@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	go_wasi_http "ziverge.com/go-wasi-http/go-wasi-http"
+	go_wasi_http "github.com/zivergetech/go-wasi-http/go-wasi-http"
 )
 
 type WasiHttpTransport struct {
