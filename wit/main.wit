@@ -1,0 +1,8 @@
+package ziverge:go-wasi-http
+
+world go-wasi-http {
+    import wasi:poll/poll
+    import wasi:io/streams
+    import wasi:http/types
+    import wasi:http/outgoing-handler
+}
