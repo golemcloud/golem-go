@@ -1,4 +1,4 @@
-package tinygo_wasi
+package go_wasi_http
 
 // inspired from https://github.com/moznion/go-optional
 
