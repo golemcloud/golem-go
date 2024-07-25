@@ -4710,6 +4710,67 @@ func WasiBlobstoreBlobstoreMoveObject(src WasiBlobstoreBlobstoreObjectId, dest W
   return lift_ret
 }
 
+// Import functions from wasi:cli/environment@0.2.0
+type WasiCli0_2_0_EnvironmentTuple2StringStringT struct {
+  F0 string
+  F1 string
+}
+
+func WasiCli0_2_0_EnvironmentGetEnvironment() []WasiCli0_2_0_EnvironmentTuple2StringStringT {
+  var ret C.golem_go_bindings_list_tuple2_string_string_t
+  C.wasi_cli_environment_get_environment(&ret )
+  var lift_ret []WasiCli0_2_0_EnvironmentTuple2StringStringT
+  lift_ret = make([]WasiCli0_2_0_EnvironmentTuple2StringStringT, ret.len)
+  if ret.len > 0 {
+    for lift_ret_i := 0; lift_ret_i < int(ret.len); lift_ret_i++ {
+      var empty_lift_ret C.golem_go_bindings_tuple2_string_string_t
+      lift_ret_ptr := *(*C.golem_go_bindings_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.ptr)) +
+      uintptr(lift_ret_i)*unsafe.Sizeof(empty_lift_ret)))
+      var list_lift_ret WasiCli0_2_0_EnvironmentTuple2StringStringT
+      var list_lift_ret_F0 string
+      list_lift_ret_F0 = C.GoStringN((*C.char)(unsafe.Pointer(lift_ret_ptr.f0.ptr)), C.int(lift_ret_ptr.f0.len))
+      list_lift_ret.F0 = list_lift_ret_F0
+      var list_lift_ret_F1 string
+      list_lift_ret_F1 = C.GoStringN((*C.char)(unsafe.Pointer(lift_ret_ptr.f1.ptr)), C.int(lift_ret_ptr.f1.len))
+      list_lift_ret.F1 = list_lift_ret_F1
+      lift_ret[lift_ret_i] = list_lift_ret
+    }
+  }
+  return lift_ret
+}
+
+func WasiCli0_2_0_EnvironmentGetArguments() []string {
+  var ret C.golem_go_bindings_list_string_t
+  C.wasi_cli_environment_get_arguments(&ret )
+  var lift_ret []string
+  lift_ret = make([]string, ret.len)
+  if ret.len > 0 {
+    for lift_ret_i := 0; lift_ret_i < int(ret.len); lift_ret_i++ {
+      var empty_lift_ret C.golem_go_bindings_string_t
+      lift_ret_ptr := *(*C.golem_go_bindings_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.ptr)) +
+      uintptr(lift_ret_i)*unsafe.Sizeof(empty_lift_ret)))
+      var list_lift_ret string
+      list_lift_ret = C.GoStringN((*C.char)(unsafe.Pointer(lift_ret_ptr.ptr)), C.int(lift_ret_ptr.len))
+      lift_ret[lift_ret_i] = list_lift_ret
+    }
+  }
+  return lift_ret
+}
+
+func WasiCli0_2_0_EnvironmentInitialCwd() Option[string] {
+  var ret C.golem_go_bindings_option_string_t
+  C.wasi_cli_environment_initial_cwd(&ret )
+  var lift_ret Option[string]
+  if ret.is_some {
+    var lift_ret_val string
+    lift_ret_val = C.GoStringN((*C.char)(unsafe.Pointer(ret.val.ptr)), C.int(ret.val.len))
+    lift_ret.Set(lift_ret_val)
+  } else {
+    lift_ret.Unset()
+  }
+  return lift_ret
+}
+
 // Import functions from wasi:clocks/wall-clock@0.2.0
 type WasiClocks0_2_0_WallClockDatetime struct {
   Seconds uint64
@@ -13148,6 +13209,79 @@ func WasiLoggingLoggingLog(level WasiLoggingLoggingLevel, context string, messag
   lower_message.ptr = (*uint8)(unsafe.Pointer(C.CString(message)))
   lower_message.len = C.size_t(len(message))
   C.wasi_logging_logging_log(lower_level , &lower_context , &lower_message )
+}
+
+// Import functions from wasi:random/random@0.2.0
+func WasiRandom0_2_0_RandomGetRandomBytes(len uint64) []uint8 {
+  lower_len := C.uint64_t(len)
+  var ret C.golem_go_bindings_list_u8_t
+  C.wasi_random_random_get_random_bytes(lower_len , &ret )
+  var lift_ret []uint8
+  lift_ret = make([]uint8, ret.len)
+  if ret.len > 0 {
+    for lift_ret_i := 0; lift_ret_i < int(ret.len); lift_ret_i++ {
+      var empty_lift_ret C.uint8_t
+      lift_ret_ptr := *(*C.uint8_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.ptr)) +
+      uintptr(lift_ret_i)*unsafe.Sizeof(empty_lift_ret)))
+      var list_lift_ret uint8
+      list_lift_ret = uint8(lift_ret_ptr)
+      lift_ret[lift_ret_i] = list_lift_ret
+    }
+  }
+  return lift_ret
+}
+
+func WasiRandom0_2_0_RandomGetRandomU64() uint64 {
+  ret := C.wasi_random_random_get_random_u64()
+  var lift_ret uint64
+  lift_ret = uint64(ret)
+  return lift_ret
+}
+
+// Import functions from wasi:random/insecure@0.2.0
+func WasiRandom0_2_0_InsecureGetInsecureRandomBytes(len uint64) []uint8 {
+  lower_len := C.uint64_t(len)
+  var ret C.golem_go_bindings_list_u8_t
+  C.wasi_random_insecure_get_insecure_random_bytes(lower_len , &ret )
+  var lift_ret []uint8
+  lift_ret = make([]uint8, ret.len)
+  if ret.len > 0 {
+    for lift_ret_i := 0; lift_ret_i < int(ret.len); lift_ret_i++ {
+      var empty_lift_ret C.uint8_t
+      lift_ret_ptr := *(*C.uint8_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.ptr)) +
+      uintptr(lift_ret_i)*unsafe.Sizeof(empty_lift_ret)))
+      var list_lift_ret uint8
+      list_lift_ret = uint8(lift_ret_ptr)
+      lift_ret[lift_ret_i] = list_lift_ret
+    }
+  }
+  return lift_ret
+}
+
+func WasiRandom0_2_0_InsecureGetInsecureRandomU64() uint64 {
+  ret := C.wasi_random_insecure_get_insecure_random_u64()
+  var lift_ret uint64
+  lift_ret = uint64(ret)
+  return lift_ret
+}
+
+// Import functions from wasi:random/insecure-seed@0.2.0
+type WasiRandom0_2_0_InsecureSeedTuple2U64U64T struct {
+  F0 uint64
+  F1 uint64
+}
+
+func WasiRandom0_2_0_InsecureSeedInsecureSeed() WasiRandom0_2_0_InsecureSeedTuple2U64U64T {
+  var ret C.golem_go_bindings_tuple2_u64_u64_t
+  C.wasi_random_insecure_seed_insecure_seed(&ret )
+  var lift_ret WasiRandom0_2_0_InsecureSeedTuple2U64U64T
+  var lift_ret_F0 uint64
+  lift_ret_F0 = uint64(ret.f0)
+  lift_ret.F0 = lift_ret_F0
+  var lift_ret_F1 uint64
+  lift_ret_F1 = uint64(ret.f1)
+  lift_ret.F1 = lift_ret_F1
+  return lift_ret
 }
 
 // Import functions from wasi:sockets/network@0.2.0

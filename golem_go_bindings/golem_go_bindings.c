@@ -243,6 +243,17 @@ extern void __wasm_import_wasi_blobstore_blobstore_copy_object(uint8_t *, size_t
 __attribute__((__import_module__("wasi:blobstore/blobstore"), __import_name__("move-object")))
 extern void __wasm_import_wasi_blobstore_blobstore_move_object(uint8_t *, size_t, uint8_t *, size_t, uint8_t *, size_t, uint8_t *, size_t, uint8_t *);
 
+// Imported Functions from `wasi:cli/environment@0.2.0`
+
+__attribute__((__import_module__("wasi:cli/environment@0.2.0"), __import_name__("get-environment")))
+extern void __wasm_import_wasi_cli_environment_get_environment(uint8_t *);
+
+__attribute__((__import_module__("wasi:cli/environment@0.2.0"), __import_name__("get-arguments")))
+extern void __wasm_import_wasi_cli_environment_get_arguments(uint8_t *);
+
+__attribute__((__import_module__("wasi:cli/environment@0.2.0"), __import_name__("initial-cwd")))
+extern void __wasm_import_wasi_cli_environment_initial_cwd(uint8_t *);
+
 // Imported Functions from `wasi:clocks/wall-clock@0.2.0`
 
 __attribute__((__import_module__("wasi:clocks/wall-clock@0.2.0"), __import_name__("now")))
@@ -509,6 +520,27 @@ extern void __wasm_import_wasi_http_outgoing_handler_handle(int32_t, int32_t, in
 
 __attribute__((__import_module__("wasi:logging/logging"), __import_name__("log")))
 extern void __wasm_import_wasi_logging_logging_log(int32_t, uint8_t *, size_t, uint8_t *, size_t);
+
+// Imported Functions from `wasi:random/random@0.2.0`
+
+__attribute__((__import_module__("wasi:random/random@0.2.0"), __import_name__("get-random-bytes")))
+extern void __wasm_import_wasi_random_random_get_random_bytes(int64_t, uint8_t *);
+
+__attribute__((__import_module__("wasi:random/random@0.2.0"), __import_name__("get-random-u64")))
+extern int64_t __wasm_import_wasi_random_random_get_random_u64(void);
+
+// Imported Functions from `wasi:random/insecure@0.2.0`
+
+__attribute__((__import_module__("wasi:random/insecure@0.2.0"), __import_name__("get-insecure-random-bytes")))
+extern void __wasm_import_wasi_random_insecure_get_insecure_random_bytes(int64_t, uint8_t *);
+
+__attribute__((__import_module__("wasi:random/insecure@0.2.0"), __import_name__("get-insecure-random-u64")))
+extern int64_t __wasm_import_wasi_random_insecure_get_insecure_random_u64(void);
+
+// Imported Functions from `wasi:random/insecure-seed@0.2.0`
+
+__attribute__((__import_module__("wasi:random/insecure-seed@0.2.0"), __import_name__("insecure-seed")))
+extern void __wasm_import_wasi_random_insecure_seed_insecure_seed(uint8_t *);
 
 // Imported Functions from `wasi:sockets/ip-name-lookup@0.2.0`
 
@@ -1239,6 +1271,12 @@ void wasi_blobstore_blobstore_result_bool_error_free(wasi_blobstore_blobstore_re
   }
 }
 
+void golem_go_bindings_option_string_free(golem_go_bindings_option_string_t *ptr) {
+  if (ptr->is_some) {
+    golem_go_bindings_string_free(&ptr->val);
+  }
+}
+
 void wasi_filesystem_types_option_datetime_free(wasi_filesystem_types_option_datetime_t *ptr) {
   if (ptr->is_some) {
   }
@@ -1409,19 +1447,12 @@ void wasi_http_types_scheme_free(wasi_http_types_scheme_t *ptr) {
   }
 }
 
-void golem_go_bindings_option_string_free(golem_go_bindings_option_string_t *ptr) {
-  if (ptr->is_some) {
-    golem_go_bindings_string_free(&ptr->val);
-  }
-}
-
 void golem_go_bindings_option_u16_free(golem_go_bindings_option_u16_t *ptr) {
   if (ptr->is_some) {
   }
 }
 
 void wasi_http_types_dns_error_payload_free(wasi_http_types_dns_error_payload_t *ptr) {
-  golem_go_bindings_option_string_free(&ptr->rcode);
   golem_go_bindings_option_u16_free(&ptr->info_code);
 }
 
@@ -1432,7 +1463,6 @@ void golem_go_bindings_option_u8_free(golem_go_bindings_option_u8_t *ptr) {
 
 void wasi_http_types_tls_alert_received_payload_free(wasi_http_types_tls_alert_received_payload_t *ptr) {
   golem_go_bindings_option_u8_free(&ptr->alert_id);
-  golem_go_bindings_option_string_free(&ptr->alert_message);
 }
 
 void golem_go_bindings_option_u32_free(golem_go_bindings_option_u32_t *ptr) {
@@ -1441,7 +1471,6 @@ void golem_go_bindings_option_u32_free(golem_go_bindings_option_u32_t *ptr) {
 }
 
 void wasi_http_types_field_size_payload_free(wasi_http_types_field_size_payload_t *ptr) {
-  golem_go_bindings_option_string_free(&ptr->field_name);
   golem_go_bindings_option_u32_free(&ptr->field_size);
 }
 
@@ -1507,15 +1536,12 @@ void wasi_http_types_error_code_free(wasi_http_types_error_code_t *ptr) {
       break;
     }
     case 31: {
-      golem_go_bindings_option_string_free(&ptr->val.http_response_transfer_coding);
       break;
     }
     case 32: {
-      golem_go_bindings_option_string_free(&ptr->val.http_response_content_coding);
       break;
     }
     case 38: {
-      golem_go_bindings_option_string_free(&ptr->val.internal_error);
       break;
     }
   }
@@ -3238,6 +3264,42 @@ void wasi_blobstore_blobstore_move_object(wasi_blobstore_blobstore_object_id_t *
     }
   }
   *ret = result;
+}
+
+void wasi_cli_environment_get_environment(golem_go_bindings_list_tuple2_string_string_t *ret) {
+  __attribute__((__aligned__(4)))
+  uint8_t ret_area[8];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_cli_environment_get_environment(ptr);
+  *ret = (golem_go_bindings_list_tuple2_string_string_t) { (golem_go_bindings_tuple2_string_string_t*)(*((uint8_t **) (ptr + 0))), (*((size_t*) (ptr + 4))) };
+}
+
+void wasi_cli_environment_get_arguments(golem_go_bindings_list_string_t *ret) {
+  __attribute__((__aligned__(4)))
+  uint8_t ret_area[8];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_cli_environment_get_arguments(ptr);
+  *ret = (golem_go_bindings_list_string_t) { (golem_go_bindings_string_t*)(*((uint8_t **) (ptr + 0))), (*((size_t*) (ptr + 4))) };
+}
+
+void wasi_cli_environment_initial_cwd(golem_go_bindings_option_string_t *ret) {
+  __attribute__((__aligned__(4)))
+  uint8_t ret_area[12];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_cli_environment_initial_cwd(ptr);
+  golem_go_bindings_option_string_t option;
+  switch ((int32_t) *((uint8_t*) (ptr + 0))) {
+    case 0: {
+      option.is_some = false;
+      break;
+    }
+    case 1: {
+      option.is_some = true;
+      option.val = (golem_go_bindings_string_t) { (uint8_t*)(*((uint8_t **) (ptr + 4))), (*((size_t*) (ptr + 8))) };
+      break;
+    }
+  }
+  *ret = option;
 }
 
 void wasi_clocks_wall_clock_now(wasi_clocks_wall_clock_datetime_t *ret) {
@@ -8005,6 +8067,43 @@ void wasi_http_outgoing_handler_handle(wasi_http_outgoing_handler_own_outgoing_r
 
 void wasi_logging_logging_log(wasi_logging_logging_level_t level, golem_go_bindings_string_t *context, golem_go_bindings_string_t *message) {
   __wasm_import_wasi_logging_logging_log((int32_t) level, (uint8_t *) (*context).ptr, (*context).len, (uint8_t *) (*message).ptr, (*message).len);
+}
+
+void wasi_random_random_get_random_bytes(uint64_t len, golem_go_bindings_list_u8_t *ret) {
+  __attribute__((__aligned__(4)))
+  uint8_t ret_area[8];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_random_random_get_random_bytes((int64_t) (len), ptr);
+  *ret = (golem_go_bindings_list_u8_t) { (uint8_t*)(*((uint8_t **) (ptr + 0))), (*((size_t*) (ptr + 4))) };
+}
+
+uint64_t wasi_random_random_get_random_u64(void) {
+  int64_t ret = __wasm_import_wasi_random_random_get_random_u64();
+  return (uint64_t) (ret);
+}
+
+void wasi_random_insecure_get_insecure_random_bytes(uint64_t len, golem_go_bindings_list_u8_t *ret) {
+  __attribute__((__aligned__(4)))
+  uint8_t ret_area[8];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_random_insecure_get_insecure_random_bytes((int64_t) (len), ptr);
+  *ret = (golem_go_bindings_list_u8_t) { (uint8_t*)(*((uint8_t **) (ptr + 0))), (*((size_t*) (ptr + 4))) };
+}
+
+uint64_t wasi_random_insecure_get_insecure_random_u64(void) {
+  int64_t ret = __wasm_import_wasi_random_insecure_get_insecure_random_u64();
+  return (uint64_t) (ret);
+}
+
+void wasi_random_insecure_seed_insecure_seed(golem_go_bindings_tuple2_u64_u64_t *ret) {
+  __attribute__((__aligned__(8)))
+  uint8_t ret_area[16];
+  uint8_t *ptr = (uint8_t *) &ret_area;
+  __wasm_import_wasi_random_insecure_seed_insecure_seed(ptr);
+  *ret = (golem_go_bindings_tuple2_u64_u64_t) {
+    (uint64_t) (uint64_t) (*((int64_t*) (ptr + 0))),
+    (uint64_t) (uint64_t) (*((int64_t*) (ptr + 8))),
+  };
 }
 
 void wasi_sockets_ip_name_lookup_resolve_addresses(wasi_sockets_ip_name_lookup_borrow_network_t network, golem_go_bindings_string_t *name, wasi_sockets_ip_name_lookup_result_own_resolve_address_stream_error_code_t *ret) {

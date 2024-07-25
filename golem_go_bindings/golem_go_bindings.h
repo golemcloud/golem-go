@@ -720,6 +720,11 @@ typedef struct {
   } val;
 } wasi_blobstore_blobstore_result_bool_error_t;
 
+typedef struct {
+  bool is_some;
+  golem_go_bindings_string_t val;
+} golem_go_bindings_option_string_t;
+
 // A time and date in seconds plus nanoseconds.
 typedef struct wasi_clocks_wall_clock_datetime_t {
   uint64_t   seconds;
@@ -1175,11 +1180,6 @@ typedef struct wasi_http_types_scheme_t {
 
 typedef struct {
   bool is_some;
-  golem_go_bindings_string_t val;
-} golem_go_bindings_option_string_t;
-
-typedef struct {
-  bool is_some;
   uint16_t val;
 } golem_go_bindings_option_u16_t;
 
@@ -1596,6 +1596,11 @@ typedef uint8_t wasi_logging_logging_level_t;
 #define WASI_LOGGING_LOGGING_LEVEL_ERROR 4
 // Describes messages indicating fatal errors.
 #define WASI_LOGGING_LOGGING_LEVEL_CRITICAL 5
+
+typedef struct {
+  uint64_t f0;
+  uint64_t f1;
+} golem_go_bindings_tuple2_u64_u64_t;
 
 typedef struct wasi_sockets_network_own_network_t {
   int32_t __handle;
@@ -2129,6 +2134,22 @@ extern void wasi_blobstore_blobstore_copy_object(wasi_blobstore_blobstore_object
 // returns an error if the destination container does not exist.
 // overwrites destination object if it already existed.
 extern void wasi_blobstore_blobstore_move_object(wasi_blobstore_blobstore_object_id_t *src, wasi_blobstore_blobstore_object_id_t *dest, wasi_blobstore_blobstore_result_void_error_t *ret);
+
+// Imported Functions from `wasi:cli/environment@0.2.0`
+// Get the POSIX-style environment variables.
+// 
+// Each environment variable is provided as a pair of string variable names
+// and string value.
+// 
+// Morally, these are a value import, but until value imports are available
+// in the component model, this import function should return the same
+// values each time it is called.
+extern void wasi_cli_environment_get_environment(golem_go_bindings_list_tuple2_string_string_t *ret);
+// Get the POSIX-style arguments to the program.
+extern void wasi_cli_environment_get_arguments(golem_go_bindings_list_string_t *ret);
+// Return a path that programs should use as their initial current working
+// directory, interpreting `.` as shorthand for this.
+extern void wasi_cli_environment_initial_cwd(golem_go_bindings_option_string_t *ret);
 
 // Imported Functions from `wasi:clocks/wall-clock@0.2.0`
 // Read the current value of the clock.
@@ -2699,6 +2720,62 @@ extern void wasi_http_outgoing_handler_handle(wasi_http_outgoing_handler_own_out
 // text.
 extern void wasi_logging_logging_log(wasi_logging_logging_level_t level, golem_go_bindings_string_t *context, golem_go_bindings_string_t *message);
 
+// Imported Functions from `wasi:random/random@0.2.0`
+// Return `len` cryptographically-secure random or pseudo-random bytes.
+// 
+// This function must produce data at least as cryptographically secure and
+// fast as an adequately seeded cryptographically-secure pseudo-random
+// number generator (CSPRNG). It must not block, from the perspective of
+// the calling program, under any circumstances, including on the first
+// request and on requests for numbers of bytes. The returned data must
+// always be unpredictable.
+// 
+// This function must always return fresh data. Deterministic environments
+// must omit this function, rather than implementing it with deterministic
+// data.
+extern void wasi_random_random_get_random_bytes(uint64_t len, golem_go_bindings_list_u8_t *ret);
+// Return a cryptographically-secure random or pseudo-random `u64` value.
+// 
+// This function returns the same type of data as `get-random-bytes`,
+// represented as a `u64`.
+extern uint64_t wasi_random_random_get_random_u64(void);
+
+// Imported Functions from `wasi:random/insecure@0.2.0`
+// Return `len` insecure pseudo-random bytes.
+// 
+// This function is not cryptographically secure. Do not use it for
+// anything related to security.
+// 
+// There are no requirements on the values of the returned bytes, however
+// implementations are encouraged to return evenly distributed values with
+// a long period.
+extern void wasi_random_insecure_get_insecure_random_bytes(uint64_t len, golem_go_bindings_list_u8_t *ret);
+// Return an insecure pseudo-random `u64` value.
+// 
+// This function returns the same type of pseudo-random data as
+// `get-insecure-random-bytes`, represented as a `u64`.
+extern uint64_t wasi_random_insecure_get_insecure_random_u64(void);
+
+// Imported Functions from `wasi:random/insecure-seed@0.2.0`
+// Return a 128-bit value that may contain a pseudo-random value.
+// 
+// The returned value is not required to be computed from a CSPRNG, and may
+// even be entirely deterministic. Host implementations are encouraged to
+// provide pseudo-random values to any program exposed to
+// attacker-controlled content, to enable DoS protection built into many
+// languages' hash-map implementations.
+// 
+// This function is intended to only be called once, by a source language
+// to initialize Denial Of Service (DoS) protection in its hash-map
+// implementation.
+// 
+// # Expected future evolution
+// 
+// This will likely be changed to a value import, to prevent it from being
+// called multiple times and potentially used for purposes other than DoS
+// protection.
+extern void wasi_random_insecure_seed_insecure_seed(golem_go_bindings_tuple2_u64_u64_t *ret);
+
 // Imported Functions from `wasi:sockets/ip-name-lookup@0.2.0`
 // Resolve an internet host name to a list of IP addresses.
 // 
@@ -2935,6 +3012,8 @@ void wasi_blobstore_blobstore_result_void_error_free(wasi_blobstore_blobstore_re
 
 void wasi_blobstore_blobstore_result_bool_error_free(wasi_blobstore_blobstore_result_bool_error_t *ptr);
 
+void golem_go_bindings_option_string_free(golem_go_bindings_option_string_t *ptr);
+
 void wasi_filesystem_types_option_datetime_free(wasi_filesystem_types_option_datetime_t *ptr);
 
 void wasi_filesystem_types_descriptor_stat_free(wasi_filesystem_types_descriptor_stat_t *ptr);
@@ -2988,8 +3067,6 @@ void wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(wasi_filesy
 void wasi_http_types_method_free(wasi_http_types_method_t *ptr);
 
 void wasi_http_types_scheme_free(wasi_http_types_scheme_t *ptr);
-
-void golem_go_bindings_option_string_free(golem_go_bindings_option_string_t *ptr);
 
 void golem_go_bindings_option_u16_free(golem_go_bindings_option_u16_t *ptr);
 
