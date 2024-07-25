@@ -13,8 +13,8 @@ world golem-go-bindings {
   import wasi:http/outgoing-handler@0.2.0;
   import wasi:io/poll@0.2.0;
   import wasi:io/streams@0.2.0;
-  import wasi:keyvalue/eventual-batch@0.1.0;
-  import wasi:keyvalue/eventual@0.1.0;
+  // import wasi:keyvalue/eventual-batch@0.1.0; // NOTE: cannot include it because the bindings collide with blobstore
+  // import wasi:keyvalue/eventual@0.1.0; // NOTE: cannot include it because the bindings collide with blobstore
   import wasi:logging/logging;
   import wasi:sockets/ip-name-lookup@0.2.0;
   import wasi:sockets/instance-network@0.2.0;
