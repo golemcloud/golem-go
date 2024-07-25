@@ -1,4 +1,4 @@
-package go_wasi_http
+package golem_go_bindings
 
 // inspired from https://github.com/moznion/go-optional
 
