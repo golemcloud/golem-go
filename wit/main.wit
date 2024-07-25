@@ -1,4 +1,4 @@
-package ziverge:go-wasi-http;
+package golemcloud:go-wasi-http;
 
 world go-wasi-http {
   import wasi:io/poll@0.2.0;
