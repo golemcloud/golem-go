@@ -91,13 +91,13 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 
 		requestBodyResult := requestHandle.Body()
 		if requestBodyResult.IsErr() {
-			return nil, errors.New("Failed to get request body")
+			return nil, errors.New("failed to get request body")
 		}
 		requestBody := requestBodyResult.Unwrap()
 
 		requestStreamResult := requestBody.Write()
 		if requestStreamResult.IsErr() {
-			return nil, errors.New("Failed to start writing request body")
+			return nil, errors.New("failed to start writing request body")
 		}
 		requestStream := requestStreamResult.Unwrap()
 
@@ -109,7 +109,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 			if result.IsErr() {
 				requestStream.Drop()
 				requestBody.Drop()
-				return nil, errors.New("Failed to write request body chunk")
+				return nil, errors.New("failed to write request body chunk")
 			}
 
 			if err == io.EOF {
@@ -133,7 +133,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 
 	futureResult := golem.WasiHttp0_2_0_OutgoingHandlerHandle(requestHandle, golem.Some(options))
 	if futureResult.IsErr() {
-		return nil, errors.New("Failed to send request")
+		return nil, errors.New("failed to send request")
 	}
 	future := futureResult.Unwrap()
 
@@ -175,13 +175,13 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 
 	responseBodyResult := incomingResponse.Consume()
 	if responseBodyResult.IsErr() {
-		return nil, errors.New("Failed to consume response body")
+		return nil, errors.New("failed to consume response body")
 	}
 	responseBody := responseBodyResult.Unwrap()
 
 	responseBodyStreamResult := responseBody.Stream()
 	if responseBodyStreamResult.IsErr() {
-		return nil, errors.New("Failed to get response body stream")
+		return nil, errors.New("failed to get response body stream")
 	}
 	responseBodyStream := responseBodyStreamResult.Unwrap()
 
@@ -210,11 +210,11 @@ func GetIncomingResponse(future golem.WasiHttp0_2_0_OutgoingHandlerFutureIncomin
 	if result.IsSome() {
 		result2 := result.Unwrap()
 		if result2.IsErr() {
-			return 0, errors.New("Failed to send request")
+			return 0, errors.New("failed to send request")
 		}
 		result3 := result2.Unwrap()
 		if result3.IsErr() {
-			return 0, errors.New("Failed to send request")
+			return 0, errors.New("failed to send request")
 		}
 		return result3.Unwrap(), nil
 	} else {
@@ -239,7 +239,7 @@ func (reader WasiStreamReader) Read(p []byte) (int, error) {
 	if isEof {
 		return 0, io.EOF
 	} else if result.IsErr() {
-		return 0, errors.New("Failed to read response stream")
+		return 0, errors.New("failed to read response stream")
 	} else {
 		chunk := result.Unwrap()
 		copy(p, chunk)
