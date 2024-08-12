@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	golem_go_bindings "github.com/golemcloud/golem-go/golem_go_bindings"
+	golem "github.com/golemcloud/golem-go/golem_go_bindings"
 )
 
 type WasiHttpTransport struct {
@@ -16,41 +16,41 @@ type WasiHttpTransport struct {
 
 func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, error) {
 
-	var headerKeyValues []golem_go_bindings.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT
+	var headerKeyValues []golem.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT
 	for key, values := range request.Header {
 		for _, value := range values {
-			headerKeyValues = append(headerKeyValues, golem_go_bindings.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT{
+			headerKeyValues = append(headerKeyValues, golem.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT{
 				F0: key,
 				F1: []byte(value),
 			})
 		}
 	}
-	headers := golem_go_bindings.StaticFieldsFromList(headerKeyValues).Unwrap()
+	headers := golem.StaticFieldsFromList(headerKeyValues).Unwrap()
 
-	var method golem_go_bindings.WasiHttp0_2_0_TypesMethod
+	var method golem.WasiHttp0_2_0_TypesMethod
 	switch strings.ToUpper(request.Method) {
 	case "":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodGet()
+		method = golem.WasiHttp0_2_0_TypesMethodGet()
 	case "GET":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodGet()
+		method = golem.WasiHttp0_2_0_TypesMethodGet()
 	case "HEAD":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodHead()
+		method = golem.WasiHttp0_2_0_TypesMethodHead()
 	case "POST":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodPost()
+		method = golem.WasiHttp0_2_0_TypesMethodPost()
 	case "PUT":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodPut()
+		method = golem.WasiHttp0_2_0_TypesMethodPut()
 	case "DELETE":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodDelete()
+		method = golem.WasiHttp0_2_0_TypesMethodDelete()
 	case "CONNECT":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodConnect()
+		method = golem.WasiHttp0_2_0_TypesMethodConnect()
 	case "OPTIONS":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodOptions()
+		method = golem.WasiHttp0_2_0_TypesMethodOptions()
 	case "TRACE":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodTrace()
+		method = golem.WasiHttp0_2_0_TypesMethodTrace()
 	case "PATCH":
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodPatch()
+		method = golem.WasiHttp0_2_0_TypesMethodPatch()
 	default:
-		method = golem_go_bindings.WasiHttp0_2_0_TypesMethodOther(request.Method)
+		method = golem.WasiHttp0_2_0_TypesMethodOther(request.Method)
 	}
 
 	path := request.URL.Path
@@ -60,14 +60,14 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 		pathAndQuery += "?" + query
 	}
 
-	var scheme golem_go_bindings.WasiHttp0_2_0_TypesScheme
+	var scheme golem.WasiHttp0_2_0_TypesScheme
 	switch strings.ToLower(request.URL.Scheme) {
 	case "http":
-		scheme = golem_go_bindings.WasiHttp0_2_0_TypesSchemeHttp()
+		scheme = golem.WasiHttp0_2_0_TypesSchemeHttp()
 	case "https":
-		scheme = golem_go_bindings.WasiHttp0_2_0_TypesSchemeHttps()
+		scheme = golem.WasiHttp0_2_0_TypesSchemeHttps()
 	default:
-		scheme = golem_go_bindings.WasiHttp0_2_0_TypesSchemeOther(request.URL.Scheme)
+		scheme = golem.WasiHttp0_2_0_TypesSchemeOther(request.URL.Scheme)
 	}
 
 	userPassword := request.URL.User.String()
@@ -78,12 +78,12 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 		authority = userPassword + "@" + request.URL.Host
 	}
 
-	requestHandle := golem_go_bindings.NewOutgoingRequest(headers)
+	requestHandle := golem.NewOutgoingRequest(headers)
 
 	requestHandle.SetMethod(method)
-	requestHandle.SetPathWithQuery(golem_go_bindings.Some(pathAndQuery))
-	requestHandle.SetScheme(golem_go_bindings.Some(scheme))
-	requestHandle.SetAuthority(golem_go_bindings.Some(authority))
+	requestHandle.SetPathWithQuery(golem.Some(pathAndQuery))
+	requestHandle.SetScheme(golem.Some(scheme))
+	requestHandle.SetAuthority(golem.Some(authority))
 
 	if request.Body != nil {
 		reader := request.Body
@@ -118,20 +118,20 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 		}
 
 		requestStream.Drop()
-		golem_go_bindings.StaticOutgoingBodyFinish(requestBody, golem_go_bindings.None[golem_go_bindings.WasiHttp0_2_0_TypesTrailers]())
+		golem.StaticOutgoingBodyFinish(requestBody, golem.None[golem.WasiHttp0_2_0_TypesTrailers]())
 		// requestBody.Drop() // TODO: this fails with "unknown handle index 0"
 	}
 
 	// TODO: timeouts
-	connectTimeoutNanos := golem_go_bindings.None[uint64]()
-	firstByteTimeoutNanos := golem_go_bindings.None[uint64]()
-	betweenBytesTimeoutNanos := golem_go_bindings.None[uint64]()
-	options := golem_go_bindings.NewRequestOptions()
+	connectTimeoutNanos := golem.None[uint64]()
+	firstByteTimeoutNanos := golem.None[uint64]()
+	betweenBytesTimeoutNanos := golem.None[uint64]()
+	options := golem.NewRequestOptions()
 	options.SetConnectTimeout(connectTimeoutNanos)
 	options.SetFirstByteTimeout(firstByteTimeoutNanos)
 	options.SetBetweenBytesTimeout(betweenBytesTimeoutNanos)
 
-	futureResult := golem_go_bindings.WasiHttp0_2_0_OutgoingHandlerHandle(requestHandle, golem_go_bindings.Some(options))
+	futureResult := golem.WasiHttp0_2_0_OutgoingHandlerHandle(requestHandle, golem.Some(options))
 	if futureResult.IsErr() {
 		return nil, errors.New("Failed to send request")
 	}
@@ -205,7 +205,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 	return &response, nil
 }
 
-func GetIncomingResponse(future golem_go_bindings.WasiHttp0_2_0_OutgoingHandlerFutureIncomingResponse) (golem_go_bindings.WasiHttp0_2_0_TypesIncomingResponse, error) {
+func GetIncomingResponse(future golem.WasiHttp0_2_0_OutgoingHandlerFutureIncomingResponse) (golem.WasiHttp0_2_0_TypesIncomingResponse, error) {
 	result := future.Get()
 	if result.IsSome() {
 		result2 := result.Unwrap()
@@ -225,17 +225,17 @@ func GetIncomingResponse(future golem_go_bindings.WasiHttp0_2_0_OutgoingHandlerF
 }
 
 type WasiStreamReader struct {
-	Stream           golem_go_bindings.WasiHttp0_2_0_TypesInputStream
-	Body             golem_go_bindings.WasiHttp0_2_0_TypesIncomingBody
-	OutgoingRequest  golem_go_bindings.WasiHttp0_2_0_TypesOutgoingRequest
-	IncomingResponse golem_go_bindings.WasiHttp0_2_0_TypesIncomingResponse
-	Future           golem_go_bindings.WasiHttp0_2_0_TypesFutureIncomingResponse
+	Stream           golem.WasiHttp0_2_0_TypesInputStream
+	Body             golem.WasiHttp0_2_0_TypesIncomingBody
+	OutgoingRequest  golem.WasiHttp0_2_0_TypesOutgoingRequest
+	IncomingResponse golem.WasiHttp0_2_0_TypesIncomingResponse
+	Future           golem.WasiHttp0_2_0_TypesFutureIncomingResponse
 }
 
 func (reader WasiStreamReader) Read(p []byte) (int, error) {
 	c := cap(p)
 	result := reader.Stream.BlockingRead(uint64(c))
-	isEof := result.IsErr() && result.UnwrapErr() == golem_go_bindings.WasiIo0_2_0_StreamsStreamErrorClosed()
+	isEof := result.IsErr() && result.UnwrapErr() == golem.WasiIo0_2_0_StreamsStreamErrorClosed()
 	if isEof {
 		return 0, io.EOF
 	} else if result.IsErr() {
