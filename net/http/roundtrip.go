@@ -11,11 +11,12 @@ import (
 	golem "github.com/golemcloud/golem-go/golem_go_bindings"
 )
 
+// WasiHttpTransport implements RoundTrip for the Golem WASI environment.
+// It can be assigned to http.DefaultClient.Transport to globally set the default transport.
 type WasiHttpTransport struct {
 }
 
 func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, error) {
-
 	var headerKeyValues []golem.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT
 	for key, values := range request.Header {
 		for _, value := range values {
@@ -137,7 +138,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 	}
 	future := futureResult.Unwrap()
 
-	incomingResponse, err := GetIncomingResponse(future)
+	incomingResponse, err := getIncomingResponse(future)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +186,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 	}
 	responseBodyStream := responseBodyStreamResult.Unwrap()
 
-	responseReader := WasiStreamReader{
+	responseReader := wasiStreamReader{
 		Stream:           responseBodyStream,
 		Body:             responseBody,
 		OutgoingRequest:  requestHandle,
@@ -205,7 +206,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 	return &response, nil
 }
 
-func GetIncomingResponse(future golem.WasiHttp0_2_0_OutgoingHandlerFutureIncomingResponse) (golem.WasiHttp0_2_0_TypesIncomingResponse, error) {
+func getIncomingResponse(future golem.WasiHttp0_2_0_OutgoingHandlerFutureIncomingResponse) (golem.WasiHttp0_2_0_TypesIncomingResponse, error) {
 	result := future.Get()
 	if result.IsSome() {
 		result2 := result.Unwrap()
@@ -220,11 +221,11 @@ func GetIncomingResponse(future golem.WasiHttp0_2_0_OutgoingHandlerFutureIncomin
 	} else {
 		pollable := future.Subscribe()
 		pollable.Block()
-		return GetIncomingResponse(future)
+		return getIncomingResponse(future)
 	}
 }
 
-type WasiStreamReader struct {
+type wasiStreamReader struct {
 	Stream           golem.WasiHttp0_2_0_TypesInputStream
 	Body             golem.WasiHttp0_2_0_TypesIncomingBody
 	OutgoingRequest  golem.WasiHttp0_2_0_TypesOutgoingRequest
@@ -232,7 +233,7 @@ type WasiStreamReader struct {
 	Future           golem.WasiHttp0_2_0_TypesFutureIncomingResponse
 }
 
-func (reader WasiStreamReader) Read(p []byte) (int, error) {
+func (reader wasiStreamReader) Read(p []byte) (int, error) {
 	c := cap(p)
 	result := reader.Stream.BlockingRead(uint64(c))
 	isEof := result.IsErr() && result.UnwrapErr() == golem.WasiIo0_2_0_StreamsStreamErrorClosed()
@@ -247,7 +248,7 @@ func (reader WasiStreamReader) Read(p []byte) (int, error) {
 	}
 }
 
-func (reader WasiStreamReader) Close() error {
+func (reader wasiStreamReader) Close() error {
 	reader.Stream.Drop()
 	reader.Body.Drop()
 	reader.IncomingResponse.Drop()
