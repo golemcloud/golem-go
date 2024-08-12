@@ -3,7 +3,7 @@ package os
 import (
 	"sync"
 
-	golem "github.com/golemcloud/golem-go/golem_go_bindings"
+	binding "github.com/golemcloud/golem-go/golem_go_bindings"
 )
 
 var (
@@ -13,7 +13,7 @@ var (
 
 func initEnv() {
 	env := map[string]string{}
-	e := golem.WasiCli0_2_0_EnvironmentGetEnvironment()
+	e := binding.WasiCli0_2_0_EnvironmentGetEnvironment()
 	for i := range e {
 		env[e[i].F0] = e[i].F1
 	}
