@@ -1,26 +1,29 @@
 package main
 
 import (
-	golemos "github.com/golemcloud/golem-go/os"
-	"net/http"
+	stdhttp "net/http"
+	"time"
 
-	golemhttp "github.com/golemcloud/golem-go/net/http"
+	"github.com/golemcloud/golem-go/golemhost"
+	"github.com/golemcloud/golem-go/net/http"
+	"github.com/golemcloud/golem-go/os"
 )
 
-// Test app for testing if the API compiles
+// Test app for testing if the API compiles with the right types
+// (as tinygo build expects a main module, we cannot simply build the lib)
 
 func main() {
 	// net/http
 
 	{
-		http.DefaultClient.Transport = &golemhttp.WasiHttpTransport{}
+		stdhttp.DefaultClient.Transport = &http.WasiHttpTransport{}
 	}
 
 	// os - args
 
 	{
 		var args []string
-		args = golemos.GetArgs()
+		args = os.GetArgs()
 		unused(args)
 	}
 
@@ -28,16 +31,95 @@ func main() {
 
 	{
 		var value string
-		value = golemos.Getenv("ENV_VAR")
+		value = os.Getenv("ENV_VAR")
 		unused(value)
 	}
 
 	{
 		var value string
 		var ok bool
-		value, ok = golemos.LookupEnv("ENV_VAR")
+		value, ok = os.LookupEnv("ENV_VAR")
 		unused(value)
 		unused(ok)
+	}
+
+	// golemhost - idempotence
+
+	{
+		var mode bool
+		mode = golemhost.GetIdempotenceMode()
+		unused(mode)
+	}
+
+	{
+		golemhost.SetIdempotenceMode(false)
+	}
+
+	{
+		var result []string
+		var err error
+		result, err = golemhost.WithIdempotenceMode(true, func() ([]string, error) {
+			return []string{"golem"}, nil
+		})
+		unused(result)
+		unused(err)
+	}
+
+	// golemhost persistence
+
+	{
+		golemhost.SetPersistenceLevel(golemhost.PersistenceLevelSmart)
+	}
+
+	{
+		var level golemhost.PersistenceLevel
+		level = golemhost.GetPersistenceLevel()
+		unused(level)
+	}
+
+	{
+		var result map[string]int
+		var err error
+		result, err = golemhost.WithPersistenceLevel(
+			golemhost.PersistenceLevelPersistRemoteSideEffects,
+			func() (map[string]int, error) {
+				return nil, nil
+			},
+		)
+		unused(result)
+		unused(err)
+	}
+
+	// golemhost retrypolicy
+
+	{
+		golemhost.SetRetryPolicy(golemhost.RetryPolicy{
+			MaxAttempts: 10,
+			MinDelay:    100 * time.Millisecond,
+			MaxDelay:    5 * time.Nanosecond,
+			Multiplier:  3,
+		})
+	}
+
+	{
+		var result golemhost.RetryPolicy
+		result = golemhost.GetRetryPolicy()
+		unused(result)
+	}
+
+	{
+		var result string
+		var err error
+		result, err = golemhost.WithRetryPolicy(golemhost.RetryPolicy{
+			MaxAttempts: 4,
+			MinDelay:    10 * time.Microsecond,
+			MaxDelay:    4 * time.Minute,
+			Multiplier:  2,
+		}, func() (string, error) {
+			return "golem", nil
+		})
+		unused(result)
+		unused(err)
 	}
 }
 
