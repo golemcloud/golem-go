@@ -87,7 +87,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 
 	if request.Body != nil {
 		reader := request.Body
-		defer reader.Close()
+		defer func() { _ = reader.Close() }()
 
 		requestBodyResult := requestHandle.Body()
 		if requestBodyResult.IsErr() {
