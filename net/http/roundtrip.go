@@ -16,7 +16,12 @@ import (
 type WasiHttpTransport struct {
 }
 
-func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, error) {
+// InitStdDefaultClientTransport overrides the standard lib's default HTTP client's transport to the golem specific one
+func InitStdDefaultClientTransport() {
+	http.DefaultClient.Transport = &WasiHttpTransport{}
+}
+
+func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, error) {
 	var headerKeyValues []binding.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT
 	for key, values := range request.Header {
 		for _, value := range values {
@@ -199,7 +204,7 @@ func (t WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, err
 		StatusCode:    int(status),
 		Header:        header,
 		ContentLength: contentLength,
-		Body:          responseReader,
+		Body:          &responseReader,
 		Request:       request,
 	}
 
@@ -233,7 +238,7 @@ type wasiStreamReader struct {
 	Future           binding.WasiHttp0_2_0_TypesFutureIncomingResponse
 }
 
-func (reader wasiStreamReader) Read(p []byte) (int, error) {
+func (reader *wasiStreamReader) Read(p []byte) (int, error) {
 	c := cap(p)
 	result := reader.Stream.BlockingRead(uint64(c))
 	isEof := result.IsErr() && result.UnwrapErr() == binding.WasiIo0_2_0_StreamsStreamErrorClosed()
@@ -248,7 +253,7 @@ func (reader wasiStreamReader) Read(p []byte) (int, error) {
 	}
 }
 
-func (reader wasiStreamReader) Close() error {
+func (reader *wasiStreamReader) Close() error {
 	reader.Stream.Drop()
 	reader.Body.Drop()
 	reader.IncomingResponse.Drop()

@@ -7,6 +7,7 @@ import (
 	"github.com/golemcloud/golem-go/golemhost"
 	"github.com/golemcloud/golem-go/net/http"
 	"github.com/golemcloud/golem-go/os"
+	"github.com/golemcloud/golem-go/std"
 )
 
 // Test app for testing if the API compiles with the right types
@@ -17,6 +18,11 @@ func main() {
 
 	{
 		stdhttp.DefaultClient.Transport = &http.WasiHttpTransport{}
+	}
+
+	// net/http
+	{
+		http.InitStdDefaultClientTransport()
 	}
 
 	// os - args
@@ -41,6 +47,13 @@ func main() {
 		value, ok = os.LookupEnv("ENV_VAR")
 		unused(value)
 		unused(ok)
+	}
+
+	// os - init
+	{
+		os.InitStdEnv()
+		os.InitStdArgs()
+		os.InitStd()
 	}
 
 	// golemhost - idempotence
@@ -120,6 +133,15 @@ func main() {
 		})
 		unused(result)
 		unused(err)
+	}
+
+	// std init
+
+	{
+		std.Init(std.Modules{
+			Os:   true,
+			Http: true,
+		})
 	}
 }
 
