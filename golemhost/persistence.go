@@ -2,7 +2,8 @@ package golemhost
 
 import (
 	"fmt"
-	binding "github.com/golemcloud/golem-go/golem_go_bindings"
+
+	"github.com/golemcloud/golem-go/binding"
 )
 
 type PersistenceLevel binding.GolemApi0_2_0_HostPersistenceLevelKind

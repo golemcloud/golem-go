@@ -1,4 +1,4 @@
-package golem_go_bindings
+package binding
 
 // inspired from https://github.com/moznion/go-optional
 

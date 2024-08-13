@@ -3,7 +3,7 @@ package os
 import (
 	"sync"
 
-	binding "github.com/golemcloud/golem-go/golem_go_bindings"
+	"github.com/golemcloud/golem-go/binding"
 )
 
 var (

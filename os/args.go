@@ -1,7 +1,7 @@
 package os
 
 import (
-	binding "github.com/golemcloud/golem-go/golem_go_bindings"
+	"github.com/golemcloud/golem-go/binding"
 )
 
 // GetArgs is convenience wrapper to be used instead of the standard lib's os.Args

@@ -3,14 +3,14 @@ package golemhost
 import (
 	"time"
 
-	binding "github.com/golemcloud/golem-go/golem_go_bindings"
+	"github.com/golemcloud/golem-go/binding"
 )
 
 type RetryPolicy struct {
 	MaxAttempts uint32
 	MinDelay    time.Duration
 	MaxDelay    time.Duration
-	Multiplier  uint32
+	Multiplier  float64
 }
 
 func newRetryPolicy(policy binding.GolemApi0_2_0_HostRetryPolicy) RetryPolicy {
@@ -18,7 +18,7 @@ func newRetryPolicy(policy binding.GolemApi0_2_0_HostRetryPolicy) RetryPolicy {
 		MaxAttempts: policy.MaxAttempts,
 		MinDelay:    time.Duration(policy.MinDelay) * time.Nanosecond,
 		MaxDelay:    time.Duration(policy.MaxDelay) * time.Nanosecond,
-		Multiplier:  policy.MaxAttempts,
+		Multiplier:  policy.Multiplier,
 	}
 }
 

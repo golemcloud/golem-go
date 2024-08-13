@@ -1,6 +1,8 @@
 package golemhost
 
-import binding "github.com/golemcloud/golem-go/golem_go_bindings"
+import (
+	"github.com/golemcloud/golem-go/binding"
+)
 
 func GetIdempotenceMode() bool {
 	return binding.GolemApi0_2_0_HostGetIdempotenceMode()

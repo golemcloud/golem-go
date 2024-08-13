@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	binding "github.com/golemcloud/golem-go/golem_go_bindings"
+	"github.com/golemcloud/golem-go/binding"
 )
 
 // WasiHttpTransport implements RoundTrip for the Golem WASI environment.
