@@ -9,3 +9,4 @@
 /build/
 /wit/deps/
 go.work
+/binding/binding.c
