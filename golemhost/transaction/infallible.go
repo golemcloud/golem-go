@@ -85,9 +85,8 @@ func ExecuteInfallibleStep[I, O any](
 // compensation actions are executed in reverse order and the transaction gets retried,
 // using Golem's active retry policy.
 func WithInfallible[T any](f func(tx Infallible) T) T {
-	index := golemhost.MarkBeginOperation()
-	defer golemhost.MarkEndOperation(index)
-	beginOpLogIndex := binding.GolemApi0_2_0_HostGetOplogIndex()
-	tx := newInfallible(beginOpLogIndex)
+	beginOpLogIndex := golemhost.MarkBeginOperation()
+	defer golemhost.MarkEndOperation(beginOpLogIndex)
+	tx := newInfallible(binding.GolemApi0_2_0_HostOplogIndex(beginOpLogIndex))
 	return f(tx)
 }
