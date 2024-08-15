@@ -132,7 +132,7 @@ func main() {
 		golemhost.SetRetryPolicy(golemhost.RetryPolicy{
 			MaxAttempts: 10,
 			MinDelay:    100 * time.Millisecond,
-			MaxDelay:    5 * time.Nanosecond,
+			MaxDelay:    5 * time.Second,
 			Multiplier:  3,
 		})
 	}
