@@ -11,12 +11,12 @@ type Packages struct {
 }
 
 // Init optionally initializes standard lib's packages with the WASI environment and wrappers
-func Init(modules Packages) {
-	if modules.NetHttp {
+func Init(packages Packages) {
+	if packages.NetHttp {
 		http.InitStd()
 	}
 
-	if modules.Os {
+	if packages.Os {
 		os.InitStd()
 	}
 }
