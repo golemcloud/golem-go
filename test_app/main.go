@@ -145,14 +145,16 @@ func main() {
 	{
 		var result string
 		var err error
-		result, err = golemhost.WithRetryPolicy(golemhost.RetryPolicy{
-			MaxAttempts: 4,
-			MinDelay:    10 * time.Microsecond,
-			MaxDelay:    4 * time.Minute,
-			Multiplier:  2,
-		}, func() (string, error) {
-			return "golem", nil
-		})
+		result, err = golemhost.WithRetryPolicy(
+			golemhost.RetryPolicy{
+				MaxAttempts: 4,
+				MinDelay:    10 * time.Microsecond,
+				MaxDelay:    4 * time.Minute,
+				Multiplier:  2,
+			}, func() (string, error) {
+				return "golem", nil
+			},
+		)
 		unused(result)
 		unused(err)
 	}
