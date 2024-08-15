@@ -78,6 +78,28 @@ func main() {
 		unused(err)
 	}
 
+	// golemhost oplog
+
+	{
+		golemhost.OpLogCommit(2)
+	}
+
+	{
+		var index golemhost.OpLogIndex
+		index = golemhost.MarkBeginOperation()
+		golemhost.MarkEndOperation(index)
+	}
+
+	{
+		var result string
+		var err error
+		result, err = golemhost.Atomically(func() (string, error) {
+			return "hello", nil
+		})
+		unused(result)
+		unused(err)
+	}
+
 	// golemhost persistence
 
 	{
