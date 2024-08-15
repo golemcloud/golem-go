@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	stdhttp "net/http"
 	"time"
 
 	"github.com/golemcloud/golem-go/golemhost"
+	"github.com/golemcloud/golem-go/golemhost/transaction"
 	"github.com/golemcloud/golem-go/net/http"
 	"github.com/golemcloud/golem-go/os"
 	"github.com/golemcloud/golem-go/std"
@@ -20,7 +22,6 @@ func main() {
 		stdhttp.DefaultClient.Transport = &http.WasiHttpTransport{}
 	}
 
-	// net/http
 	{
 		http.InitStdDefaultClientTransport()
 	}
@@ -155,6 +156,81 @@ func main() {
 				return "golem", nil
 			},
 		)
+		unused(result)
+		unused(err)
+	}
+
+	// golemhost transaction - fallible
+	{
+		type Entity struct {
+			ID string
+		}
+
+		createEntity := func(stepID int64) (Entity, error) {
+			return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
+		}
+
+		revertCreateEntity := func(entity Entity, stepID int64) error {
+			fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
+			return nil
+		}
+
+		type Result struct {
+			entity1 Entity
+			entity2 Entity
+		}
+		var result Result
+		var err error
+		result, err = transaction.WithFallible(func(tx transaction.Fallible) (Result, error) {
+			entity1, err := transaction.ExecuteFallibleStep(tx, createEntity, revertCreateEntity, 1)
+			if err != nil {
+				return Result{}, err
+			}
+
+			entity2, err := transaction.ExecuteFallibleStep(tx, createEntity, revertCreateEntity, 2)
+			if err != nil {
+				return Result{}, err
+			}
+
+			return Result{
+				entity1: entity1,
+				entity2: entity2,
+			}, nil
+		})
+		unused(result)
+		unused(err)
+	}
+
+	// golemhost transaction - infallible
+	{
+		type Entity struct {
+			ID string
+		}
+
+		createEntity := func(stepID int64) (Entity, error) {
+			return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
+		}
+
+		revertCreateEntity := func(entity Entity, stepID int64) error {
+			fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
+			return nil
+		}
+
+		type Result struct {
+			entity1 Entity
+			entity2 Entity
+		}
+		var result Result
+		var err error
+		result, err = transaction.WithInfallible(func(tx transaction.Infallible) (Result, error) {
+			entity1 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 1)
+			entity2 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 2)
+
+			return Result{
+				entity1: entity1,
+				entity2: entity2,
+			}, nil
+		})
 		unused(result)
 		unused(err)
 	}
