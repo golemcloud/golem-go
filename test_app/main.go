@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	stdhttp "net/http"
 	"time"
 
@@ -126,6 +127,28 @@ func main() {
 		unused(err)
 	}
 
+	// golemhost promise
+	{
+		var promiseID golemhost.PromiseID
+		promiseID = golemhost.NewPromise()
+
+		golemhost.DeletePromise(promiseID)
+
+		var bs []byte
+		bs = golemhost.AwaitPromise(promiseID)
+
+		var err error
+		err = golemhost.AwaitPromiseJSON(promiseID, nil)
+
+		var ok bool
+		ok = golemhost.CompletePromise(promiseID, bs)
+
+		ok, err = golemhost.CompletePromiseJSON(promiseID, nil)
+
+		unused(err)
+		unused(ok)
+	}
+
 	// golemhost retrypolicy
 
 	{
@@ -160,7 +183,24 @@ func main() {
 		unused(err)
 	}
 
-	// golemhost transaction - fallible
+	// golemhost worker
+
+	{
+		var metadata golemhost.WorkerMetadata
+		metadata = golemhost.GetSelfMetadata()
+		unused(metadata)
+	}
+
+	{
+		var metadata *golemhost.WorkerMetadata
+		metadata = golemhost.GetWorkerMetadata(golemhost.WorkerID{
+			ComponentID: golemhost.ComponentID(uuid.New()),
+			WorkerName:  "test-name",
+		})
+		unused(metadata)
+	}
+
+	// golemhost/transaction - fallible
 	{
 		var result Result
 		var err error
@@ -184,7 +224,7 @@ func main() {
 		unused(err)
 	}
 
-	// golemhost transaction - infallible
+	// golemhost/transaction - infallible
 	{
 		var result Result
 		result = transaction.WithInfallible(func(tx transaction.Infallible) Result {

@@ -6,7 +6,7 @@ import (
 	"github.com/golemcloud/golem-go/binding"
 )
 
-type PersistenceLevel binding.GolemApi0_2_0_HostPersistenceLevelKind
+type PersistenceLevel int
 
 const (
 	PersistenceLevelPersistNothing PersistenceLevel = iota
@@ -23,11 +23,11 @@ func newPersistenceLevel(level binding.GolemApi0_2_0_HostPersistenceLevel) Persi
 	case binding.GolemApi0_2_0_HostPersistenceLevelKindSmart:
 		return PersistenceLevelSmart
 	default:
-		panic(fmt.Sprintf("newPersistenceLevel: illegal persistence level: %d", level))
+		panic(fmt.Sprintf("newPersistenceLevel: unhandled persistence level: %d", level))
 	}
 }
 
-func (level PersistenceLevel) toBindingLevel() binding.GolemApi0_2_0_HostPersistenceLevel {
+func (level PersistenceLevel) toBinding() binding.GolemApi0_2_0_HostPersistenceLevel {
 	switch level {
 	case PersistenceLevelPersistNothing:
 		return binding.GolemApi0_2_0_HostPersistenceLevelPersistNothing()
@@ -36,12 +36,12 @@ func (level PersistenceLevel) toBindingLevel() binding.GolemApi0_2_0_HostPersist
 	case PersistenceLevelSmart:
 		return binding.GolemApi0_2_0_HostPersistenceLevelSmart()
 	default:
-		panic(fmt.Sprintf("toBindingLevel: illegal persistence level: %d", level))
+		panic(fmt.Sprintf("toBinding: unhandled persistence level: %d", level))
 	}
 }
 
 func SetPersistenceLevel(level PersistenceLevel) {
-	binding.GolemApi0_2_0_HostSetOplogPersistenceLevel(level.toBindingLevel())
+	binding.GolemApi0_2_0_HostSetOplogPersistenceLevel(level.toBinding())
 }
 
 func GetPersistenceLevel() PersistenceLevel {
