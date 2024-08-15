@@ -5,14 +5,14 @@ import (
 	"github.com/golemcloud/golem-go/os"
 )
 
-type Modules struct {
-	Os   bool
-	Http bool
+type Packages struct {
+	Os      bool
+	NetHttp bool
 }
 
-// Init optionally initializes standard lib's modules with the WASI environment and wrappers
-func Init(modules Modules) {
-	if modules.Http {
+// Init optionally initializes standard lib's packages with the WASI environment and wrappers
+func Init(modules Packages) {
+	if modules.NetHttp {
 		http.InitStd()
 	}
 

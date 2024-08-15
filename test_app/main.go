@@ -138,9 +138,9 @@ func main() {
 	// std init
 
 	{
-		std.Init(std.Modules{
-			Os:   true,
-			Http: true,
+		std.Init(std.Packages{
+			Os:      true,
+			NetHttp: true,
 		})
 	}
 }
