@@ -5,6 +5,7 @@ type Fallible interface {
 	fail(err error) error
 	isFailed() bool
 	error() error
+	finish()
 }
 
 type fallible struct {
@@ -46,6 +47,11 @@ func (tx *fallible) error() error {
 	return tx.err
 }
 
+func (tx *fallible) finish() {
+	// to prevent leaked transaction usage
+	tx.err = &FinishedError{}
+}
+
 func ExecuteFallibleStep[I, O any](
 	tx Fallible,
 	transactionStep func(I) (O, error),
@@ -65,6 +71,10 @@ func ExecuteFallibleStep[I, O any](
 	return output, nil
 }
 
+// WithFallible starts fallible transaction execution.
+// Inside f operations can be executed using ExecuteFallibleStep.
+// If any operation fails, all the already executed successful operation's compensation actions
+// are executed in reverse order and the transaction returns with a failure.
 func WithFallible[T any](f func(tx Fallible) (T, error)) (T, error) {
 	tx := &fallible{}
 	return f(tx)

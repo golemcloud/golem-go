@@ -54,3 +54,9 @@ func (e *CannotExecuteStepInFailedTransactionError) Error() string {
 func (e *CannotExecuteStepInFailedTransactionError) Unwrap() error {
 	return e.OriginalError
 }
+
+type FinishedError struct{}
+
+func (e *FinishedError) Error() string {
+	return "transaction finished"
+}

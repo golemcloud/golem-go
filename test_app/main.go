@@ -162,23 +162,6 @@ func main() {
 
 	// golemhost transaction - fallible
 	{
-		type Entity struct {
-			ID string
-		}
-
-		createEntity := func(stepID int64) (Entity, error) {
-			return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
-		}
-
-		revertCreateEntity := func(entity Entity, stepID int64) error {
-			fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
-			return nil
-		}
-
-		type Result struct {
-			entity1 Entity
-			entity2 Entity
-		}
 		var result Result
 		var err error
 		result, err = transaction.WithFallible(func(tx transaction.Fallible) (Result, error) {
@@ -203,36 +186,17 @@ func main() {
 
 	// golemhost transaction - infallible
 	{
-		type Entity struct {
-			ID string
-		}
-
-		createEntity := func(stepID int64) (Entity, error) {
-			return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
-		}
-
-		revertCreateEntity := func(entity Entity, stepID int64) error {
-			fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
-			return nil
-		}
-
-		type Result struct {
-			entity1 Entity
-			entity2 Entity
-		}
 		var result Result
-		var err error
-		result, err = transaction.WithInfallible(func(tx transaction.Infallible) (Result, error) {
+		result = transaction.WithInfallible(func(tx transaction.Infallible) Result {
 			entity1 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 1)
 			entity2 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 2)
 
 			return Result{
 				entity1: entity1,
 				entity2: entity2,
-			}, nil
+			}
 		})
 		unused(result)
-		unused(err)
 	}
 
 	// std init
@@ -243,6 +207,24 @@ func main() {
 			NetHttp: true,
 		})
 	}
+}
+
+type Entity struct {
+	ID string
+}
+
+type Result struct {
+	entity1 Entity
+	entity2 Entity
+}
+
+func createEntity(stepID int64) (Entity, error) {
+	return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
+}
+
+func revertCreateEntity(entity Entity, stepID int64) error {
+	fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
+	return nil
 }
 
 func unused[T any](_ T) {}
