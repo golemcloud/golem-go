@@ -204,13 +204,13 @@ func main() {
 	{
 		var result Result
 		var err error
-		result, err = transaction.WithFallible(func(tx transaction.Fallible) (Result, error) {
-			entity1, err := transaction.ExecuteFallible(tx, createEntity, revertCreateEntity, 1)
+		result, err = transaction.Fallible(func(tx transaction.FallibleTx) (Result, error) {
+			entity1, err := transaction.ExecuteFallible(tx, op, 1)
 			if err != nil {
 				return Result{}, err
 			}
 
-			entity2, err := transaction.ExecuteFallible(tx, createEntity, revertCreateEntity, 2)
+			entity2, err := transaction.ExecuteFallible(tx, op, 2)
 			if err != nil {
 				return Result{}, err
 			}
@@ -227,9 +227,9 @@ func main() {
 	// golemhost/transaction - infallible
 	{
 		var result Result
-		result = transaction.WithInfallible(func(tx transaction.Infallible) Result {
-			entity1 := transaction.ExecuteInfallible(tx, createEntity, revertCreateEntity, 1)
-			entity2 := transaction.ExecuteInfallible(tx, createEntity, revertCreateEntity, 2)
+		result = transaction.Infallible(func(tx transaction.InfallibleTx) Result {
+			entity1 := transaction.ExecuteInfallible(tx, op, 1)
+			entity2 := transaction.ExecuteInfallible(tx, op, 2)
 
 			return Result{
 				entity1: entity1,
@@ -266,5 +266,7 @@ func revertCreateEntity(stepID int64, entity Entity) error {
 	fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
 	return nil
 }
+
+var op = transaction.NewOperation(createEntity, revertCreateEntity)
 
 func unused[T any](_ T) {}

@@ -1,6 +1,6 @@
 package transaction
 
-type Fallible interface {
+type FallibleTx interface {
 	addCompensationStep(compensationStep func() error)
 	fail(err error) error
 	isFailed() bool
@@ -52,30 +52,25 @@ func (tx *fallible) finish() {
 	tx.err = &FinishedError{}
 }
 
-func ExecuteFallible[I, O any](
-	tx Fallible,
-	execute func(I) (O, error),
-	compensate func(I, O) error,
-	input I,
-) (O, error) {
+func ExecuteFallible[I, O any](tx FallibleTx, op Operation[I, O], input I) (O, error) {
 	if tx.isFailed() {
 		return *new(O), &CannotExecuteStepInFailedTransactionError{OriginalError: tx.error()}
 	}
 
-	output, err := execute(input)
+	output, err := op.Execute(input)
 	if err != nil {
 		return *new(O), tx.fail(err)
 	}
 
-	tx.addCompensationStep(func() error { return compensate(input, output) })
+	tx.addCompensationStep(func() error { return op.Compensate(input, output) })
 	return output, nil
 }
 
-// WithFallible starts fallible transaction execution.
+// Fallible starts fallible transaction execution.
 // Inside f operations can be executed using ExecuteFallible.
 // If any operation fails, all the already executed successful operation's compensation actions
 // are executed in reverse order and the transaction returns with a failure.
-func WithFallible[T any](f func(tx Fallible) (T, error)) (T, error) {
+func Fallible[T any](f func(tx FallibleTx) (T, error)) (T, error) {
 	tx := &fallible{}
 	return f(tx)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/golemcloud/golem-go/golemhost"
 )
 
-type Infallible interface {
+type InfallibleTx interface {
 	addCompensationStep(compensationStep func() error)
 	retry(err error)
 	finish()
@@ -61,30 +61,25 @@ func (tx *infallible) ensureNoError() {
 	}
 }
 
-func ExecuteInfallible[I, O any](
-	tx Infallible,
-	execute func(I) (O, error),
-	compensate func(I, O) error,
-	input I,
-) O {
+func ExecuteInfallible[I, O any](tx InfallibleTx, op Operation[I, O], input I) O {
 	tx.ensureNoError()
 
-	output, err := execute(input)
+	output, err := op.Execute(input)
 	if err != nil {
 		tx.retry(err)
 		panic("unreachable after retry")
 	}
 
-	tx.addCompensationStep(func() error { return compensate(input, output) })
+	tx.addCompensationStep(func() error { return op.Compensate(input, output) })
 	return output
 }
 
-// WithInfallible starts a transaction which retries in case of failure.
+// Infallible starts a transaction which retries in case of failure.
 // Inside f operations can be executed using ExecuteInfallible.
 // If any operation returns with a failure, all the already executed successful operation's
 // compensation actions are executed in reverse order and the transaction gets retried,
 // using Golem's active retry policy.
-func WithInfallible[T any](f func(tx Infallible) T) T {
+func Infallible[T any](f func(tx InfallibleTx) T) T {
 	beginOpLogIndex := golemhost.MarkBeginOperation()
 	defer golemhost.MarkEndOperation(beginOpLogIndex)
 	tx := newInfallible(binding.GolemApi0_2_0_HostOplogIndex(beginOpLogIndex))
