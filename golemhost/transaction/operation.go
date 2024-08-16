@@ -17,8 +17,10 @@ func (o *operation[I, O]) Execute(input I) (O, error) {
 func (o *operation[I, O]) Compensate(input I, output O) error {
 	return o.compensate(input, output)
 }
-
-func NewOperation[I any, O any](execute func(I) (O, error), compensate func(I, O) error) Operation[I, O] {
+func NewOperation[I any, O any](
+	execute func(I) (O, error),
+	compensate func(I, O) error,
+) Operation[I, O] {
 	return &operation[I, O]{
 		execute:    execute,
 		compensate: compensate,

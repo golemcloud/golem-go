@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	stdhttp "net/http"
 	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/golemcloud/golem-go/golemhost"
 	"github.com/golemcloud/golem-go/golemhost/transaction"
