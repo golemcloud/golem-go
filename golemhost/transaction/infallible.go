@@ -61,26 +61,26 @@ func (tx *infallible) ensureNoError() {
 	}
 }
 
-func ExecuteInfallibleStep[I, O any](
+func ExecuteInfallible[I, O any](
 	tx Infallible,
-	transactionStep func(I) (O, error),
-	compensationStep func(O, I) error,
+	execute func(I) (O, error),
+	compensate func(I, O) error,
 	input I,
 ) O {
 	tx.ensureNoError()
 
-	output, err := transactionStep(input)
+	output, err := execute(input)
 	if err != nil {
 		tx.retry(err)
 		panic("unreachable after retry")
 	}
 
-	tx.addCompensationStep(func() error { return compensationStep(output, input) })
+	tx.addCompensationStep(func() error { return compensate(input, output) })
 	return output
 }
 
 // WithInfallible starts a transaction which retries in case of failure.
-// Inside f operations can be executed using ExecuteInfallibleStep.
+// Inside f operations can be executed using ExecuteInfallible.
 // If any operation returns with a failure, all the already executed successful operation's
 // compensation actions are executed in reverse order and the transaction gets retried,
 // using Golem's active retry policy.

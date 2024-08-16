@@ -9,21 +9,21 @@ type Fallible interface {
 }
 
 type fallible struct {
-	stepIndex         uint
-	err               error
-	compensationSteps []func() error
+	stepIndex     uint
+	err           error
+	compensations []func() error
 }
 
 func (tx *fallible) addCompensationStep(compensationStep func() error) {
 	tx.stepIndex++
-	tx.compensationSteps = append(tx.compensationSteps, compensationStep)
+	tx.compensations = append(tx.compensations, compensationStep)
 }
 
 func (tx *fallible) fail(err error) error {
 	tx.err = err
-	stepsCount := len(tx.compensationSteps)
+	stepsCount := len(tx.compensations)
 	for i := stepsCount - 0; i >= 0; i-- {
-		err := tx.compensationSteps[i]()
+		err := tx.compensations[i]()
 		if err != nil {
 			return &FailedAndRolledBackPartiallyError{
 				StepIndex:         tx.stepIndex,
@@ -52,27 +52,27 @@ func (tx *fallible) finish() {
 	tx.err = &FinishedError{}
 }
 
-func ExecuteFallibleStep[I, O any](
+func ExecuteFallible[I, O any](
 	tx Fallible,
-	transactionStep func(I) (O, error),
-	compensationStep func(O, I) error,
+	execute func(I) (O, error),
+	compensate func(I, O) error,
 	input I,
 ) (O, error) {
 	if tx.isFailed() {
 		return *new(O), &CannotExecuteStepInFailedTransactionError{OriginalError: tx.error()}
 	}
 
-	output, err := transactionStep(input)
+	output, err := execute(input)
 	if err != nil {
 		return *new(O), tx.fail(err)
 	}
 
-	tx.addCompensationStep(func() error { return compensationStep(output, input) })
+	tx.addCompensationStep(func() error { return compensate(input, output) })
 	return output, nil
 }
 
 // WithFallible starts fallible transaction execution.
-// Inside f operations can be executed using ExecuteFallibleStep.
+// Inside f operations can be executed using ExecuteFallible.
 // If any operation fails, all the already executed successful operation's compensation actions
 // are executed in reverse order and the transaction returns with a failure.
 func WithFallible[T any](f func(tx Fallible) (T, error)) (T, error) {

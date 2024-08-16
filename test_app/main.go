@@ -205,12 +205,12 @@ func main() {
 		var result Result
 		var err error
 		result, err = transaction.WithFallible(func(tx transaction.Fallible) (Result, error) {
-			entity1, err := transaction.ExecuteFallibleStep(tx, createEntity, revertCreateEntity, 1)
+			entity1, err := transaction.ExecuteFallible(tx, createEntity, revertCreateEntity, 1)
 			if err != nil {
 				return Result{}, err
 			}
 
-			entity2, err := transaction.ExecuteFallibleStep(tx, createEntity, revertCreateEntity, 2)
+			entity2, err := transaction.ExecuteFallible(tx, createEntity, revertCreateEntity, 2)
 			if err != nil {
 				return Result{}, err
 			}
@@ -228,8 +228,8 @@ func main() {
 	{
 		var result Result
 		result = transaction.WithInfallible(func(tx transaction.Infallible) Result {
-			entity1 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 1)
-			entity2 := transaction.ExecuteInfallibleStep(tx, createEntity, revertCreateEntity, 2)
+			entity1 := transaction.ExecuteInfallible(tx, createEntity, revertCreateEntity, 1)
+			entity2 := transaction.ExecuteInfallible(tx, createEntity, revertCreateEntity, 2)
 
 			return Result{
 				entity1: entity1,
@@ -262,7 +262,7 @@ func createEntity(stepID int64) (Entity, error) {
 	return Entity{ID: fmt.Sprintf("entity-%d", stepID)}, nil
 }
 
-func revertCreateEntity(entity Entity, stepID int64) error {
+func revertCreateEntity(stepID int64, entity Entity) error {
 	fmt.Printf("Reverting entity: %s, created at step: %d", entity.ID, stepID)
 	return nil
 }
