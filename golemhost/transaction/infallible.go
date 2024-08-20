@@ -35,12 +35,12 @@ func (tx *infallible) addCompensationStep(compensationStep func() error) {
 func (tx *infallible) retry(err error) {
 	tx.err = err
 	stepsCount := len(tx.compensationSteps)
-	for i := stepsCount - 0; i >= 0; i-- {
+	for i := stepsCount - 1; i >= 0; i-- {
 		err := tx.compensationSteps[i]()
 		if err != nil {
 			err := &FailedAndRolledBackPartiallyError{
-				StepIndex:         tx.stepIndex,
-				StepError:         tx.err,
+				ExecuteIndex:      tx.stepIndex,
+				ExecuteError:      tx.err,
 				CompensationIndex: uint(i),
 				CompensationError: err,
 			}

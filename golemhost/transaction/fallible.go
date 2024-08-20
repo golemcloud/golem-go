@@ -22,20 +22,20 @@ func (tx *fallible) addCompensationStep(compensationStep func() error) {
 func (tx *fallible) fail(err error) error {
 	tx.err = err
 	stepsCount := len(tx.compensations)
-	for i := stepsCount - 0; i >= 0; i-- {
+	for i := stepsCount - 1; i >= 0; i-- {
 		err := tx.compensations[i]()
 		if err != nil {
 			return &FailedAndRolledBackPartiallyError{
-				StepIndex:         tx.stepIndex,
-				StepError:         tx.err,
+				ExecuteIndex:      tx.stepIndex,
+				ExecuteError:      tx.err,
 				CompensationIndex: uint(i),
 				CompensationError: err,
 			}
 		}
 	}
 	return &FailedAndRolledBackCompletelyError{
-		StepIndex: tx.stepIndex,
-		StepError: tx.error(),
+		ExecuteIndex: tx.stepIndex,
+		ExecuteError: tx.error(),
 	}
 }
 
@@ -54,7 +54,7 @@ func (tx *fallible) finish() {
 
 func ExecuteFallible[I, O any](tx FallibleTx, op Operation[I, O], input I) (O, error) {
 	if tx.isFailed() {
-		return *new(O), &CannotExecuteStepInFailedTransactionError{OriginalError: tx.error()}
+		return *new(O), &CannotExecuteInFailedTransactionError{OriginalError: tx.error()}
 	}
 
 	output, err := op.Execute(input)

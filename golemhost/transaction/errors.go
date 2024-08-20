@@ -3,55 +3,55 @@ package transaction
 import "fmt"
 
 type FailedAndRolledBackPartiallyError struct {
-	StepIndex         uint
-	StepError         error
+	ExecuteIndex      uint
+	ExecuteError      error
 	CompensationIndex uint
 	CompensationError error
 }
 
 func (e *FailedAndRolledBackPartiallyError) Error() string {
 	return fmt.Sprintf(
-		"fallible transaction failed and rolled back partially, step (%d) error: %s, compensation (%d) error: %s",
-		e.StepIndex,
-		e.StepError.Error(),
+		"fallible transaction failed and rolled back partially, execute (%d) error: %s, compensation (%d) error: %s",
+		e.ExecuteIndex,
+		e.ExecuteError.Error(),
 		e.CompensationIndex,
 		e.CompensationError.Error(),
 	)
 }
 
 func (e *FailedAndRolledBackPartiallyError) Unwrap() []error {
-	return []error{e.StepError, e.CompensationError}
+	return []error{e.ExecuteError, e.CompensationError}
 }
 
 type FailedAndRolledBackCompletelyError struct {
-	StepIndex uint
-	StepError error
+	ExecuteIndex uint
+	ExecuteError error
 }
 
 func (e *FailedAndRolledBackCompletelyError) Error() string {
 	return fmt.Sprintf(
-		"fallible transaction failed and rolled back completely, step (%d) error: %s",
-		e.StepIndex,
-		e.StepError.Error(),
+		"fallible transaction failed and rolled back completely, execute (%d) error: %s",
+		e.ExecuteIndex,
+		e.ExecuteError.Error(),
 	)
 }
 
 func (e *FailedAndRolledBackCompletelyError) Unwrap() error {
-	return e.StepError
+	return e.ExecuteError
 }
 
-type CannotExecuteStepInFailedTransactionError struct {
+type CannotExecuteInFailedTransactionError struct {
 	OriginalError error
 }
 
-func (e *CannotExecuteStepInFailedTransactionError) Error() string {
+func (e *CannotExecuteInFailedTransactionError) Error() string {
 	return fmt.Sprintf(
-		"cannot execute step in failed transaction, original error: %s",
+		"cannot execute in failed transaction, original error: %s",
 		e.OriginalError.Error(),
 	)
 }
 
-func (e *CannotExecuteStepInFailedTransactionError) Unwrap() error {
+func (e *CannotExecuteInFailedTransactionError) Unwrap() error {
 	return e.OriginalError
 }
 
