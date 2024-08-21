@@ -17,7 +17,7 @@ const (
 	WorkerStatusExited
 )
 
-func newWorkerStatus(status binding.GolemApi0_2_0_HostWorkerStatus) WorkerStatus {
+func NewWorkerStatus(status binding.GolemApi0_2_0_HostWorkerStatus) WorkerStatus {
 	switch status.Kind() {
 	case binding.GolemApi0_2_0_HostWorkerStatusKindRunning:
 		return WorkerStatusRunning
@@ -34,11 +34,11 @@ func newWorkerStatus(status binding.GolemApi0_2_0_HostWorkerStatus) WorkerStatus
 	case binding.GolemApi0_2_0_HostWorkerStatusKindExited:
 		return WorkerStatusExited
 	default:
-		panic(fmt.Sprintf("newWorkerStatus: unhandled status: %d", status.Kind()))
+		panic(fmt.Sprintf("NewWorkerStatus: unhandled status: %d", status.Kind()))
 	}
 }
 
-func (ws WorkerStatus) toBinding() binding.GolemApi0_2_0_HostWorkerStatus {
+func (ws WorkerStatus) ToBinding() binding.GolemApi0_2_0_HostWorkerStatus {
 	switch ws {
 	case WorkerStatusRunning:
 		return binding.GolemApi0_2_0_HostWorkerStatusRunning()
@@ -64,16 +64,16 @@ type WorkerID struct {
 	WorkerName  string
 }
 
-func newWorkerID(workerID binding.GolemApi0_2_0_HostWorkerId) WorkerID {
+func NewWorkerID(workerID binding.GolemApi0_2_0_HostWorkerId) WorkerID {
 	return WorkerID{
-		ComponentID: newComponentID(workerID.ComponentId),
+		ComponentID: NewComponentID(workerID.ComponentId),
 		WorkerName:  workerID.WorkerName,
 	}
 }
 
-func (workerID WorkerID) toBinding() binding.GolemApi0_2_0_HostWorkerId {
+func (workerID WorkerID) ToBinding() binding.GolemApi0_2_0_HostWorkerId {
 	return binding.GolemApi0_2_0_HostWorkerId{
-		ComponentId: workerID.ComponentID.toBinding(),
+		ComponentId: workerID.ComponentID.ToBinding(),
 		WorkerName:  workerID.WorkerName,
 	}
 }
@@ -92,7 +92,7 @@ type WorkerMetadata struct {
 	RetryCount       uint64
 }
 
-func newWorkerMetadata(metadata binding.GolemApi0_2_0_HostWorkerMetadata) WorkerMetadata {
+func NewWorkerMetadata(metadata binding.GolemApi0_2_0_HostWorkerMetadata) WorkerMetadata {
 	envVars := make([]WorkerMetadataEnvVar, len(metadata.Env))
 	for i := range metadata.Env {
 		envVars[i] = WorkerMetadataEnvVar{
@@ -102,24 +102,24 @@ func newWorkerMetadata(metadata binding.GolemApi0_2_0_HostWorkerMetadata) Worker
 	}
 
 	return WorkerMetadata{
-		WorkerId:         newWorkerID(metadata.WorkerId),
+		WorkerId:         NewWorkerID(metadata.WorkerId),
 		Args:             metadata.Args,
 		Env:              envVars,
-		Status:           newWorkerStatus(metadata.Status),
+		Status:           NewWorkerStatus(metadata.Status),
 		ComponentVersion: metadata.ComponentVersion,
 		RetryCount:       metadata.RetryCount,
 	}
 }
 
 func GetSelfMetadata() WorkerMetadata {
-	return newWorkerMetadata(binding.GolemApi0_2_0_HostGetSelfMetadata())
+	return NewWorkerMetadata(binding.GolemApi0_2_0_HostGetSelfMetadata())
 }
 
 func GetWorkerMetadata(workerID WorkerID) *WorkerMetadata {
-	bindingMetadata := binding.GolemApi0_2_0_HostGetWorkerMetadata(workerID.toBinding())
+	bindingMetadata := binding.GolemApi0_2_0_HostGetWorkerMetadata(workerID.ToBinding())
 	if bindingMetadata.IsNone() {
 		return nil
 	}
-	metadata := newWorkerMetadata(bindingMetadata.Unwrap())
+	metadata := NewWorkerMetadata(bindingMetadata.Unwrap())
 	return &metadata
 }

@@ -14,7 +14,7 @@ const (
 	PersistenceLevelSmart
 )
 
-func newPersistenceLevel(level binding.GolemApi0_2_0_HostPersistenceLevel) PersistenceLevel {
+func NewPersistenceLevel(level binding.GolemApi0_2_0_HostPersistenceLevel) PersistenceLevel {
 	switch level.Kind() {
 	case binding.GolemApi0_2_0_HostPersistenceLevelKindPersistRemoteSideEffects:
 		return PersistenceLevelPersistRemoteSideEffects
@@ -23,11 +23,11 @@ func newPersistenceLevel(level binding.GolemApi0_2_0_HostPersistenceLevel) Persi
 	case binding.GolemApi0_2_0_HostPersistenceLevelKindSmart:
 		return PersistenceLevelSmart
 	default:
-		panic(fmt.Sprintf("newPersistenceLevel: unhandled persistence level: %d", level))
+		panic(fmt.Sprintf("NewPersistenceLevel: unhandled persistence level: %d", level))
 	}
 }
 
-func (level PersistenceLevel) toBinding() binding.GolemApi0_2_0_HostPersistenceLevel {
+func (level PersistenceLevel) ToBinding() binding.GolemApi0_2_0_HostPersistenceLevel {
 	switch level {
 	case PersistenceLevelPersistNothing:
 		return binding.GolemApi0_2_0_HostPersistenceLevelPersistNothing()
@@ -41,11 +41,11 @@ func (level PersistenceLevel) toBinding() binding.GolemApi0_2_0_HostPersistenceL
 }
 
 func SetPersistenceLevel(level PersistenceLevel) {
-	binding.GolemApi0_2_0_HostSetOplogPersistenceLevel(level.toBinding())
+	binding.GolemApi0_2_0_HostSetOplogPersistenceLevel(level.ToBinding())
 }
 
 func GetPersistenceLevel() PersistenceLevel {
-	return newPersistenceLevel(binding.GolemApi0_2_0_HostGetOplogPersistenceLevel())
+	return NewPersistenceLevel(binding.GolemApi0_2_0_HostGetOplogPersistenceLevel())
 }
 
 func WithPersistenceLevel[T any](level PersistenceLevel, f func() (T, error)) (T, error) {
