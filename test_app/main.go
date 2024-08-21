@@ -8,10 +8,10 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/golemcloud/golem-go/golemhost"
-	"github.com/golemcloud/golem-go/golemhost/ptr"
 	"github.com/golemcloud/golem-go/golemhost/transaction"
 	"github.com/golemcloud/golem-go/net/http"
 	"github.com/golemcloud/golem-go/os"
+	"github.com/golemcloud/golem-go/ptr"
 	"github.com/golemcloud/golem-go/std"
 )
 
@@ -203,7 +203,8 @@ func main() {
 	}
 
 	{
-		golemhost.GetWorkers(
+		var results []golemhost.WorkerMetadata
+		results = golemhost.GetWorkers(
 			golemhost.ComponentID(uuid.New()),
 			&golemhost.WorkerAnyFilter{
 				Filters: []golemhost.WorkerAllFilter{
@@ -237,6 +238,7 @@ func main() {
 				},
 			},
 		)
+		unused(results)
 	}
 
 	{
