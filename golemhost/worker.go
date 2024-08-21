@@ -131,6 +131,8 @@ func GetWorkerMetadata(workerID WorkerID) *WorkerMetadata {
 	return &metadata
 }
 
+// GetWorkers enumerates all the workers optionally matching the provided filter
+// NOTE: Enumerating workers of a component is a slow operation and should not be used as part of the application logic.
 func GetWorkers(componentID ComponentID, filter *WorkerAnyFilter) []WorkerMetadata {
 	bindingFilter := binding.None[binding.GolemApi0_2_0_HostWorkerAnyFilter]()
 	if filter == nil {
