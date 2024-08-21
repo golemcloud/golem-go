@@ -36,7 +36,7 @@ func (level PersistenceLevel) ToBinding() binding.GolemApi0_2_0_HostPersistenceL
 	case PersistenceLevelSmart:
 		return binding.GolemApi0_2_0_HostPersistenceLevelSmart()
 	default:
-		panic(fmt.Sprintf("toBinding: unhandled persistence level: %d", level))
+		panic(fmt.Sprintf("ToBinding: unhandled persistence level: %d", level))
 	}
 }
 
