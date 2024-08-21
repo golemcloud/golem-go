@@ -2,6 +2,9 @@ package golemhost
 
 import (
 	"fmt"
+
+	"github.com/google/uuid"
+
 	"github.com/golemcloud/golem-go/binding"
 )
 
@@ -55,7 +58,7 @@ func (ws WorkerStatus) ToBinding() binding.GolemApi0_2_0_HostWorkerStatus {
 	case WorkerStatusExited:
 		return binding.GolemApi0_2_0_HostWorkerStatusExited()
 	default:
-		panic(fmt.Sprintf("toBinding: unhandled status: %d", ws))
+		panic(fmt.Sprintf("ToBinding: unhandled status: %d", ws))
 	}
 }
 
@@ -115,6 +118,10 @@ func GetSelfMetadata() WorkerMetadata {
 	return NewWorkerMetadata(binding.GolemApi0_2_0_HostGetSelfMetadata())
 }
 
+func GetSelfURI(functionName string) string {
+	return binding.GolemApi0_2_0_HostGetSelfUri(functionName).Value
+}
+
 func GetWorkerMetadata(workerID WorkerID) *WorkerMetadata {
 	bindingMetadata := binding.GolemApi0_2_0_HostGetWorkerMetadata(workerID.ToBinding())
 	if bindingMetadata.IsNone() {
@@ -122,4 +129,53 @@ func GetWorkerMetadata(workerID WorkerID) *WorkerMetadata {
 	}
 	metadata := NewWorkerMetadata(bindingMetadata.Unwrap())
 	return &metadata
+}
+
+func GetWorkers(componentID ComponentID, filter *WorkerAnyFilter) []WorkerMetadata {
+	bindingFilter := binding.None[binding.GolemApi0_2_0_HostWorkerAnyFilter]()
+	if filter == nil {
+		bindingFilter.Set(filter.ToBinding())
+	}
+
+	iter := binding.NewGetWorkers(componentID.ToBinding(), bindingFilter, true)
+
+	var results []WorkerMetadata
+	for {
+		nextResults := iter.GetNext()
+		if nextResults.IsNone() {
+			break
+		}
+
+		for _, metadata := range nextResults.Unwrap() {
+			results = append(results, NewWorkerMetadata(metadata))
+		}
+	}
+
+	return results
+}
+
+type UpdateMode int
+
+const (
+	UpdateModeAutomatic UpdateMode = iota
+	UpdateModeSnapshotBased
+)
+
+func (updateMode UpdateMode) ToBinding() binding.GolemApi0_2_0_HostUpdateMode {
+	switch updateMode {
+	case UpdateModeAutomatic:
+		return binding.GolemApi0_2_0_HostUpdateModeAutomatic()
+	case UpdateModeSnapshotBased:
+		return binding.GolemApi0_2_0_HostUpdateModeSnapshotBased()
+	default:
+		panic(fmt.Sprintf("ToBinding: unhandled update mode: %d", updateMode))
+	}
+}
+
+func UpdateWorker(workerID WorkerID, targetVersion uint64, updateMode UpdateMode) {
+	binding.GolemApi0_2_0_HostUpdateWorker(workerID.ToBinding(), targetVersion, updateMode.ToBinding())
+}
+
+func GenerateIdempotencyKey() uuid.UUID {
+	return NewUUID(binding.GolemApi0_2_0_HostGenerateIdempotencyKey())
 }

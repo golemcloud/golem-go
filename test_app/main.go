@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/golemcloud/golem-go/golemhost"
+	"github.com/golemcloud/golem-go/golemhost/ptr"
 	"github.com/golemcloud/golem-go/golemhost/transaction"
 	"github.com/golemcloud/golem-go/net/http"
 	"github.com/golemcloud/golem-go/os"
@@ -199,6 +200,66 @@ func main() {
 			WorkerName:  "test-name",
 		})
 		unused(metadata)
+	}
+
+	{
+		golemhost.GetWorkers(
+			golemhost.ComponentID(uuid.New()),
+			&golemhost.WorkerAnyFilter{
+				Filters: []golemhost.WorkerAllFilter{
+					{
+						Filters: []golemhost.WorkerFilter{
+							{
+								Name:           ptr.New("worker name"),
+								NameComparator: golemhost.StringFilterComparatorLike,
+							},
+							{
+								CreatedAt:           ptr.New(time.Now()),
+								CreatedAtComparator: golemhost.FilterComparatorLessEqual,
+							},
+							{
+								Version:           ptr.New[uint64](10),
+								VersionComparator: golemhost.FilterComparatorNotEqual,
+							},
+							{
+								Status:           ptr.New[golemhost.WorkerStatus](golemhost.WorkerStatusFailed),
+								StatusComparator: golemhost.FilterComparatorEqual,
+							},
+							{
+								Env: &golemhost.WorkerEnvFilter{
+									Name:  "ENV_VAR",
+									Value: "ENV_VAR_VALUE",
+								},
+								EnvComparator: golemhost.StringFilterComparatorEqual,
+							},
+						},
+					},
+				},
+			},
+		)
+	}
+
+	{
+		golemhost.UpdateWorker(
+			golemhost.WorkerID{
+				ComponentID: golemhost.ComponentID(uuid.New()),
+				WorkerName:  "worker-name",
+			},
+			20,
+			golemhost.UpdateModeAutomatic,
+		)
+	}
+
+	{
+		var result string
+		result = golemhost.GetSelfURI("get")
+		unused(result)
+	}
+
+	{
+		var result uuid.UUID
+		result = golemhost.GenerateIdempotencyKey()
+		unused(result)
 	}
 
 	// golemhost/transaction - fallible
