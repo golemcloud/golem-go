@@ -13,7 +13,7 @@ type RetryPolicy struct {
 	Multiplier  float64
 }
 
-func newRetryPolicy(policy binding.GolemApi0_2_0_HostRetryPolicy) RetryPolicy {
+func NewRetryPolicy(policy binding.GolemApi0_2_0_HostRetryPolicy) RetryPolicy {
 	return RetryPolicy{
 		MaxAttempts: policy.MaxAttempts,
 		MinDelay:    time.Duration(policy.MinDelay) * time.Nanosecond,
@@ -22,7 +22,7 @@ func newRetryPolicy(policy binding.GolemApi0_2_0_HostRetryPolicy) RetryPolicy {
 	}
 }
 
-func (policy RetryPolicy) toBinding() binding.GolemApi0_2_0_HostRetryPolicy {
+func (policy RetryPolicy) ToBinding() binding.GolemApi0_2_0_HostRetryPolicy {
 	return binding.GolemApi0_2_0_HostRetryPolicy{
 		MaxAttempts: policy.MaxAttempts,
 		MinDelay:    binding.GolemApi0_2_0_HostDuration(policy.MinDelay.Nanoseconds()),
@@ -32,11 +32,11 @@ func (policy RetryPolicy) toBinding() binding.GolemApi0_2_0_HostRetryPolicy {
 }
 
 func GetRetryPolicy() RetryPolicy {
-	return newRetryPolicy(binding.GolemApi0_2_0_HostGetRetryPolicy())
+	return NewRetryPolicy(binding.GolemApi0_2_0_HostGetRetryPolicy())
 }
 
 func SetRetryPolicy(policy RetryPolicy) {
-	binding.GolemApi0_2_0_HostSetRetryPolicy(policy.toBinding())
+	binding.GolemApi0_2_0_HostSetRetryPolicy(policy.ToBinding())
 }
 
 func WithRetryPolicy[T any](policy RetryPolicy, f func() (T, error)) (T, error) {
