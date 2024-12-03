@@ -253,12 +253,6 @@ func main() {
 	}
 
 	{
-		var result string
-		result = golemhost.GetSelfURI("get")
-		unused(result)
-	}
-
-	{
 		var result uuid.UUID
 		result = golemhost.GenerateIdempotencyKey()
 		unused(result)

@@ -8,12 +8,12 @@ import (
 
 type ComponentID uuid.UUID
 
-func NewComponentID(componentID binding.GolemApi0_2_0_HostComponentId) ComponentID {
+func NewComponentID(componentID binding.GolemApi1_1_0_HostComponentId) ComponentID {
 	return ComponentID(NewUUID(componentID.Uuid))
 }
 
-func (componentID ComponentID) ToBinding() binding.GolemApi0_2_0_HostComponentId {
-	return binding.GolemApi0_2_0_HostComponentId{
+func (componentID ComponentID) ToBinding() binding.GolemApi1_1_0_HostComponentId {
+	return binding.GolemApi1_1_0_HostComponentId{
 		Uuid: UUIDToBinding(uuid.UUID(componentID)),
 	}
 }

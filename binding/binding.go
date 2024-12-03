@@ -2194,421 +2194,426 @@ func WasiClocks0_2_0_MonotonicClockSubscribeDuration(when WasiClocks0_2_0_Monoto
 	return lift_ret
 }
 
-// Import functions from golem:api/host@0.2.0
-type GolemApi0_2_0_HostUri = GolemRpc0_1_0_TypesUri
-type GolemApi0_2_0_HostDuration = WasiClocks0_2_0_MonotonicClockDuration
-type GolemApi0_2_0_HostOplogIndex = uint64
-type GolemApi0_2_0_HostComponentVersion = uint64
-type GolemApi0_2_0_HostUuid struct {
+// Import functions from golem:api/host@1.1.0
+type GolemApi1_1_0_HostUri = GolemRpc0_1_0_TypesUri
+type GolemApi1_1_0_HostDuration = WasiClocks0_2_0_MonotonicClockDuration
+type GolemApi1_1_0_HostOplogIndex = uint64
+type GolemApi1_1_0_HostComponentVersion = uint64
+type GolemApi1_1_0_HostUuid struct {
 	HighBits uint64
 	LowBits  uint64
 }
 
-type GolemApi0_2_0_HostComponentId struct {
-	Uuid GolemApi0_2_0_HostUuid
+type GolemApi1_1_0_HostComponentId struct {
+	Uuid GolemApi1_1_0_HostUuid
 }
 
-type GolemApi0_2_0_HostWorkerId struct {
-	ComponentId GolemApi0_2_0_HostComponentId
+type GolemApi1_1_0_HostWorkerId struct {
+	ComponentId GolemApi1_1_0_HostComponentId
 	WorkerName  string
 }
 
-type GolemApi0_2_0_HostPromiseId struct {
-	WorkerId GolemApi0_2_0_HostWorkerId
-	OplogIdx GolemApi0_2_0_HostOplogIndex
+type GolemApi1_1_0_HostPromiseId struct {
+	WorkerId GolemApi1_1_0_HostWorkerId
+	OplogIdx GolemApi1_1_0_HostOplogIndex
 }
 
-type GolemApi0_2_0_HostRetryPolicy struct {
-	MaxAttempts uint32
-	MinDelay    GolemApi0_2_0_HostDuration
-	MaxDelay    GolemApi0_2_0_HostDuration
-	Multiplier  float64
+type GolemApi1_1_0_HostAccountId struct {
+	Value string
 }
 
-type GolemApi0_2_0_HostPersistenceLevelKind int
+type GolemApi1_1_0_HostRetryPolicy struct {
+	MaxAttempts     uint32
+	MinDelay        GolemApi1_1_0_HostDuration
+	MaxDelay        GolemApi1_1_0_HostDuration
+	Multiplier      float64
+	MaxJitterFactor Option[float64]
+}
+
+type GolemApi1_1_0_HostPersistenceLevelKind int
 
 const (
-	GolemApi0_2_0_HostPersistenceLevelKindPersistNothing GolemApi0_2_0_HostPersistenceLevelKind = iota
-	GolemApi0_2_0_HostPersistenceLevelKindPersistRemoteSideEffects
-	GolemApi0_2_0_HostPersistenceLevelKindSmart
+	GolemApi1_1_0_HostPersistenceLevelKindPersistNothing GolemApi1_1_0_HostPersistenceLevelKind = iota
+	GolemApi1_1_0_HostPersistenceLevelKindPersistRemoteSideEffects
+	GolemApi1_1_0_HostPersistenceLevelKindSmart
 )
 
-type GolemApi0_2_0_HostPersistenceLevel struct {
-	kind GolemApi0_2_0_HostPersistenceLevelKind
+type GolemApi1_1_0_HostPersistenceLevel struct {
+	kind GolemApi1_1_0_HostPersistenceLevelKind
 	val  any
 }
 
-func (n GolemApi0_2_0_HostPersistenceLevel) Kind() GolemApi0_2_0_HostPersistenceLevelKind {
+func (n GolemApi1_1_0_HostPersistenceLevel) Kind() GolemApi1_1_0_HostPersistenceLevelKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostPersistenceLevelPersistNothing() GolemApi0_2_0_HostPersistenceLevel {
-	return GolemApi0_2_0_HostPersistenceLevel{kind: GolemApi0_2_0_HostPersistenceLevelKindPersistNothing}
+func GolemApi1_1_0_HostPersistenceLevelPersistNothing() GolemApi1_1_0_HostPersistenceLevel {
+	return GolemApi1_1_0_HostPersistenceLevel{kind: GolemApi1_1_0_HostPersistenceLevelKindPersistNothing}
 }
 
-func GolemApi0_2_0_HostPersistenceLevelPersistRemoteSideEffects() GolemApi0_2_0_HostPersistenceLevel {
-	return GolemApi0_2_0_HostPersistenceLevel{kind: GolemApi0_2_0_HostPersistenceLevelKindPersistRemoteSideEffects}
+func GolemApi1_1_0_HostPersistenceLevelPersistRemoteSideEffects() GolemApi1_1_0_HostPersistenceLevel {
+	return GolemApi1_1_0_HostPersistenceLevel{kind: GolemApi1_1_0_HostPersistenceLevelKindPersistRemoteSideEffects}
 }
 
-func GolemApi0_2_0_HostPersistenceLevelSmart() GolemApi0_2_0_HostPersistenceLevel {
-	return GolemApi0_2_0_HostPersistenceLevel{kind: GolemApi0_2_0_HostPersistenceLevelKindSmart}
+func GolemApi1_1_0_HostPersistenceLevelSmart() GolemApi1_1_0_HostPersistenceLevel {
+	return GolemApi1_1_0_HostPersistenceLevel{kind: GolemApi1_1_0_HostPersistenceLevelKindSmart}
 }
 
-type GolemApi0_2_0_HostUpdateModeKind int
+type GolemApi1_1_0_HostUpdateModeKind int
 
 const (
-	GolemApi0_2_0_HostUpdateModeKindAutomatic GolemApi0_2_0_HostUpdateModeKind = iota
-	GolemApi0_2_0_HostUpdateModeKindSnapshotBased
+	GolemApi1_1_0_HostUpdateModeKindAutomatic GolemApi1_1_0_HostUpdateModeKind = iota
+	GolemApi1_1_0_HostUpdateModeKindSnapshotBased
 )
 
-type GolemApi0_2_0_HostUpdateMode struct {
-	kind GolemApi0_2_0_HostUpdateModeKind
+type GolemApi1_1_0_HostUpdateMode struct {
+	kind GolemApi1_1_0_HostUpdateModeKind
 }
 
-func (n GolemApi0_2_0_HostUpdateMode) Kind() GolemApi0_2_0_HostUpdateModeKind {
+func (n GolemApi1_1_0_HostUpdateMode) Kind() GolemApi1_1_0_HostUpdateModeKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostUpdateModeAutomatic() GolemApi0_2_0_HostUpdateMode {
-	return GolemApi0_2_0_HostUpdateMode{kind: GolemApi0_2_0_HostUpdateModeKindAutomatic}
+func GolemApi1_1_0_HostUpdateModeAutomatic() GolemApi1_1_0_HostUpdateMode {
+	return GolemApi1_1_0_HostUpdateMode{kind: GolemApi1_1_0_HostUpdateModeKindAutomatic}
 }
 
-func GolemApi0_2_0_HostUpdateModeSnapshotBased() GolemApi0_2_0_HostUpdateMode {
-	return GolemApi0_2_0_HostUpdateMode{kind: GolemApi0_2_0_HostUpdateModeKindSnapshotBased}
+func GolemApi1_1_0_HostUpdateModeSnapshotBased() GolemApi1_1_0_HostUpdateMode {
+	return GolemApi1_1_0_HostUpdateMode{kind: GolemApi1_1_0_HostUpdateModeKindSnapshotBased}
 }
 
-type GolemApi0_2_0_HostFilterComparatorKind int
+type GolemApi1_1_0_HostFilterComparatorKind int
 
 const (
-	GolemApi0_2_0_HostFilterComparatorKindEqual GolemApi0_2_0_HostFilterComparatorKind = iota
-	GolemApi0_2_0_HostFilterComparatorKindNotEqual
-	GolemApi0_2_0_HostFilterComparatorKindGreaterEqual
-	GolemApi0_2_0_HostFilterComparatorKindGreater
-	GolemApi0_2_0_HostFilterComparatorKindLessEqual
-	GolemApi0_2_0_HostFilterComparatorKindLess
+	GolemApi1_1_0_HostFilterComparatorKindEqual GolemApi1_1_0_HostFilterComparatorKind = iota
+	GolemApi1_1_0_HostFilterComparatorKindNotEqual
+	GolemApi1_1_0_HostFilterComparatorKindGreaterEqual
+	GolemApi1_1_0_HostFilterComparatorKindGreater
+	GolemApi1_1_0_HostFilterComparatorKindLessEqual
+	GolemApi1_1_0_HostFilterComparatorKindLess
 )
 
-type GolemApi0_2_0_HostFilterComparator struct {
-	kind GolemApi0_2_0_HostFilterComparatorKind
+type GolemApi1_1_0_HostFilterComparator struct {
+	kind GolemApi1_1_0_HostFilterComparatorKind
 }
 
-func (n GolemApi0_2_0_HostFilterComparator) Kind() GolemApi0_2_0_HostFilterComparatorKind {
+func (n GolemApi1_1_0_HostFilterComparator) Kind() GolemApi1_1_0_HostFilterComparatorKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostFilterComparatorEqual() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindEqual}
+func GolemApi1_1_0_HostFilterComparatorEqual() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindEqual}
 }
 
-func GolemApi0_2_0_HostFilterComparatorNotEqual() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindNotEqual}
+func GolemApi1_1_0_HostFilterComparatorNotEqual() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindNotEqual}
 }
 
-func GolemApi0_2_0_HostFilterComparatorGreaterEqual() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindGreaterEqual}
+func GolemApi1_1_0_HostFilterComparatorGreaterEqual() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindGreaterEqual}
 }
 
-func GolemApi0_2_0_HostFilterComparatorGreater() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindGreater}
+func GolemApi1_1_0_HostFilterComparatorGreater() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindGreater}
 }
 
-func GolemApi0_2_0_HostFilterComparatorLessEqual() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindLessEqual}
+func GolemApi1_1_0_HostFilterComparatorLessEqual() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindLessEqual}
 }
 
-func GolemApi0_2_0_HostFilterComparatorLess() GolemApi0_2_0_HostFilterComparator {
-	return GolemApi0_2_0_HostFilterComparator{kind: GolemApi0_2_0_HostFilterComparatorKindLess}
+func GolemApi1_1_0_HostFilterComparatorLess() GolemApi1_1_0_HostFilterComparator {
+	return GolemApi1_1_0_HostFilterComparator{kind: GolemApi1_1_0_HostFilterComparatorKindLess}
 }
 
-type GolemApi0_2_0_HostStringFilterComparatorKind int
+type GolemApi1_1_0_HostStringFilterComparatorKind int
 
 const (
-	GolemApi0_2_0_HostStringFilterComparatorKindEqual GolemApi0_2_0_HostStringFilterComparatorKind = iota
-	GolemApi0_2_0_HostStringFilterComparatorKindNotEqual
-	GolemApi0_2_0_HostStringFilterComparatorKindLike
-	GolemApi0_2_0_HostStringFilterComparatorKindNotLike
+	GolemApi1_1_0_HostStringFilterComparatorKindEqual GolemApi1_1_0_HostStringFilterComparatorKind = iota
+	GolemApi1_1_0_HostStringFilterComparatorKindNotEqual
+	GolemApi1_1_0_HostStringFilterComparatorKindLike
+	GolemApi1_1_0_HostStringFilterComparatorKindNotLike
 )
 
-type GolemApi0_2_0_HostStringFilterComparator struct {
-	kind GolemApi0_2_0_HostStringFilterComparatorKind
+type GolemApi1_1_0_HostStringFilterComparator struct {
+	kind GolemApi1_1_0_HostStringFilterComparatorKind
 }
 
-func (n GolemApi0_2_0_HostStringFilterComparator) Kind() GolemApi0_2_0_HostStringFilterComparatorKind {
+func (n GolemApi1_1_0_HostStringFilterComparator) Kind() GolemApi1_1_0_HostStringFilterComparatorKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostStringFilterComparatorEqual() GolemApi0_2_0_HostStringFilterComparator {
-	return GolemApi0_2_0_HostStringFilterComparator{kind: GolemApi0_2_0_HostStringFilterComparatorKindEqual}
+func GolemApi1_1_0_HostStringFilterComparatorEqual() GolemApi1_1_0_HostStringFilterComparator {
+	return GolemApi1_1_0_HostStringFilterComparator{kind: GolemApi1_1_0_HostStringFilterComparatorKindEqual}
 }
 
-func GolemApi0_2_0_HostStringFilterComparatorNotEqual() GolemApi0_2_0_HostStringFilterComparator {
-	return GolemApi0_2_0_HostStringFilterComparator{kind: GolemApi0_2_0_HostStringFilterComparatorKindNotEqual}
+func GolemApi1_1_0_HostStringFilterComparatorNotEqual() GolemApi1_1_0_HostStringFilterComparator {
+	return GolemApi1_1_0_HostStringFilterComparator{kind: GolemApi1_1_0_HostStringFilterComparatorKindNotEqual}
 }
 
-func GolemApi0_2_0_HostStringFilterComparatorLike() GolemApi0_2_0_HostStringFilterComparator {
-	return GolemApi0_2_0_HostStringFilterComparator{kind: GolemApi0_2_0_HostStringFilterComparatorKindLike}
+func GolemApi1_1_0_HostStringFilterComparatorLike() GolemApi1_1_0_HostStringFilterComparator {
+	return GolemApi1_1_0_HostStringFilterComparator{kind: GolemApi1_1_0_HostStringFilterComparatorKindLike}
 }
 
-func GolemApi0_2_0_HostStringFilterComparatorNotLike() GolemApi0_2_0_HostStringFilterComparator {
-	return GolemApi0_2_0_HostStringFilterComparator{kind: GolemApi0_2_0_HostStringFilterComparatorKindNotLike}
+func GolemApi1_1_0_HostStringFilterComparatorNotLike() GolemApi1_1_0_HostStringFilterComparator {
+	return GolemApi1_1_0_HostStringFilterComparator{kind: GolemApi1_1_0_HostStringFilterComparatorKindNotLike}
 }
 
-type GolemApi0_2_0_HostWorkerStatusKind int
+type GolemApi1_1_0_HostWorkerStatusKind int
 
 const (
-	GolemApi0_2_0_HostWorkerStatusKindRunning GolemApi0_2_0_HostWorkerStatusKind = iota
-	GolemApi0_2_0_HostWorkerStatusKindIdle
-	GolemApi0_2_0_HostWorkerStatusKindSuspended
-	GolemApi0_2_0_HostWorkerStatusKindInterrupted
-	GolemApi0_2_0_HostWorkerStatusKindRetrying
-	GolemApi0_2_0_HostWorkerStatusKindFailed
-	GolemApi0_2_0_HostWorkerStatusKindExited
+	GolemApi1_1_0_HostWorkerStatusKindRunning GolemApi1_1_0_HostWorkerStatusKind = iota
+	GolemApi1_1_0_HostWorkerStatusKindIdle
+	GolemApi1_1_0_HostWorkerStatusKindSuspended
+	GolemApi1_1_0_HostWorkerStatusKindInterrupted
+	GolemApi1_1_0_HostWorkerStatusKindRetrying
+	GolemApi1_1_0_HostWorkerStatusKindFailed
+	GolemApi1_1_0_HostWorkerStatusKindExited
 )
 
-type GolemApi0_2_0_HostWorkerStatus struct {
-	kind GolemApi0_2_0_HostWorkerStatusKind
+type GolemApi1_1_0_HostWorkerStatus struct {
+	kind GolemApi1_1_0_HostWorkerStatusKind
 }
 
-func (n GolemApi0_2_0_HostWorkerStatus) Kind() GolemApi0_2_0_HostWorkerStatusKind {
+func (n GolemApi1_1_0_HostWorkerStatus) Kind() GolemApi1_1_0_HostWorkerStatusKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostWorkerStatusRunning() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindRunning}
+func GolemApi1_1_0_HostWorkerStatusRunning() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindRunning}
 }
 
-func GolemApi0_2_0_HostWorkerStatusIdle() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindIdle}
+func GolemApi1_1_0_HostWorkerStatusIdle() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindIdle}
 }
 
-func GolemApi0_2_0_HostWorkerStatusSuspended() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindSuspended}
+func GolemApi1_1_0_HostWorkerStatusSuspended() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindSuspended}
 }
 
-func GolemApi0_2_0_HostWorkerStatusInterrupted() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindInterrupted}
+func GolemApi1_1_0_HostWorkerStatusInterrupted() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindInterrupted}
 }
 
-func GolemApi0_2_0_HostWorkerStatusRetrying() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindRetrying}
+func GolemApi1_1_0_HostWorkerStatusRetrying() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindRetrying}
 }
 
-func GolemApi0_2_0_HostWorkerStatusFailed() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindFailed}
+func GolemApi1_1_0_HostWorkerStatusFailed() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindFailed}
 }
 
-func GolemApi0_2_0_HostWorkerStatusExited() GolemApi0_2_0_HostWorkerStatus {
-	return GolemApi0_2_0_HostWorkerStatus{kind: GolemApi0_2_0_HostWorkerStatusKindExited}
+func GolemApi1_1_0_HostWorkerStatusExited() GolemApi1_1_0_HostWorkerStatus {
+	return GolemApi1_1_0_HostWorkerStatus{kind: GolemApi1_1_0_HostWorkerStatusKindExited}
 }
 
-type GolemApi0_2_0_HostWorkerNameFilter struct {
-	Comparator GolemApi0_2_0_HostStringFilterComparator
+type GolemApi1_1_0_HostWorkerNameFilter struct {
+	Comparator GolemApi1_1_0_HostStringFilterComparator
 	Value      string
 }
 
-type GolemApi0_2_0_HostWorkerStatusFilter struct {
-	Comparator GolemApi0_2_0_HostFilterComparator
-	Value      GolemApi0_2_0_HostWorkerStatus
+type GolemApi1_1_0_HostWorkerStatusFilter struct {
+	Comparator GolemApi1_1_0_HostFilterComparator
+	Value      GolemApi1_1_0_HostWorkerStatus
 }
 
-type GolemApi0_2_0_HostWorkerVersionFilter struct {
-	Comparator GolemApi0_2_0_HostFilterComparator
+type GolemApi1_1_0_HostWorkerVersionFilter struct {
+	Comparator GolemApi1_1_0_HostFilterComparator
 	Value      uint64
 }
 
-type GolemApi0_2_0_HostWorkerCreatedAtFilter struct {
-	Comparator GolemApi0_2_0_HostFilterComparator
+type GolemApi1_1_0_HostWorkerCreatedAtFilter struct {
+	Comparator GolemApi1_1_0_HostFilterComparator
 	Value      uint64
 }
 
-type GolemApi0_2_0_HostWorkerEnvFilter struct {
+type GolemApi1_1_0_HostWorkerEnvFilter struct {
 	Name       string
-	Comparator GolemApi0_2_0_HostStringFilterComparator
+	Comparator GolemApi1_1_0_HostStringFilterComparator
 	Value      string
 }
 
-type GolemApi0_2_0_HostWorkerPropertyFilterKind int
+type GolemApi1_1_0_HostWorkerPropertyFilterKind int
 
 const (
-	GolemApi0_2_0_HostWorkerPropertyFilterKindName GolemApi0_2_0_HostWorkerPropertyFilterKind = iota
-	GolemApi0_2_0_HostWorkerPropertyFilterKindStatus
-	GolemApi0_2_0_HostWorkerPropertyFilterKindVersion
-	GolemApi0_2_0_HostWorkerPropertyFilterKindCreatedAt
-	GolemApi0_2_0_HostWorkerPropertyFilterKindEnv
+	GolemApi1_1_0_HostWorkerPropertyFilterKindName GolemApi1_1_0_HostWorkerPropertyFilterKind = iota
+	GolemApi1_1_0_HostWorkerPropertyFilterKindStatus
+	GolemApi1_1_0_HostWorkerPropertyFilterKindVersion
+	GolemApi1_1_0_HostWorkerPropertyFilterKindCreatedAt
+	GolemApi1_1_0_HostWorkerPropertyFilterKindEnv
 )
 
-type GolemApi0_2_0_HostWorkerPropertyFilter struct {
-	kind GolemApi0_2_0_HostWorkerPropertyFilterKind
+type GolemApi1_1_0_HostWorkerPropertyFilter struct {
+	kind GolemApi1_1_0_HostWorkerPropertyFilterKind
 	val  any
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) Kind() GolemApi0_2_0_HostWorkerPropertyFilterKind {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) Kind() GolemApi1_1_0_HostWorkerPropertyFilterKind {
 	return n.kind
 }
 
-func GolemApi0_2_0_HostWorkerPropertyFilterName(v GolemApi0_2_0_HostWorkerNameFilter) GolemApi0_2_0_HostWorkerPropertyFilter {
-	return GolemApi0_2_0_HostWorkerPropertyFilter{kind: GolemApi0_2_0_HostWorkerPropertyFilterKindName, val: v}
+func GolemApi1_1_0_HostWorkerPropertyFilterName(v GolemApi1_1_0_HostWorkerNameFilter) GolemApi1_1_0_HostWorkerPropertyFilter {
+	return GolemApi1_1_0_HostWorkerPropertyFilter{kind: GolemApi1_1_0_HostWorkerPropertyFilterKindName, val: v}
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) GetName() GolemApi0_2_0_HostWorkerNameFilter {
-	if g, w := n.Kind(), GolemApi0_2_0_HostWorkerPropertyFilterKindName; g != w {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) GetName() GolemApi1_1_0_HostWorkerNameFilter {
+	if g, w := n.Kind(), GolemApi1_1_0_HostWorkerPropertyFilterKindName; g != w {
 		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
 	}
-	return n.val.(GolemApi0_2_0_HostWorkerNameFilter)
+	return n.val.(GolemApi1_1_0_HostWorkerNameFilter)
 }
 
-func (n *GolemApi0_2_0_HostWorkerPropertyFilter) SetName(v GolemApi0_2_0_HostWorkerNameFilter) {
+func (n *GolemApi1_1_0_HostWorkerPropertyFilter) SetName(v GolemApi1_1_0_HostWorkerNameFilter) {
 	n.val = v
-	n.kind = GolemApi0_2_0_HostWorkerPropertyFilterKindName
+	n.kind = GolemApi1_1_0_HostWorkerPropertyFilterKindName
 }
 
-func GolemApi0_2_0_HostWorkerPropertyFilterStatus(v GolemApi0_2_0_HostWorkerStatusFilter) GolemApi0_2_0_HostWorkerPropertyFilter {
-	return GolemApi0_2_0_HostWorkerPropertyFilter{kind: GolemApi0_2_0_HostWorkerPropertyFilterKindStatus, val: v}
+func GolemApi1_1_0_HostWorkerPropertyFilterStatus(v GolemApi1_1_0_HostWorkerStatusFilter) GolemApi1_1_0_HostWorkerPropertyFilter {
+	return GolemApi1_1_0_HostWorkerPropertyFilter{kind: GolemApi1_1_0_HostWorkerPropertyFilterKindStatus, val: v}
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) GetStatus() GolemApi0_2_0_HostWorkerStatusFilter {
-	if g, w := n.Kind(), GolemApi0_2_0_HostWorkerPropertyFilterKindStatus; g != w {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) GetStatus() GolemApi1_1_0_HostWorkerStatusFilter {
+	if g, w := n.Kind(), GolemApi1_1_0_HostWorkerPropertyFilterKindStatus; g != w {
 		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
 	}
-	return n.val.(GolemApi0_2_0_HostWorkerStatusFilter)
+	return n.val.(GolemApi1_1_0_HostWorkerStatusFilter)
 }
 
-func (n *GolemApi0_2_0_HostWorkerPropertyFilter) SetStatus(v GolemApi0_2_0_HostWorkerStatusFilter) {
+func (n *GolemApi1_1_0_HostWorkerPropertyFilter) SetStatus(v GolemApi1_1_0_HostWorkerStatusFilter) {
 	n.val = v
-	n.kind = GolemApi0_2_0_HostWorkerPropertyFilterKindStatus
+	n.kind = GolemApi1_1_0_HostWorkerPropertyFilterKindStatus
 }
 
-func GolemApi0_2_0_HostWorkerPropertyFilterVersion(v GolemApi0_2_0_HostWorkerVersionFilter) GolemApi0_2_0_HostWorkerPropertyFilter {
-	return GolemApi0_2_0_HostWorkerPropertyFilter{kind: GolemApi0_2_0_HostWorkerPropertyFilterKindVersion, val: v}
+func GolemApi1_1_0_HostWorkerPropertyFilterVersion(v GolemApi1_1_0_HostWorkerVersionFilter) GolemApi1_1_0_HostWorkerPropertyFilter {
+	return GolemApi1_1_0_HostWorkerPropertyFilter{kind: GolemApi1_1_0_HostWorkerPropertyFilterKindVersion, val: v}
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) GetVersion() GolemApi0_2_0_HostWorkerVersionFilter {
-	if g, w := n.Kind(), GolemApi0_2_0_HostWorkerPropertyFilterKindVersion; g != w {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) GetVersion() GolemApi1_1_0_HostWorkerVersionFilter {
+	if g, w := n.Kind(), GolemApi1_1_0_HostWorkerPropertyFilterKindVersion; g != w {
 		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
 	}
-	return n.val.(GolemApi0_2_0_HostWorkerVersionFilter)
+	return n.val.(GolemApi1_1_0_HostWorkerVersionFilter)
 }
 
-func (n *GolemApi0_2_0_HostWorkerPropertyFilter) SetVersion(v GolemApi0_2_0_HostWorkerVersionFilter) {
+func (n *GolemApi1_1_0_HostWorkerPropertyFilter) SetVersion(v GolemApi1_1_0_HostWorkerVersionFilter) {
 	n.val = v
-	n.kind = GolemApi0_2_0_HostWorkerPropertyFilterKindVersion
+	n.kind = GolemApi1_1_0_HostWorkerPropertyFilterKindVersion
 }
 
-func GolemApi0_2_0_HostWorkerPropertyFilterCreatedAt(v GolemApi0_2_0_HostWorkerCreatedAtFilter) GolemApi0_2_0_HostWorkerPropertyFilter {
-	return GolemApi0_2_0_HostWorkerPropertyFilter{kind: GolemApi0_2_0_HostWorkerPropertyFilterKindCreatedAt, val: v}
+func GolemApi1_1_0_HostWorkerPropertyFilterCreatedAt(v GolemApi1_1_0_HostWorkerCreatedAtFilter) GolemApi1_1_0_HostWorkerPropertyFilter {
+	return GolemApi1_1_0_HostWorkerPropertyFilter{kind: GolemApi1_1_0_HostWorkerPropertyFilterKindCreatedAt, val: v}
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) GetCreatedAt() GolemApi0_2_0_HostWorkerCreatedAtFilter {
-	if g, w := n.Kind(), GolemApi0_2_0_HostWorkerPropertyFilterKindCreatedAt; g != w {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) GetCreatedAt() GolemApi1_1_0_HostWorkerCreatedAtFilter {
+	if g, w := n.Kind(), GolemApi1_1_0_HostWorkerPropertyFilterKindCreatedAt; g != w {
 		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
 	}
-	return n.val.(GolemApi0_2_0_HostWorkerCreatedAtFilter)
+	return n.val.(GolemApi1_1_0_HostWorkerCreatedAtFilter)
 }
 
-func (n *GolemApi0_2_0_HostWorkerPropertyFilter) SetCreatedAt(v GolemApi0_2_0_HostWorkerCreatedAtFilter) {
+func (n *GolemApi1_1_0_HostWorkerPropertyFilter) SetCreatedAt(v GolemApi1_1_0_HostWorkerCreatedAtFilter) {
 	n.val = v
-	n.kind = GolemApi0_2_0_HostWorkerPropertyFilterKindCreatedAt
+	n.kind = GolemApi1_1_0_HostWorkerPropertyFilterKindCreatedAt
 }
 
-func GolemApi0_2_0_HostWorkerPropertyFilterEnv(v GolemApi0_2_0_HostWorkerEnvFilter) GolemApi0_2_0_HostWorkerPropertyFilter {
-	return GolemApi0_2_0_HostWorkerPropertyFilter{kind: GolemApi0_2_0_HostWorkerPropertyFilterKindEnv, val: v}
+func GolemApi1_1_0_HostWorkerPropertyFilterEnv(v GolemApi1_1_0_HostWorkerEnvFilter) GolemApi1_1_0_HostWorkerPropertyFilter {
+	return GolemApi1_1_0_HostWorkerPropertyFilter{kind: GolemApi1_1_0_HostWorkerPropertyFilterKindEnv, val: v}
 }
 
-func (n GolemApi0_2_0_HostWorkerPropertyFilter) GetEnv() GolemApi0_2_0_HostWorkerEnvFilter {
-	if g, w := n.Kind(), GolemApi0_2_0_HostWorkerPropertyFilterKindEnv; g != w {
+func (n GolemApi1_1_0_HostWorkerPropertyFilter) GetEnv() GolemApi1_1_0_HostWorkerEnvFilter {
+	if g, w := n.Kind(), GolemApi1_1_0_HostWorkerPropertyFilterKindEnv; g != w {
 		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
 	}
-	return n.val.(GolemApi0_2_0_HostWorkerEnvFilter)
+	return n.val.(GolemApi1_1_0_HostWorkerEnvFilter)
 }
 
-func (n *GolemApi0_2_0_HostWorkerPropertyFilter) SetEnv(v GolemApi0_2_0_HostWorkerEnvFilter) {
+func (n *GolemApi1_1_0_HostWorkerPropertyFilter) SetEnv(v GolemApi1_1_0_HostWorkerEnvFilter) {
 	n.val = v
-	n.kind = GolemApi0_2_0_HostWorkerPropertyFilterKindEnv
+	n.kind = GolemApi1_1_0_HostWorkerPropertyFilterKindEnv
 }
 
-type GolemApi0_2_0_HostWorkerAllFilter struct {
-	Filters []GolemApi0_2_0_HostWorkerPropertyFilter
+type GolemApi1_1_0_HostWorkerAllFilter struct {
+	Filters []GolemApi1_1_0_HostWorkerPropertyFilter
 }
 
-type GolemApi0_2_0_HostWorkerAnyFilter struct {
-	Filters []GolemApi0_2_0_HostWorkerAllFilter
+type GolemApi1_1_0_HostWorkerAnyFilter struct {
+	Filters []GolemApi1_1_0_HostWorkerAllFilter
 }
 
-type GolemApi0_2_0_HostTuple2StringStringT struct {
+type GolemApi1_1_0_HostTuple2StringStringT struct {
 	F0 string
 	F1 string
 }
 
-type GolemApi0_2_0_HostWorkerMetadata struct {
-	WorkerId         GolemApi0_2_0_HostWorkerId
+type GolemApi1_1_0_HostWorkerMetadata struct {
+	WorkerId         GolemApi1_1_0_HostWorkerId
 	Args             []string
-	Env              []GolemApi0_2_0_HostTuple2StringStringT
-	Status           GolemApi0_2_0_HostWorkerStatus
+	Env              []GolemApi1_1_0_HostTuple2StringStringT
+	Status           GolemApi1_1_0_HostWorkerStatus
 	ComponentVersion uint64
 	RetryCount       uint64
 }
 
-// GolemApi0_2_0_HostGetWorkers is a handle to imported resource get-workers
-type GolemApi0_2_0_HostGetWorkers int32
+// GolemApi1_1_0_HostGetWorkers is a handle to imported resource get-workers
+type GolemApi1_1_0_HostGetWorkers int32
 
-//go:wasmimport golem:api/host@0.2.0 [resource-drop]get-workers
-func _GolemApi0_2_0_HostGetWorkers_drop(self GolemApi0_2_0_HostGetWorkers)
+//go:wasmimport golem:api/host@1.1.0 [resource-drop]get-workers
+func _GolemApi1_1_0_HostGetWorkers_drop(self GolemApi1_1_0_HostGetWorkers)
 
-func (self GolemApi0_2_0_HostGetWorkers) Drop() {
-	_GolemApi0_2_0_HostGetWorkers_drop(self)
+func (self GolemApi1_1_0_HostGetWorkers) Drop() {
+	_GolemApi1_1_0_HostGetWorkers_drop(self)
 }
 
-func NewGetWorkers(component_id GolemApi0_2_0_HostComponentId, filter Option[GolemApi0_2_0_HostWorkerAnyFilter], precise bool) GolemApi0_2_0_HostGetWorkers {
-	var lower_component_id C.golem_api_host_component_id_t
-	var lower_component_id_uuid C.golem_api_host_uuid_t
+func NewGetWorkers(component_id GolemApi1_1_0_HostComponentId, filter Option[GolemApi1_1_0_HostWorkerAnyFilter], precise bool) GolemApi1_1_0_HostGetWorkers {
+	var lower_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_component_id_uuid_high_bits := C.uint64_t(component_id.Uuid.HighBits)
 	lower_component_id_uuid.high_bits = lower_component_id_uuid_high_bits
 	lower_component_id_uuid_low_bits := C.uint64_t(component_id.Uuid.LowBits)
 	lower_component_id_uuid.low_bits = lower_component_id_uuid_low_bits
 	lower_component_id.uuid = lower_component_id_uuid
-	var lower_filter C.golem_api_host_option_worker_any_filter_t
+	var lower_filter C.golem_api_1_1_0_host_option_worker_any_filter_t
 	if filter.IsSome() {
-		var lower_filter_val C.golem_api_host_worker_any_filter_t
-		var lower_filter_val_filters C.golem_api_host_list_worker_all_filter_t
+		var lower_filter_val C.golem_api_1_1_0_host_worker_any_filter_t
+		var lower_filter_val_filters C.golem_api_1_1_0_host_list_worker_all_filter_t
 		if len(filter.Unwrap().Filters) == 0 {
 			lower_filter_val_filters.ptr = nil
 			lower_filter_val_filters.len = 0
 		} else {
-			var empty_lower_filter_val_filters C.golem_api_host_worker_all_filter_t
-			lower_filter_val_filters.ptr = (*C.golem_api_host_worker_all_filter_t)(C.malloc(C.size_t(len(filter.Unwrap().Filters)) * C.size_t(unsafe.Sizeof(empty_lower_filter_val_filters))))
+			var empty_lower_filter_val_filters C.golem_api_1_1_0_host_worker_all_filter_t
+			lower_filter_val_filters.ptr = (*C.golem_api_1_1_0_host_worker_all_filter_t)(C.malloc(C.size_t(len(filter.Unwrap().Filters)) * C.size_t(unsafe.Sizeof(empty_lower_filter_val_filters))))
 			lower_filter_val_filters.len = C.size_t(len(filter.Unwrap().Filters))
 			for lower_filter_val_filters_i := range filter.Unwrap().Filters {
-				lower_filter_val_filters_ptr := (*C.golem_api_host_worker_all_filter_t)(unsafe.Pointer(uintptr(unsafe.Pointer(lower_filter_val_filters.ptr)) +
+				lower_filter_val_filters_ptr := (*C.golem_api_1_1_0_host_worker_all_filter_t)(unsafe.Pointer(uintptr(unsafe.Pointer(lower_filter_val_filters.ptr)) +
 					uintptr(lower_filter_val_filters_i)*unsafe.Sizeof(empty_lower_filter_val_filters)))
-				var lower_filter_val_filters_ptr_value C.golem_api_host_worker_all_filter_t
-				var lower_filter_val_filters_ptr_value_filters C.golem_api_host_list_worker_property_filter_t
+				var lower_filter_val_filters_ptr_value C.golem_api_1_1_0_host_worker_all_filter_t
+				var lower_filter_val_filters_ptr_value_filters C.golem_api_1_1_0_host_list_worker_property_filter_t
 				if len(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters) == 0 {
 					lower_filter_val_filters_ptr_value_filters.ptr = nil
 					lower_filter_val_filters_ptr_value_filters.len = 0
 				} else {
-					var empty_lower_filter_val_filters_ptr_value_filters C.golem_api_host_worker_property_filter_t
-					lower_filter_val_filters_ptr_value_filters.ptr = (*C.golem_api_host_worker_property_filter_t)(C.malloc(C.size_t(len(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters)) * C.size_t(unsafe.Sizeof(empty_lower_filter_val_filters_ptr_value_filters))))
+					var empty_lower_filter_val_filters_ptr_value_filters C.golem_api_1_1_0_host_worker_property_filter_t
+					lower_filter_val_filters_ptr_value_filters.ptr = (*C.golem_api_1_1_0_host_worker_property_filter_t)(C.malloc(C.size_t(len(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters)) * C.size_t(unsafe.Sizeof(empty_lower_filter_val_filters_ptr_value_filters))))
 					lower_filter_val_filters_ptr_value_filters.len = C.size_t(len(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters))
 					for lower_filter_val_filters_ptr_value_filters_i := range filter.Unwrap().Filters[lower_filter_val_filters_i].Filters {
-						lower_filter_val_filters_ptr_value_filters_ptr := (*C.golem_api_host_worker_property_filter_t)(unsafe.Pointer(uintptr(unsafe.Pointer(lower_filter_val_filters_ptr_value_filters.ptr)) +
+						lower_filter_val_filters_ptr_value_filters_ptr := (*C.golem_api_1_1_0_host_worker_property_filter_t)(unsafe.Pointer(uintptr(unsafe.Pointer(lower_filter_val_filters_ptr_value_filters.ptr)) +
 							uintptr(lower_filter_val_filters_ptr_value_filters_i)*unsafe.Sizeof(empty_lower_filter_val_filters_ptr_value_filters)))
-						var lower_filter_val_filters_ptr_value_filters_ptr_value C.golem_api_host_worker_property_filter_t
-						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi0_2_0_HostWorkerPropertyFilterKindName {
+						var lower_filter_val_filters_ptr_value_filters_ptr_value C.golem_api_1_1_0_host_worker_property_filter_t
+						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi1_1_0_HostWorkerPropertyFilterKindName {
 
 							lower_filter_val_filters_ptr_value_filters_ptr_value.tag = 0
-							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_host_worker_name_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_host_worker_name_filter_t
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_host_string_filter_comparator_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindEqual {
+							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_1_1_0_host_worker_name_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_1_1_0_host_worker_name_filter_t
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_1_1_0_host_string_filter_comparator_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindNotEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindNotEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindLike {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindLike {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindNotLike {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetName().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindNotLike {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 3
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.comparator = lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator
@@ -2620,78 +2625,78 @@ func NewGetWorkers(component_id GolemApi0_2_0_HostComponentId, filter Option[Gol
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.value = lower_filter_val_filters_ptr_value_filters_ptr_value_val_value
 							*lower_filter_val_filters_ptr_value_filters_ptr_value_ptr = lower_filter_val_filters_ptr_value_filters_ptr_value_val
 						}
-						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi0_2_0_HostWorkerPropertyFilterKindStatus {
+						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi1_1_0_HostWorkerPropertyFilterKindStatus {
 
 							lower_filter_val_filters_ptr_value_filters_ptr_value.tag = 1
-							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_host_worker_status_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_host_worker_status_filter_t
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_host_filter_comparator_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindEqual {
+							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_1_1_0_host_worker_status_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_1_1_0_host_worker_status_filter_t
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_1_1_0_host_filter_comparator_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindNotEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindNotEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreaterEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreaterEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreater {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreater {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 3
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLessEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLessEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 4
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLess {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLess {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 5
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.comparator = lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_value C.golem_api_host_worker_status_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindRunning {
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_value C.golem_api_1_1_0_host_worker_status_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindRunning {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindIdle {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindIdle {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindSuspended {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindSuspended {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindInterrupted {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindInterrupted {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 3
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindRetrying {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindRetrying {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 4
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindFailed {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindFailed {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 5
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi0_2_0_HostWorkerStatusKindExited {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetStatus().Value.Kind() == GolemApi1_1_0_HostWorkerStatusKindExited {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_value = 6
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.value = lower_filter_val_filters_ptr_value_filters_ptr_value_val_value
 							*lower_filter_val_filters_ptr_value_filters_ptr_value_ptr = lower_filter_val_filters_ptr_value_filters_ptr_value_val
 						}
-						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi0_2_0_HostWorkerPropertyFilterKindVersion {
+						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi1_1_0_HostWorkerPropertyFilterKindVersion {
 
 							lower_filter_val_filters_ptr_value_filters_ptr_value.tag = 2
-							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_host_worker_version_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_host_worker_version_filter_t
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_host_filter_comparator_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindEqual {
+							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_1_1_0_host_worker_version_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_1_1_0_host_worker_version_filter_t
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_1_1_0_host_filter_comparator_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindNotEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindNotEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreaterEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreaterEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreater {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreater {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 3
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLessEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLessEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 4
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLess {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetVersion().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLess {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 5
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.comparator = lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator
@@ -2699,28 +2704,28 @@ func NewGetWorkers(component_id GolemApi0_2_0_HostComponentId, filter Option[Gol
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.value = lower_filter_val_filters_ptr_value_filters_ptr_value_val_value
 							*lower_filter_val_filters_ptr_value_filters_ptr_value_ptr = lower_filter_val_filters_ptr_value_filters_ptr_value_val
 						}
-						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi0_2_0_HostWorkerPropertyFilterKindCreatedAt {
+						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi1_1_0_HostWorkerPropertyFilterKindCreatedAt {
 
 							lower_filter_val_filters_ptr_value_filters_ptr_value.tag = 3
-							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_host_worker_created_at_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_host_worker_created_at_filter_t
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_host_filter_comparator_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindEqual {
+							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_1_1_0_host_worker_created_at_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_1_1_0_host_worker_created_at_filter_t
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_1_1_0_host_filter_comparator_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindNotEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindNotEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreaterEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreaterEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindGreater {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindGreater {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 3
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLessEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLessEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 4
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi0_2_0_HostFilterComparatorKindLess {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetCreatedAt().Comparator.Kind() == GolemApi1_1_0_HostFilterComparatorKindLess {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 5
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.comparator = lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator
@@ -2728,28 +2733,28 @@ func NewGetWorkers(component_id GolemApi0_2_0_HostComponentId, filter Option[Gol
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.value = lower_filter_val_filters_ptr_value_filters_ptr_value_val_value
 							*lower_filter_val_filters_ptr_value_filters_ptr_value_ptr = lower_filter_val_filters_ptr_value_filters_ptr_value_val
 						}
-						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi0_2_0_HostWorkerPropertyFilterKindEnv {
+						if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].Kind() == GolemApi1_1_0_HostWorkerPropertyFilterKindEnv {
 
 							lower_filter_val_filters_ptr_value_filters_ptr_value.tag = 4
-							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_host_worker_env_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_host_worker_env_filter_t
+							lower_filter_val_filters_ptr_value_filters_ptr_value_ptr := (*C.golem_api_1_1_0_host_worker_env_filter_t)(unsafe.Pointer(&lower_filter_val_filters_ptr_value_filters_ptr_value.val))
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val C.golem_api_1_1_0_host_worker_env_filter_t
 							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_name C.binding_string_t
 
 							// use unsafe.Pointer to avoid copy
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val_name.ptr = (*uint8)(unsafe.Pointer(C.CString(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Name)))
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val_name.len = C.size_t(len(filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Name))
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.name = lower_filter_val_filters_ptr_value_filters_ptr_value_val_name
-							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_host_string_filter_comparator_t
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindEqual {
+							var lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator C.golem_api_1_1_0_host_string_filter_comparator_t
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 0
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindNotEqual {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindNotEqual {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 1
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindLike {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindLike {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 2
 							}
-							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi0_2_0_HostStringFilterComparatorKindNotLike {
+							if filter.Unwrap().Filters[lower_filter_val_filters_i].Filters[lower_filter_val_filters_ptr_value_filters_i].GetEnv().Comparator.Kind() == GolemApi1_1_0_HostStringFilterComparatorKindNotLike {
 								lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator = 3
 							}
 							lower_filter_val_filters_ptr_value_filters_ptr_value_val.comparator = lower_filter_val_filters_ptr_value_filters_ptr_value_val_comparator
@@ -2773,31 +2778,31 @@ func NewGetWorkers(component_id GolemApi0_2_0_HostComponentId, filter Option[Gol
 		lower_filter.is_some = true
 	}
 	lower_precise := precise
-	ret := C.golem_api_host_constructor_get_workers(&lower_component_id, &lower_filter, lower_precise)
-	var lift_ret GolemApi0_2_0_HostGetWorkers
-	lift_ret = GolemApi0_2_0_HostGetWorkers(ret.__handle)
+	ret := C.golem_api_1_1_0_host_constructor_get_workers(&lower_component_id, &lower_filter, lower_precise)
+	var lift_ret GolemApi1_1_0_HostGetWorkers
+	lift_ret = GolemApi1_1_0_HostGetWorkers(ret.__handle)
 
 	return lift_ret
 }
 
-func (self GolemApi0_2_0_HostGetWorkers) GetNext() Option[[]GolemApi0_2_0_HostWorkerMetadata] {
-	var lower_self C.golem_api_host_borrow_get_workers_t
+func (self GolemApi1_1_0_HostGetWorkers) GetNext() Option[[]GolemApi1_1_0_HostWorkerMetadata] {
+	var lower_self C.golem_api_1_1_0_host_borrow_get_workers_t
 	lower_self.__handle = C.int32_t(self)
-	var ret C.golem_api_host_option_list_worker_metadata_t
-	C.golem_api_host_method_get_workers_get_next(lower_self, &ret)
-	var lift_ret Option[[]GolemApi0_2_0_HostWorkerMetadata]
+	var ret C.golem_api_1_1_0_host_option_list_worker_metadata_t
+	C.golem_api_1_1_0_host_method_get_workers_get_next(lower_self, &ret)
+	var lift_ret Option[[]GolemApi1_1_0_HostWorkerMetadata]
 	if ret.is_some {
-		var lift_ret_val []GolemApi0_2_0_HostWorkerMetadata
-		lift_ret_val = make([]GolemApi0_2_0_HostWorkerMetadata, ret.val.len)
+		var lift_ret_val []GolemApi1_1_0_HostWorkerMetadata
+		lift_ret_val = make([]GolemApi1_1_0_HostWorkerMetadata, ret.val.len)
 		if ret.val.len > 0 {
 			for lift_ret_val_i := 0; lift_ret_val_i < int(ret.val.len); lift_ret_val_i++ {
-				var empty_lift_ret_val C.golem_api_host_worker_metadata_t
-				lift_ret_val_ptr := *(*C.golem_api_host_worker_metadata_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.val.ptr)) +
+				var empty_lift_ret_val C.golem_api_1_1_0_host_worker_metadata_t
+				lift_ret_val_ptr := *(*C.golem_api_1_1_0_host_worker_metadata_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.val.ptr)) +
 					uintptr(lift_ret_val_i)*unsafe.Sizeof(empty_lift_ret_val)))
-				var list_lift_ret_val GolemApi0_2_0_HostWorkerMetadata
-				var list_lift_ret_val_WorkerId GolemApi0_2_0_HostWorkerId
-				var list_lift_ret_val_WorkerId_ComponentId GolemApi0_2_0_HostComponentId
-				var list_lift_ret_val_WorkerId_ComponentId_Uuid GolemApi0_2_0_HostUuid
+				var list_lift_ret_val GolemApi1_1_0_HostWorkerMetadata
+				var list_lift_ret_val_WorkerId GolemApi1_1_0_HostWorkerId
+				var list_lift_ret_val_WorkerId_ComponentId GolemApi1_1_0_HostComponentId
+				var list_lift_ret_val_WorkerId_ComponentId_Uuid GolemApi1_1_0_HostUuid
 				var list_lift_ret_val_WorkerId_ComponentId_Uuid_HighBits uint64
 				list_lift_ret_val_WorkerId_ComponentId_Uuid_HighBits = uint64(lift_ret_val_ptr.worker_id.component_id.uuid.high_bits)
 				list_lift_ret_val_WorkerId_ComponentId_Uuid.HighBits = list_lift_ret_val_WorkerId_ComponentId_Uuid_HighBits
@@ -2823,14 +2828,14 @@ func (self GolemApi0_2_0_HostGetWorkers) GetNext() Option[[]GolemApi0_2_0_HostWo
 					}
 				}
 				list_lift_ret_val.Args = list_lift_ret_val_Args
-				var list_lift_ret_val_Env []GolemApi0_2_0_HostTuple2StringStringT
-				list_lift_ret_val_Env = make([]GolemApi0_2_0_HostTuple2StringStringT, lift_ret_val_ptr.env.len)
+				var list_lift_ret_val_Env []GolemApi1_1_0_HostTuple2StringStringT
+				list_lift_ret_val_Env = make([]GolemApi1_1_0_HostTuple2StringStringT, lift_ret_val_ptr.env.len)
 				if lift_ret_val_ptr.env.len > 0 {
 					for list_lift_ret_val_Env_i := 0; list_lift_ret_val_Env_i < int(lift_ret_val_ptr.env.len); list_lift_ret_val_Env_i++ {
 						var empty_list_lift_ret_val_Env C.binding_tuple2_string_string_t
 						list_lift_ret_val_Env_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(lift_ret_val_ptr.env.ptr)) +
 							uintptr(list_lift_ret_val_Env_i)*unsafe.Sizeof(empty_list_lift_ret_val_Env)))
-						var list_list_lift_ret_val_Env GolemApi0_2_0_HostTuple2StringStringT
+						var list_list_lift_ret_val_Env GolemApi1_1_0_HostTuple2StringStringT
 						var list_list_lift_ret_val_Env_F0 string
 						list_list_lift_ret_val_Env_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_Env_ptr.f0.ptr)), C.int(list_lift_ret_val_Env_ptr.f0.len))
 						list_list_lift_ret_val_Env.F0 = list_list_lift_ret_val_Env_F0
@@ -2841,27 +2846,27 @@ func (self GolemApi0_2_0_HostGetWorkers) GetNext() Option[[]GolemApi0_2_0_HostWo
 					}
 				}
 				list_lift_ret_val.Env = list_lift_ret_val_Env
-				var list_lift_ret_val_Status GolemApi0_2_0_HostWorkerStatus
+				var list_lift_ret_val_Status GolemApi1_1_0_HostWorkerStatus
 				if lift_ret_val_ptr.status == 0 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusRunning()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusRunning()
 				}
 				if lift_ret_val_ptr.status == 1 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusIdle()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusIdle()
 				}
 				if lift_ret_val_ptr.status == 2 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusSuspended()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusSuspended()
 				}
 				if lift_ret_val_ptr.status == 3 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusInterrupted()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusInterrupted()
 				}
 				if lift_ret_val_ptr.status == 4 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusRetrying()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusRetrying()
 				}
 				if lift_ret_val_ptr.status == 5 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusFailed()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusFailed()
 				}
 				if lift_ret_val_ptr.status == 6 {
-					list_lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusExited()
+					list_lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusExited()
 				}
 				list_lift_ret_val.Status = list_lift_ret_val_Status
 				var list_lift_ret_val_ComponentVersion uint64
@@ -2880,13 +2885,13 @@ func (self GolemApi0_2_0_HostGetWorkers) GetNext() Option[[]GolemApi0_2_0_HostWo
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostCreatePromise() GolemApi0_2_0_HostPromiseId {
-	var ret C.golem_api_host_promise_id_t
-	C.golem_api_host_create_promise(&ret)
-	var lift_ret GolemApi0_2_0_HostPromiseId
-	var lift_ret_WorkerId GolemApi0_2_0_HostWorkerId
-	var lift_ret_WorkerId_ComponentId GolemApi0_2_0_HostComponentId
-	var lift_ret_WorkerId_ComponentId_Uuid GolemApi0_2_0_HostUuid
+func GolemApi1_1_0_HostCreatePromise() GolemApi1_1_0_HostPromiseId {
+	var ret C.golem_api_1_1_0_host_promise_id_t
+	C.golem_api_1_1_0_host_create_promise(&ret)
+	var lift_ret GolemApi1_1_0_HostPromiseId
+	var lift_ret_WorkerId GolemApi1_1_0_HostWorkerId
+	var lift_ret_WorkerId_ComponentId GolemApi1_1_0_HostComponentId
+	var lift_ret_WorkerId_ComponentId_Uuid GolemApi1_1_0_HostUuid
 	var lift_ret_WorkerId_ComponentId_Uuid_HighBits uint64
 	lift_ret_WorkerId_ComponentId_Uuid_HighBits = uint64(ret.worker_id.component_id.uuid.high_bits)
 	lift_ret_WorkerId_ComponentId_Uuid.HighBits = lift_ret_WorkerId_ComponentId_Uuid_HighBits
@@ -2899,7 +2904,7 @@ func GolemApi0_2_0_HostCreatePromise() GolemApi0_2_0_HostPromiseId {
 	lift_ret_WorkerId_WorkerName = C.GoStringN((*C.char)(unsafe.Pointer(ret.worker_id.worker_name.ptr)), C.int(ret.worker_id.worker_name.len))
 	lift_ret_WorkerId.WorkerName = lift_ret_WorkerId_WorkerName
 	lift_ret.WorkerId = lift_ret_WorkerId
-	var lift_ret_OplogIdx GolemApi0_2_0_HostOplogIndex
+	var lift_ret_OplogIdx GolemApi1_1_0_HostOplogIndex
 	var lift_ret_OplogIdx_val uint64
 	lift_ret_OplogIdx_val = uint64(ret.oplog_idx)
 	lift_ret_OplogIdx = lift_ret_OplogIdx_val
@@ -2907,11 +2912,11 @@ func GolemApi0_2_0_HostCreatePromise() GolemApi0_2_0_HostPromiseId {
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostAwaitPromise(promise_id GolemApi0_2_0_HostPromiseId) []uint8 {
-	var lower_promise_id C.golem_api_host_promise_id_t
-	var lower_promise_id_worker_id C.golem_api_host_worker_id_t
-	var lower_promise_id_worker_id_component_id C.golem_api_host_component_id_t
-	var lower_promise_id_worker_id_component_id_uuid C.golem_api_host_uuid_t
+func GolemApi1_1_0_HostAwaitPromise(promise_id GolemApi1_1_0_HostPromiseId) []uint8 {
+	var lower_promise_id C.golem_api_1_1_0_host_promise_id_t
+	var lower_promise_id_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_promise_id_worker_id_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_promise_id_worker_id_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_promise_id_worker_id_component_id_uuid_high_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.HighBits)
 	lower_promise_id_worker_id_component_id_uuid.high_bits = lower_promise_id_worker_id_component_id_uuid_high_bits
 	lower_promise_id_worker_id_component_id_uuid_low_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.LowBits)
@@ -2930,7 +2935,7 @@ func GolemApi0_2_0_HostAwaitPromise(promise_id GolemApi0_2_0_HostPromiseId) []ui
 	lower_promise_id_oplog_idx = lower_promise_id_oplog_idx_val
 	lower_promise_id.oplog_idx = lower_promise_id_oplog_idx
 	var ret C.binding_list_u8_t
-	C.golem_api_host_await_promise(&lower_promise_id, &ret)
+	C.golem_api_1_1_0_host_await_promise(&lower_promise_id, &ret)
 	var lift_ret []uint8
 	lift_ret = make([]uint8, ret.len)
 	if ret.len > 0 {
@@ -2946,11 +2951,11 @@ func GolemApi0_2_0_HostAwaitPromise(promise_id GolemApi0_2_0_HostPromiseId) []ui
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostCompletePromise(promise_id GolemApi0_2_0_HostPromiseId, data []uint8) bool {
-	var lower_promise_id C.golem_api_host_promise_id_t
-	var lower_promise_id_worker_id C.golem_api_host_worker_id_t
-	var lower_promise_id_worker_id_component_id C.golem_api_host_component_id_t
-	var lower_promise_id_worker_id_component_id_uuid C.golem_api_host_uuid_t
+func GolemApi1_1_0_HostCompletePromise(promise_id GolemApi1_1_0_HostPromiseId, data []uint8) bool {
+	var lower_promise_id C.golem_api_1_1_0_host_promise_id_t
+	var lower_promise_id_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_promise_id_worker_id_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_promise_id_worker_id_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_promise_id_worker_id_component_id_uuid_high_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.HighBits)
 	lower_promise_id_worker_id_component_id_uuid.high_bits = lower_promise_id_worker_id_component_id_uuid_high_bits
 	lower_promise_id_worker_id_component_id_uuid_low_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.LowBits)
@@ -2983,16 +2988,16 @@ func GolemApi0_2_0_HostCompletePromise(promise_id GolemApi0_2_0_HostPromiseId, d
 			*lower_data_ptr = lower_data_ptr_value
 		}
 	}
-	ret := C.golem_api_host_complete_promise(&lower_promise_id, &lower_data)
+	ret := C.golem_api_1_1_0_host_complete_promise(&lower_promise_id, &lower_data)
 	lift_ret := ret
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostDeletePromise(promise_id GolemApi0_2_0_HostPromiseId) {
-	var lower_promise_id C.golem_api_host_promise_id_t
-	var lower_promise_id_worker_id C.golem_api_host_worker_id_t
-	var lower_promise_id_worker_id_component_id C.golem_api_host_component_id_t
-	var lower_promise_id_worker_id_component_id_uuid C.golem_api_host_uuid_t
+func GolemApi1_1_0_HostDeletePromise(promise_id GolemApi1_1_0_HostPromiseId) {
+	var lower_promise_id C.golem_api_1_1_0_host_promise_id_t
+	var lower_promise_id_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_promise_id_worker_id_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_promise_id_worker_id_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_promise_id_worker_id_component_id_uuid_high_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.HighBits)
 	lower_promise_id_worker_id_component_id_uuid.high_bits = lower_promise_id_worker_id_component_id_uuid_high_bits
 	lower_promise_id_worker_id_component_id_uuid_low_bits := C.uint64_t(promise_id.WorkerId.ComponentId.Uuid.LowBits)
@@ -3010,78 +3015,61 @@ func GolemApi0_2_0_HostDeletePromise(promise_id GolemApi0_2_0_HostPromiseId) {
 	lower_promise_id_oplog_idx_val := C.uint64_t(promise_id.OplogIdx)
 	lower_promise_id_oplog_idx = lower_promise_id_oplog_idx_val
 	lower_promise_id.oplog_idx = lower_promise_id_oplog_idx
-	C.golem_api_host_delete_promise(&lower_promise_id)
+	C.golem_api_1_1_0_host_delete_promise(&lower_promise_id)
 }
 
-func GolemApi0_2_0_HostGetSelfUri(function_name string) GolemApi0_2_0_HostUri {
-	var lower_function_name C.binding_string_t
-
-	// use unsafe.Pointer to avoid copy
-	lower_function_name.ptr = (*uint8)(unsafe.Pointer(C.CString(function_name)))
-	lower_function_name.len = C.size_t(len(function_name))
-	var ret C.golem_api_host_uri_t
-	C.golem_api_host_get_self_uri(&lower_function_name, &ret)
-	var lift_ret GolemApi0_2_0_HostUri
-	var lift_ret_val GolemRpc0_1_0_TypesUri
-	var lift_ret_val_Value string
-	lift_ret_val_Value = C.GoStringN((*C.char)(unsafe.Pointer(ret.value.ptr)), C.int(ret.value.len))
-	lift_ret_val.Value = lift_ret_val_Value
-	lift_ret = lift_ret_val
-	return lift_ret
-}
-
-func GolemApi0_2_0_HostGetOplogIndex() GolemApi0_2_0_HostOplogIndex {
-	ret := C.golem_api_host_get_oplog_index()
-	var lift_ret GolemApi0_2_0_HostOplogIndex
+func GolemApi1_1_0_HostGetOplogIndex() GolemApi1_1_0_HostOplogIndex {
+	ret := C.golem_api_1_1_0_host_get_oplog_index()
+	var lift_ret GolemApi1_1_0_HostOplogIndex
 	var lift_ret_val uint64
 	lift_ret_val = uint64(ret)
 	lift_ret = lift_ret_val
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostSetOplogIndex(oplog_idx GolemApi0_2_0_HostOplogIndex) {
+func GolemApi1_1_0_HostSetOplogIndex(oplog_idx GolemApi1_1_0_HostOplogIndex) {
 	var lower_oplog_idx C.uint64_t
 	lower_oplog_idx_val := C.uint64_t(oplog_idx)
 	lower_oplog_idx = lower_oplog_idx_val
-	C.golem_api_host_set_oplog_index(lower_oplog_idx)
+	C.golem_api_1_1_0_host_set_oplog_index(lower_oplog_idx)
 }
 
-func GolemApi0_2_0_HostOplogCommit(replicas uint8) {
+func GolemApi1_1_0_HostOplogCommit(replicas uint8) {
 	lower_replicas := C.uint8_t(replicas)
-	C.golem_api_host_oplog_commit(lower_replicas)
+	C.golem_api_1_1_0_host_oplog_commit(lower_replicas)
 }
 
-func GolemApi0_2_0_HostMarkBeginOperation() GolemApi0_2_0_HostOplogIndex {
-	ret := C.golem_api_host_mark_begin_operation()
-	var lift_ret GolemApi0_2_0_HostOplogIndex
+func GolemApi1_1_0_HostMarkBeginOperation() GolemApi1_1_0_HostOplogIndex {
+	ret := C.golem_api_1_1_0_host_mark_begin_operation()
+	var lift_ret GolemApi1_1_0_HostOplogIndex
 	var lift_ret_val uint64
 	lift_ret_val = uint64(ret)
 	lift_ret = lift_ret_val
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostMarkEndOperation(begin GolemApi0_2_0_HostOplogIndex) {
+func GolemApi1_1_0_HostMarkEndOperation(begin GolemApi1_1_0_HostOplogIndex) {
 	var lower_begin C.uint64_t
 	lower_begin_val := C.uint64_t(begin)
 	lower_begin = lower_begin_val
-	C.golem_api_host_mark_end_operation(lower_begin)
+	C.golem_api_1_1_0_host_mark_end_operation(lower_begin)
 }
 
-func GolemApi0_2_0_HostGetRetryPolicy() GolemApi0_2_0_HostRetryPolicy {
-	var ret C.golem_api_host_retry_policy_t
-	C.golem_api_host_get_retry_policy(&ret)
-	var lift_ret GolemApi0_2_0_HostRetryPolicy
+func GolemApi1_1_0_HostGetRetryPolicy() GolemApi1_1_0_HostRetryPolicy {
+	var ret C.golem_api_1_1_0_host_retry_policy_t
+	C.golem_api_1_1_0_host_get_retry_policy(&ret)
+	var lift_ret GolemApi1_1_0_HostRetryPolicy
 	var lift_ret_MaxAttempts uint32
 	lift_ret_MaxAttempts = uint32(ret.max_attempts)
 	lift_ret.MaxAttempts = lift_ret_MaxAttempts
-	var lift_ret_MinDelay GolemApi0_2_0_HostDuration
+	var lift_ret_MinDelay GolemApi1_1_0_HostDuration
 	var lift_ret_MinDelay_val WasiClocks0_2_0_MonotonicClockDuration
 	var lift_ret_MinDelay_val_val uint64
 	lift_ret_MinDelay_val_val = uint64(ret.min_delay)
 	lift_ret_MinDelay_val = lift_ret_MinDelay_val_val
 	lift_ret_MinDelay = lift_ret_MinDelay_val
 	lift_ret.MinDelay = lift_ret_MinDelay
-	var lift_ret_MaxDelay GolemApi0_2_0_HostDuration
+	var lift_ret_MaxDelay GolemApi1_1_0_HostDuration
 	var lift_ret_MaxDelay_val WasiClocks0_2_0_MonotonicClockDuration
 	var lift_ret_MaxDelay_val_val uint64
 	lift_ret_MaxDelay_val_val = uint64(ret.max_delay)
@@ -3091,11 +3079,20 @@ func GolemApi0_2_0_HostGetRetryPolicy() GolemApi0_2_0_HostRetryPolicy {
 	var lift_ret_Multiplier float64
 	lift_ret_Multiplier = float64(ret.multiplier)
 	lift_ret.Multiplier = lift_ret_Multiplier
+	var lift_ret_MaxJitterFactor Option[float64]
+	if ret.max_jitter_factor.is_some {
+		var lift_ret_MaxJitterFactor_val float64
+		lift_ret_MaxJitterFactor_val = float64(ret.max_jitter_factor.val)
+		lift_ret_MaxJitterFactor.Set(lift_ret_MaxJitterFactor_val)
+	} else {
+		lift_ret_MaxJitterFactor.Unset()
+	}
+	lift_ret.MaxJitterFactor = lift_ret_MaxJitterFactor
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostSetRetryPolicy(new_retry_policy GolemApi0_2_0_HostRetryPolicy) {
-	var lower_new_retry_policy C.golem_api_host_retry_policy_t
+func GolemApi1_1_0_HostSetRetryPolicy(new_retry_policy GolemApi1_1_0_HostRetryPolicy) {
+	var lower_new_retry_policy C.golem_api_1_1_0_host_retry_policy_t
 	lower_new_retry_policy_max_attempts := C.uint32_t(new_retry_policy.MaxAttempts)
 	lower_new_retry_policy.max_attempts = lower_new_retry_policy_max_attempts
 	var lower_new_retry_policy_min_delay C.wasi_clocks_monotonic_clock_duration_t
@@ -3112,54 +3109,61 @@ func GolemApi0_2_0_HostSetRetryPolicy(new_retry_policy GolemApi0_2_0_HostRetryPo
 	lower_new_retry_policy.max_delay = lower_new_retry_policy_max_delay
 	lower_new_retry_policy_multiplier := C.double(new_retry_policy.Multiplier)
 	lower_new_retry_policy.multiplier = lower_new_retry_policy_multiplier
-	C.golem_api_host_set_retry_policy(&lower_new_retry_policy)
+	var lower_new_retry_policy_max_jitter_factor C.binding_option_f64_t
+	if new_retry_policy.MaxJitterFactor.IsSome() {
+		lower_new_retry_policy_max_jitter_factor_val := C.double(new_retry_policy.MaxJitterFactor.Unwrap())
+		lower_new_retry_policy_max_jitter_factor.val = lower_new_retry_policy_max_jitter_factor_val
+		lower_new_retry_policy_max_jitter_factor.is_some = true
+	}
+	lower_new_retry_policy.max_jitter_factor = lower_new_retry_policy_max_jitter_factor
+	C.golem_api_1_1_0_host_set_retry_policy(&lower_new_retry_policy)
 }
 
-func GolemApi0_2_0_HostGetOplogPersistenceLevel() GolemApi0_2_0_HostPersistenceLevel {
-	var ret C.golem_api_host_persistence_level_t
-	C.golem_api_host_get_oplog_persistence_level(&ret)
-	var lift_ret GolemApi0_2_0_HostPersistenceLevel
+func GolemApi1_1_0_HostGetOplogPersistenceLevel() GolemApi1_1_0_HostPersistenceLevel {
+	var ret C.golem_api_1_1_0_host_persistence_level_t
+	C.golem_api_1_1_0_host_get_oplog_persistence_level(&ret)
+	var lift_ret GolemApi1_1_0_HostPersistenceLevel
 	if ret.tag == 0 {
-		lift_ret = GolemApi0_2_0_HostPersistenceLevelPersistNothing()
+		lift_ret = GolemApi1_1_0_HostPersistenceLevelPersistNothing()
 	}
 	if ret.tag == 1 {
-		lift_ret = GolemApi0_2_0_HostPersistenceLevelPersistRemoteSideEffects()
+		lift_ret = GolemApi1_1_0_HostPersistenceLevelPersistRemoteSideEffects()
 	}
 	if ret.tag == 2 {
-		lift_ret = GolemApi0_2_0_HostPersistenceLevelSmart()
+		lift_ret = GolemApi1_1_0_HostPersistenceLevelSmart()
 	}
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostSetOplogPersistenceLevel(new_persistence_level GolemApi0_2_0_HostPersistenceLevel) {
-	var lower_new_persistence_level C.golem_api_host_persistence_level_t
-	if new_persistence_level.Kind() == GolemApi0_2_0_HostPersistenceLevelKindPersistNothing {
+func GolemApi1_1_0_HostSetOplogPersistenceLevel(new_persistence_level GolemApi1_1_0_HostPersistenceLevel) {
+	var lower_new_persistence_level C.golem_api_1_1_0_host_persistence_level_t
+	if new_persistence_level.Kind() == GolemApi1_1_0_HostPersistenceLevelKindPersistNothing {
 		lower_new_persistence_level.tag = 0
 	}
-	if new_persistence_level.Kind() == GolemApi0_2_0_HostPersistenceLevelKindPersistRemoteSideEffects {
+	if new_persistence_level.Kind() == GolemApi1_1_0_HostPersistenceLevelKindPersistRemoteSideEffects {
 		lower_new_persistence_level.tag = 1
 	}
-	if new_persistence_level.Kind() == GolemApi0_2_0_HostPersistenceLevelKindSmart {
+	if new_persistence_level.Kind() == GolemApi1_1_0_HostPersistenceLevelKindSmart {
 		lower_new_persistence_level.tag = 2
 	}
-	C.golem_api_host_set_oplog_persistence_level(&lower_new_persistence_level)
+	C.golem_api_1_1_0_host_set_oplog_persistence_level(&lower_new_persistence_level)
 }
 
-func GolemApi0_2_0_HostGetIdempotenceMode() bool {
-	ret := C.golem_api_host_get_idempotence_mode()
+func GolemApi1_1_0_HostGetIdempotenceMode() bool {
+	ret := C.golem_api_1_1_0_host_get_idempotence_mode()
 	lift_ret := ret
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostSetIdempotenceMode(idempotent bool) {
+func GolemApi1_1_0_HostSetIdempotenceMode(idempotent bool) {
 	lower_idempotent := idempotent
-	C.golem_api_host_set_idempotence_mode(lower_idempotent)
+	C.golem_api_1_1_0_host_set_idempotence_mode(lower_idempotent)
 }
 
-func GolemApi0_2_0_HostGenerateIdempotencyKey() GolemApi0_2_0_HostUuid {
-	var ret C.golem_api_host_uuid_t
-	C.golem_api_host_generate_idempotency_key(&ret)
-	var lift_ret GolemApi0_2_0_HostUuid
+func GolemApi1_1_0_HostGenerateIdempotencyKey() GolemApi1_1_0_HostUuid {
+	var ret C.golem_api_1_1_0_host_uuid_t
+	C.golem_api_1_1_0_host_generate_idempotency_key(&ret)
+	var lift_ret GolemApi1_1_0_HostUuid
 	var lift_ret_HighBits uint64
 	lift_ret_HighBits = uint64(ret.high_bits)
 	lift_ret.HighBits = lift_ret_HighBits
@@ -3169,10 +3173,10 @@ func GolemApi0_2_0_HostGenerateIdempotencyKey() GolemApi0_2_0_HostUuid {
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostUpdateWorker(worker_id GolemApi0_2_0_HostWorkerId, target_version GolemApi0_2_0_HostComponentVersion, mode GolemApi0_2_0_HostUpdateMode) {
-	var lower_worker_id C.golem_api_host_worker_id_t
-	var lower_worker_id_component_id C.golem_api_host_component_id_t
-	var lower_worker_id_component_id_uuid C.golem_api_host_uuid_t
+func GolemApi1_1_0_HostUpdateWorker(worker_id GolemApi1_1_0_HostWorkerId, target_version GolemApi1_1_0_HostComponentVersion, mode GolemApi1_1_0_HostUpdateMode) {
+	var lower_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_worker_id_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_worker_id_component_id_uuid_high_bits := C.uint64_t(worker_id.ComponentId.Uuid.HighBits)
 	lower_worker_id_component_id_uuid.high_bits = lower_worker_id_component_id_uuid_high_bits
 	lower_worker_id_component_id_uuid_low_bits := C.uint64_t(worker_id.ComponentId.Uuid.LowBits)
@@ -3188,23 +3192,23 @@ func GolemApi0_2_0_HostUpdateWorker(worker_id GolemApi0_2_0_HostWorkerId, target
 	var lower_target_version C.uint64_t
 	lower_target_version_val := C.uint64_t(target_version)
 	lower_target_version = lower_target_version_val
-	var lower_mode C.golem_api_host_update_mode_t
-	if mode.Kind() == GolemApi0_2_0_HostUpdateModeKindAutomatic {
+	var lower_mode C.golem_api_1_1_0_host_update_mode_t
+	if mode.Kind() == GolemApi1_1_0_HostUpdateModeKindAutomatic {
 		lower_mode = 0
 	}
-	if mode.Kind() == GolemApi0_2_0_HostUpdateModeKindSnapshotBased {
+	if mode.Kind() == GolemApi1_1_0_HostUpdateModeKindSnapshotBased {
 		lower_mode = 1
 	}
-	C.golem_api_host_update_worker(&lower_worker_id, lower_target_version, lower_mode)
+	C.golem_api_1_1_0_host_update_worker(&lower_worker_id, lower_target_version, lower_mode)
 }
 
-func GolemApi0_2_0_HostGetSelfMetadata() GolemApi0_2_0_HostWorkerMetadata {
-	var ret C.golem_api_host_worker_metadata_t
-	C.golem_api_host_get_self_metadata(&ret)
-	var lift_ret GolemApi0_2_0_HostWorkerMetadata
-	var lift_ret_WorkerId GolemApi0_2_0_HostWorkerId
-	var lift_ret_WorkerId_ComponentId GolemApi0_2_0_HostComponentId
-	var lift_ret_WorkerId_ComponentId_Uuid GolemApi0_2_0_HostUuid
+func GolemApi1_1_0_HostGetSelfMetadata() GolemApi1_1_0_HostWorkerMetadata {
+	var ret C.golem_api_1_1_0_host_worker_metadata_t
+	C.golem_api_1_1_0_host_get_self_metadata(&ret)
+	var lift_ret GolemApi1_1_0_HostWorkerMetadata
+	var lift_ret_WorkerId GolemApi1_1_0_HostWorkerId
+	var lift_ret_WorkerId_ComponentId GolemApi1_1_0_HostComponentId
+	var lift_ret_WorkerId_ComponentId_Uuid GolemApi1_1_0_HostUuid
 	var lift_ret_WorkerId_ComponentId_Uuid_HighBits uint64
 	lift_ret_WorkerId_ComponentId_Uuid_HighBits = uint64(ret.worker_id.component_id.uuid.high_bits)
 	lift_ret_WorkerId_ComponentId_Uuid.HighBits = lift_ret_WorkerId_ComponentId_Uuid_HighBits
@@ -3230,14 +3234,14 @@ func GolemApi0_2_0_HostGetSelfMetadata() GolemApi0_2_0_HostWorkerMetadata {
 		}
 	}
 	lift_ret.Args = lift_ret_Args
-	var lift_ret_Env []GolemApi0_2_0_HostTuple2StringStringT
-	lift_ret_Env = make([]GolemApi0_2_0_HostTuple2StringStringT, ret.env.len)
+	var lift_ret_Env []GolemApi1_1_0_HostTuple2StringStringT
+	lift_ret_Env = make([]GolemApi1_1_0_HostTuple2StringStringT, ret.env.len)
 	if ret.env.len > 0 {
 		for lift_ret_Env_i := 0; lift_ret_Env_i < int(ret.env.len); lift_ret_Env_i++ {
 			var empty_lift_ret_Env C.binding_tuple2_string_string_t
 			lift_ret_Env_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.env.ptr)) +
 				uintptr(lift_ret_Env_i)*unsafe.Sizeof(empty_lift_ret_Env)))
-			var list_lift_ret_Env GolemApi0_2_0_HostTuple2StringStringT
+			var list_lift_ret_Env GolemApi1_1_0_HostTuple2StringStringT
 			var list_lift_ret_Env_F0 string
 			list_lift_ret_Env_F0 = C.GoStringN((*C.char)(unsafe.Pointer(lift_ret_Env_ptr.f0.ptr)), C.int(lift_ret_Env_ptr.f0.len))
 			list_lift_ret_Env.F0 = list_lift_ret_Env_F0
@@ -3248,27 +3252,27 @@ func GolemApi0_2_0_HostGetSelfMetadata() GolemApi0_2_0_HostWorkerMetadata {
 		}
 	}
 	lift_ret.Env = lift_ret_Env
-	var lift_ret_Status GolemApi0_2_0_HostWorkerStatus
+	var lift_ret_Status GolemApi1_1_0_HostWorkerStatus
 	if ret.status == 0 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusRunning()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusRunning()
 	}
 	if ret.status == 1 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusIdle()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusIdle()
 	}
 	if ret.status == 2 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusSuspended()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusSuspended()
 	}
 	if ret.status == 3 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusInterrupted()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusInterrupted()
 	}
 	if ret.status == 4 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusRetrying()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusRetrying()
 	}
 	if ret.status == 5 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusFailed()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusFailed()
 	}
 	if ret.status == 6 {
-		lift_ret_Status = GolemApi0_2_0_HostWorkerStatusExited()
+		lift_ret_Status = GolemApi1_1_0_HostWorkerStatusExited()
 	}
 	lift_ret.Status = lift_ret_Status
 	var lift_ret_ComponentVersion uint64
@@ -3280,10 +3284,10 @@ func GolemApi0_2_0_HostGetSelfMetadata() GolemApi0_2_0_HostWorkerMetadata {
 	return lift_ret
 }
 
-func GolemApi0_2_0_HostGetWorkerMetadata(worker_id GolemApi0_2_0_HostWorkerId) Option[GolemApi0_2_0_HostWorkerMetadata] {
-	var lower_worker_id C.golem_api_host_worker_id_t
-	var lower_worker_id_component_id C.golem_api_host_component_id_t
-	var lower_worker_id_component_id_uuid C.golem_api_host_uuid_t
+func GolemApi1_1_0_HostGetWorkerMetadata(worker_id GolemApi1_1_0_HostWorkerId) Option[GolemApi1_1_0_HostWorkerMetadata] {
+	var lower_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_worker_id_component_id_uuid C.golem_api_1_1_0_host_uuid_t
 	lower_worker_id_component_id_uuid_high_bits := C.uint64_t(worker_id.ComponentId.Uuid.HighBits)
 	lower_worker_id_component_id_uuid.high_bits = lower_worker_id_component_id_uuid_high_bits
 	lower_worker_id_component_id_uuid_low_bits := C.uint64_t(worker_id.ComponentId.Uuid.LowBits)
@@ -3296,14 +3300,14 @@ func GolemApi0_2_0_HostGetWorkerMetadata(worker_id GolemApi0_2_0_HostWorkerId) O
 	lower_worker_id_worker_name.ptr = (*uint8)(unsafe.Pointer(C.CString(worker_id.WorkerName)))
 	lower_worker_id_worker_name.len = C.size_t(len(worker_id.WorkerName))
 	lower_worker_id.worker_name = lower_worker_id_worker_name
-	var ret C.golem_api_host_option_worker_metadata_t
-	C.golem_api_host_get_worker_metadata(&lower_worker_id, &ret)
-	var lift_ret Option[GolemApi0_2_0_HostWorkerMetadata]
+	var ret C.golem_api_1_1_0_host_option_worker_metadata_t
+	C.golem_api_1_1_0_host_get_worker_metadata(&lower_worker_id, &ret)
+	var lift_ret Option[GolemApi1_1_0_HostWorkerMetadata]
 	if ret.is_some {
-		var lift_ret_val GolemApi0_2_0_HostWorkerMetadata
-		var lift_ret_val_WorkerId GolemApi0_2_0_HostWorkerId
-		var lift_ret_val_WorkerId_ComponentId GolemApi0_2_0_HostComponentId
-		var lift_ret_val_WorkerId_ComponentId_Uuid GolemApi0_2_0_HostUuid
+		var lift_ret_val GolemApi1_1_0_HostWorkerMetadata
+		var lift_ret_val_WorkerId GolemApi1_1_0_HostWorkerId
+		var lift_ret_val_WorkerId_ComponentId GolemApi1_1_0_HostComponentId
+		var lift_ret_val_WorkerId_ComponentId_Uuid GolemApi1_1_0_HostUuid
 		var lift_ret_val_WorkerId_ComponentId_Uuid_HighBits uint64
 		lift_ret_val_WorkerId_ComponentId_Uuid_HighBits = uint64(ret.val.worker_id.component_id.uuid.high_bits)
 		lift_ret_val_WorkerId_ComponentId_Uuid.HighBits = lift_ret_val_WorkerId_ComponentId_Uuid_HighBits
@@ -3329,14 +3333,14 @@ func GolemApi0_2_0_HostGetWorkerMetadata(worker_id GolemApi0_2_0_HostWorkerId) O
 			}
 		}
 		lift_ret_val.Args = lift_ret_val_Args
-		var lift_ret_val_Env []GolemApi0_2_0_HostTuple2StringStringT
-		lift_ret_val_Env = make([]GolemApi0_2_0_HostTuple2StringStringT, ret.val.env.len)
+		var lift_ret_val_Env []GolemApi1_1_0_HostTuple2StringStringT
+		lift_ret_val_Env = make([]GolemApi1_1_0_HostTuple2StringStringT, ret.val.env.len)
 		if ret.val.env.len > 0 {
 			for lift_ret_val_Env_i := 0; lift_ret_val_Env_i < int(ret.val.env.len); lift_ret_val_Env_i++ {
 				var empty_lift_ret_val_Env C.binding_tuple2_string_string_t
 				lift_ret_val_Env_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.val.env.ptr)) +
 					uintptr(lift_ret_val_Env_i)*unsafe.Sizeof(empty_lift_ret_val_Env)))
-				var list_lift_ret_val_Env GolemApi0_2_0_HostTuple2StringStringT
+				var list_lift_ret_val_Env GolemApi1_1_0_HostTuple2StringStringT
 				var list_lift_ret_val_Env_F0 string
 				list_lift_ret_val_Env_F0 = C.GoStringN((*C.char)(unsafe.Pointer(lift_ret_val_Env_ptr.f0.ptr)), C.int(lift_ret_val_Env_ptr.f0.len))
 				list_lift_ret_val_Env.F0 = list_lift_ret_val_Env_F0
@@ -3347,27 +3351,27 @@ func GolemApi0_2_0_HostGetWorkerMetadata(worker_id GolemApi0_2_0_HostWorkerId) O
 			}
 		}
 		lift_ret_val.Env = lift_ret_val_Env
-		var lift_ret_val_Status GolemApi0_2_0_HostWorkerStatus
+		var lift_ret_val_Status GolemApi1_1_0_HostWorkerStatus
 		if ret.val.status == 0 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusRunning()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusRunning()
 		}
 		if ret.val.status == 1 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusIdle()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusIdle()
 		}
 		if ret.val.status == 2 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusSuspended()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusSuspended()
 		}
 		if ret.val.status == 3 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusInterrupted()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusInterrupted()
 		}
 		if ret.val.status == 4 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusRetrying()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusRetrying()
 		}
 		if ret.val.status == 5 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusFailed()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusFailed()
 		}
 		if ret.val.status == 6 {
-			lift_ret_val_Status = GolemApi0_2_0_HostWorkerStatusExited()
+			lift_ret_val_Status = GolemApi1_1_0_HostWorkerStatusExited()
 		}
 		lift_ret_val.Status = lift_ret_val_Status
 		var lift_ret_val_ComponentVersion uint64
@@ -3376,6 +3380,5777 @@ func GolemApi0_2_0_HostGetWorkerMetadata(worker_id GolemApi0_2_0_HostWorkerId) O
 		var lift_ret_val_RetryCount uint64
 		lift_ret_val_RetryCount = uint64(ret.val.retry_count)
 		lift_ret_val.RetryCount = lift_ret_val_RetryCount
+		lift_ret.Set(lift_ret_val)
+	} else {
+		lift_ret.Unset()
+	}
+	return lift_ret
+}
+
+// Import functions from wasi:clocks/wall-clock@0.2.0
+type WasiClocks0_2_0_WallClockDatetime struct {
+	Seconds     uint64
+	Nanoseconds uint32
+}
+
+func WasiClocks0_2_0_WallClockNow() WasiClocks0_2_0_WallClockDatetime {
+	var ret C.wasi_clocks_wall_clock_datetime_t
+	C.wasi_clocks_wall_clock_now(&ret)
+	var lift_ret WasiClocks0_2_0_WallClockDatetime
+	var lift_ret_Seconds uint64
+	lift_ret_Seconds = uint64(ret.seconds)
+	lift_ret.Seconds = lift_ret_Seconds
+	var lift_ret_Nanoseconds uint32
+	lift_ret_Nanoseconds = uint32(ret.nanoseconds)
+	lift_ret.Nanoseconds = lift_ret_Nanoseconds
+	return lift_ret
+}
+
+func WasiClocks0_2_0_WallClockResolution() WasiClocks0_2_0_WallClockDatetime {
+	var ret C.wasi_clocks_wall_clock_datetime_t
+	C.wasi_clocks_wall_clock_resolution(&ret)
+	var lift_ret WasiClocks0_2_0_WallClockDatetime
+	var lift_ret_Seconds uint64
+	lift_ret_Seconds = uint64(ret.seconds)
+	lift_ret.Seconds = lift_ret_Seconds
+	var lift_ret_Nanoseconds uint32
+	lift_ret_Nanoseconds = uint32(ret.nanoseconds)
+	lift_ret.Nanoseconds = lift_ret_Nanoseconds
+	return lift_ret
+}
+
+// Import functions from golem:api/oplog@1.1.0
+type GolemApi1_1_0_OplogDatetime = WasiClocks0_2_0_WallClockDatetime
+type GolemApi1_1_0_OplogWitValue = GolemRpc0_1_0_TypesWitValue
+type GolemApi1_1_0_OplogAccountId = GolemApi1_1_0_HostAccountId
+type GolemApi1_1_0_OplogComponentVersion = GolemApi1_1_0_HostComponentVersion
+type GolemApi1_1_0_OplogOplogIndex = GolemApi1_1_0_HostOplogIndex
+type GolemApi1_1_0_OplogRetryPolicy = GolemApi1_1_0_HostRetryPolicy
+type GolemApi1_1_0_OplogUuid = GolemApi1_1_0_HostUuid
+type GolemApi1_1_0_OplogWorkerId = GolemApi1_1_0_HostWorkerId
+type GolemApi1_1_0_OplogWrappedFunctionTypeKind int
+
+const (
+	GolemApi1_1_0_OplogWrappedFunctionTypeKindReadLocal GolemApi1_1_0_OplogWrappedFunctionTypeKind = iota
+	GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteLocal
+	GolemApi1_1_0_OplogWrappedFunctionTypeKindReadRemote
+	GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemote
+	GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemoteBatched
+)
+
+type GolemApi1_1_0_OplogWrappedFunctionType struct {
+	kind GolemApi1_1_0_OplogWrappedFunctionTypeKind
+	val  any
+}
+
+func (n GolemApi1_1_0_OplogWrappedFunctionType) Kind() GolemApi1_1_0_OplogWrappedFunctionTypeKind {
+	return n.kind
+}
+
+func GolemApi1_1_0_OplogWrappedFunctionTypeReadLocal() GolemApi1_1_0_OplogWrappedFunctionType {
+	return GolemApi1_1_0_OplogWrappedFunctionType{kind: GolemApi1_1_0_OplogWrappedFunctionTypeKindReadLocal}
+}
+
+func GolemApi1_1_0_OplogWrappedFunctionTypeWriteLocal() GolemApi1_1_0_OplogWrappedFunctionType {
+	return GolemApi1_1_0_OplogWrappedFunctionType{kind: GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteLocal}
+}
+
+func GolemApi1_1_0_OplogWrappedFunctionTypeReadRemote() GolemApi1_1_0_OplogWrappedFunctionType {
+	return GolemApi1_1_0_OplogWrappedFunctionType{kind: GolemApi1_1_0_OplogWrappedFunctionTypeKindReadRemote}
+}
+
+func GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemote() GolemApi1_1_0_OplogWrappedFunctionType {
+	return GolemApi1_1_0_OplogWrappedFunctionType{kind: GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemote}
+}
+
+func GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemoteBatched(v Option[GolemApi1_1_0_OplogOplogIndex]) GolemApi1_1_0_OplogWrappedFunctionType {
+	return GolemApi1_1_0_OplogWrappedFunctionType{kind: GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemoteBatched, val: v}
+}
+
+func (n GolemApi1_1_0_OplogWrappedFunctionType) GetWriteRemoteBatched() Option[GolemApi1_1_0_OplogOplogIndex] {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemoteBatched; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(Option[GolemApi1_1_0_OplogOplogIndex])
+}
+
+func (n *GolemApi1_1_0_OplogWrappedFunctionType) SetWriteRemoteBatched(v Option[GolemApi1_1_0_OplogOplogIndex]) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogWrappedFunctionTypeKindWriteRemoteBatched
+}
+
+type GolemApi1_1_0_OplogPluginInstallationDescription struct {
+	InstallationId GolemApi1_1_0_OplogUuid
+	Name           string
+	Version        string
+	Parameters     []GolemApi1_1_0_HostTuple2StringStringT
+}
+
+type GolemApi1_1_0_OplogCreateParameters struct {
+	Timestamp                    GolemApi1_1_0_OplogDatetime
+	WorkerId                     GolemApi1_1_0_OplogWorkerId
+	ComponentVersion             GolemApi1_1_0_OplogComponentVersion
+	Args                         []string
+	Env                          []GolemApi1_1_0_HostTuple2StringStringT
+	AccountId                    GolemApi1_1_0_OplogAccountId
+	Parent                       Option[GolemApi1_1_0_OplogWorkerId]
+	ComponentSize                uint64
+	InitialTotalLinearMemorySize uint64
+	InitialActivePlugins         []GolemApi1_1_0_OplogPluginInstallationDescription
+}
+
+type GolemApi1_1_0_OplogImportedFunctionInvokedParameters struct {
+	Timestamp           GolemApi1_1_0_OplogDatetime
+	FunctionName        string
+	Request             GolemApi1_1_0_OplogWitValue
+	Response            GolemApi1_1_0_OplogWitValue
+	WrappedFunctionType GolemApi1_1_0_OplogWrappedFunctionType
+}
+
+type GolemApi1_1_0_OplogExportedFunctionInvokedParameters struct {
+	Timestamp      GolemApi1_1_0_OplogDatetime
+	FunctionName   string
+	Request        []GolemApi1_1_0_OplogWitValue
+	IdempotencyKey string
+}
+
+type GolemApi1_1_0_OplogExportedFunctionCompletedParameters struct {
+	Timestamp    GolemApi1_1_0_OplogDatetime
+	Response     GolemApi1_1_0_OplogWitValue
+	ConsumedFuel int64
+}
+
+type GolemApi1_1_0_OplogErrorParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Error     string
+}
+
+type GolemApi1_1_0_OplogJumpParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Start     GolemApi1_1_0_OplogOplogIndex
+	End       GolemApi1_1_0_OplogOplogIndex
+}
+
+type GolemApi1_1_0_OplogChangeRetryPolicyParameters struct {
+	Timestamp   GolemApi1_1_0_OplogDatetime
+	RetryPolicy GolemApi1_1_0_OplogRetryPolicy
+}
+
+type GolemApi1_1_0_OplogEndAtomicRegionParameters struct {
+	Timestamp  GolemApi1_1_0_OplogDatetime
+	BeginIndex GolemApi1_1_0_OplogOplogIndex
+}
+
+type GolemApi1_1_0_OplogEndRemoteWriteParameters struct {
+	Timestamp  GolemApi1_1_0_OplogDatetime
+	BeginIndex GolemApi1_1_0_OplogOplogIndex
+}
+
+type GolemApi1_1_0_OplogExportedFunctionInvocationParameters struct {
+	IdempotencyKey string
+	FunctionName   string
+	Input          Option[[]GolemApi1_1_0_OplogWitValue]
+}
+
+type GolemApi1_1_0_OplogWorkerInvocationKind int
+
+const (
+	GolemApi1_1_0_OplogWorkerInvocationKindExportedFunction GolemApi1_1_0_OplogWorkerInvocationKind = iota
+	GolemApi1_1_0_OplogWorkerInvocationKindManualUpdate
+)
+
+type GolemApi1_1_0_OplogWorkerInvocation struct {
+	kind GolemApi1_1_0_OplogWorkerInvocationKind
+	val  any
+}
+
+func (n GolemApi1_1_0_OplogWorkerInvocation) Kind() GolemApi1_1_0_OplogWorkerInvocationKind {
+	return n.kind
+}
+
+func GolemApi1_1_0_OplogWorkerInvocationExportedFunction(v GolemApi1_1_0_OplogExportedFunctionInvocationParameters) GolemApi1_1_0_OplogWorkerInvocation {
+	return GolemApi1_1_0_OplogWorkerInvocation{kind: GolemApi1_1_0_OplogWorkerInvocationKindExportedFunction, val: v}
+}
+
+func (n GolemApi1_1_0_OplogWorkerInvocation) GetExportedFunction() GolemApi1_1_0_OplogExportedFunctionInvocationParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogWorkerInvocationKindExportedFunction; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogExportedFunctionInvocationParameters)
+}
+
+func (n *GolemApi1_1_0_OplogWorkerInvocation) SetExportedFunction(v GolemApi1_1_0_OplogExportedFunctionInvocationParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogWorkerInvocationKindExportedFunction
+}
+
+func GolemApi1_1_0_OplogWorkerInvocationManualUpdate(v GolemApi1_1_0_OplogComponentVersion) GolemApi1_1_0_OplogWorkerInvocation {
+	return GolemApi1_1_0_OplogWorkerInvocation{kind: GolemApi1_1_0_OplogWorkerInvocationKindManualUpdate, val: v}
+}
+
+func (n GolemApi1_1_0_OplogWorkerInvocation) GetManualUpdate() GolemApi1_1_0_OplogComponentVersion {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogWorkerInvocationKindManualUpdate; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogComponentVersion)
+}
+
+func (n *GolemApi1_1_0_OplogWorkerInvocation) SetManualUpdate(v GolemApi1_1_0_OplogComponentVersion) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogWorkerInvocationKindManualUpdate
+}
+
+type GolemApi1_1_0_OplogPendingWorkerInvocationParameters struct {
+	Timestamp  GolemApi1_1_0_OplogDatetime
+	Invocation GolemApi1_1_0_OplogWorkerInvocation
+}
+
+type GolemApi1_1_0_OplogUpdateDescriptionKind int
+
+const (
+	GolemApi1_1_0_OplogUpdateDescriptionKindAutoUpdate GolemApi1_1_0_OplogUpdateDescriptionKind = iota
+	GolemApi1_1_0_OplogUpdateDescriptionKindSnapshotBased
+)
+
+type GolemApi1_1_0_OplogUpdateDescription struct {
+	kind GolemApi1_1_0_OplogUpdateDescriptionKind
+	val  any
+}
+
+func (n GolemApi1_1_0_OplogUpdateDescription) Kind() GolemApi1_1_0_OplogUpdateDescriptionKind {
+	return n.kind
+}
+
+func GolemApi1_1_0_OplogUpdateDescriptionAutoUpdate() GolemApi1_1_0_OplogUpdateDescription {
+	return GolemApi1_1_0_OplogUpdateDescription{kind: GolemApi1_1_0_OplogUpdateDescriptionKindAutoUpdate}
+}
+
+func GolemApi1_1_0_OplogUpdateDescriptionSnapshotBased(v []uint8) GolemApi1_1_0_OplogUpdateDescription {
+	return GolemApi1_1_0_OplogUpdateDescription{kind: GolemApi1_1_0_OplogUpdateDescriptionKindSnapshotBased, val: v}
+}
+
+func (n GolemApi1_1_0_OplogUpdateDescription) GetSnapshotBased() []uint8 {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogUpdateDescriptionKindSnapshotBased; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.([]uint8)
+}
+
+func (n *GolemApi1_1_0_OplogUpdateDescription) SetSnapshotBased(v []uint8) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogUpdateDescriptionKindSnapshotBased
+}
+
+type GolemApi1_1_0_OplogPendingUpdateParameters struct {
+	Timestamp         GolemApi1_1_0_OplogDatetime
+	TargetVersion     GolemApi1_1_0_OplogComponentVersion
+	UpdateDescription GolemApi1_1_0_OplogUpdateDescription
+}
+
+type GolemApi1_1_0_OplogSuccessfulUpdateParameters struct {
+	Timestamp        GolemApi1_1_0_OplogDatetime
+	TargetVersion    GolemApi1_1_0_OplogComponentVersion
+	NewComponentSize uint64
+	NewActivePlugins []GolemApi1_1_0_OplogPluginInstallationDescription
+}
+
+type GolemApi1_1_0_OplogFailedUpdateParameters struct {
+	Timestamp     GolemApi1_1_0_OplogDatetime
+	TargetVersion GolemApi1_1_0_OplogComponentVersion
+	Details       Option[string]
+}
+
+type GolemApi1_1_0_OplogGrowMemoryParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Delta     uint64
+}
+
+type GolemApi1_1_0_OplogWorkerResourceId = uint64
+type GolemApi1_1_0_OplogCreateResourceParameters struct {
+	Timestamp  GolemApi1_1_0_OplogDatetime
+	ResourceId GolemApi1_1_0_OplogWorkerResourceId
+}
+
+type GolemApi1_1_0_OplogDropResourceParameters struct {
+	Timestamp  GolemApi1_1_0_OplogDatetime
+	ResourceId GolemApi1_1_0_OplogWorkerResourceId
+}
+
+type GolemApi1_1_0_OplogDescribeResourceParameters struct {
+	Timestamp      GolemApi1_1_0_OplogDatetime
+	ResourceId     GolemApi1_1_0_OplogWorkerResourceId
+	ResourceName   string
+	ResourceParams []GolemApi1_1_0_OplogWitValue
+}
+
+type GolemApi1_1_0_OplogLogLevelKind int
+
+const (
+	GolemApi1_1_0_OplogLogLevelKindStdout GolemApi1_1_0_OplogLogLevelKind = iota
+	GolemApi1_1_0_OplogLogLevelKindStderr
+	GolemApi1_1_0_OplogLogLevelKindTrace
+	GolemApi1_1_0_OplogLogLevelKindDebug
+	GolemApi1_1_0_OplogLogLevelKindInfo
+	GolemApi1_1_0_OplogLogLevelKindWarn
+	GolemApi1_1_0_OplogLogLevelKindError
+	GolemApi1_1_0_OplogLogLevelKindCritical
+)
+
+type GolemApi1_1_0_OplogLogLevel struct {
+	kind GolemApi1_1_0_OplogLogLevelKind
+}
+
+func (n GolemApi1_1_0_OplogLogLevel) Kind() GolemApi1_1_0_OplogLogLevelKind {
+	return n.kind
+}
+
+func GolemApi1_1_0_OplogLogLevelStdout() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindStdout}
+}
+
+func GolemApi1_1_0_OplogLogLevelStderr() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindStderr}
+}
+
+func GolemApi1_1_0_OplogLogLevelTrace() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindTrace}
+}
+
+func GolemApi1_1_0_OplogLogLevelDebug() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindDebug}
+}
+
+func GolemApi1_1_0_OplogLogLevelInfo() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindInfo}
+}
+
+func GolemApi1_1_0_OplogLogLevelWarn() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindWarn}
+}
+
+func GolemApi1_1_0_OplogLogLevelError() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindError}
+}
+
+func GolemApi1_1_0_OplogLogLevelCritical() GolemApi1_1_0_OplogLogLevel {
+	return GolemApi1_1_0_OplogLogLevel{kind: GolemApi1_1_0_OplogLogLevelKindCritical}
+}
+
+type GolemApi1_1_0_OplogLogParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Level     GolemApi1_1_0_OplogLogLevel
+	Context   string
+	Message   string
+}
+
+type GolemApi1_1_0_OplogActivatePluginParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Plugin    GolemApi1_1_0_OplogPluginInstallationDescription
+}
+
+type GolemApi1_1_0_OplogDeactivatePluginParameters struct {
+	Timestamp GolemApi1_1_0_OplogDatetime
+	Plugin    GolemApi1_1_0_OplogPluginInstallationDescription
+}
+
+type GolemApi1_1_0_OplogOplogEntryKind int
+
+const (
+	GolemApi1_1_0_OplogOplogEntryKindCreate GolemApi1_1_0_OplogOplogEntryKind = iota
+	GolemApi1_1_0_OplogOplogEntryKindImportedFunctionInvoked
+	GolemApi1_1_0_OplogOplogEntryKindExportedFunctionInvoked
+	GolemApi1_1_0_OplogOplogEntryKindExportedFunctionCompleted
+	GolemApi1_1_0_OplogOplogEntryKindSuspend
+	GolemApi1_1_0_OplogOplogEntryKindError
+	GolemApi1_1_0_OplogOplogEntryKindNoOp
+	GolemApi1_1_0_OplogOplogEntryKindJump
+	GolemApi1_1_0_OplogOplogEntryKindInterrupted
+	GolemApi1_1_0_OplogOplogEntryKindExited
+	GolemApi1_1_0_OplogOplogEntryKindChangeRetryPolicy
+	GolemApi1_1_0_OplogOplogEntryKindBeginAtomicRegion
+	GolemApi1_1_0_OplogOplogEntryKindEndAtomicRegion
+	GolemApi1_1_0_OplogOplogEntryKindBeginRemoteWrite
+	GolemApi1_1_0_OplogOplogEntryKindEndRemoteWrite
+	GolemApi1_1_0_OplogOplogEntryKindPendingWorkerInvocation
+	GolemApi1_1_0_OplogOplogEntryKindPendingUpdate
+	GolemApi1_1_0_OplogOplogEntryKindSuccessfulUpdate
+	GolemApi1_1_0_OplogOplogEntryKindFailedUpdate
+	GolemApi1_1_0_OplogOplogEntryKindGrowMemory
+	GolemApi1_1_0_OplogOplogEntryKindCreateResource
+	GolemApi1_1_0_OplogOplogEntryKindDropResource
+	GolemApi1_1_0_OplogOplogEntryKindDescribeResource
+	GolemApi1_1_0_OplogOplogEntryKindLog
+	GolemApi1_1_0_OplogOplogEntryKindRestart
+	GolemApi1_1_0_OplogOplogEntryKindActivatePlugin
+	GolemApi1_1_0_OplogOplogEntryKindDeactivatePlugin
+)
+
+type GolemApi1_1_0_OplogOplogEntry struct {
+	kind GolemApi1_1_0_OplogOplogEntryKind
+	val  any
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) Kind() GolemApi1_1_0_OplogOplogEntryKind {
+	return n.kind
+}
+
+func GolemApi1_1_0_OplogOplogEntryCreate(v GolemApi1_1_0_OplogCreateParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindCreate, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetCreate() GolemApi1_1_0_OplogCreateParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindCreate; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogCreateParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetCreate(v GolemApi1_1_0_OplogCreateParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindCreate
+}
+
+func GolemApi1_1_0_OplogOplogEntryImportedFunctionInvoked(v GolemApi1_1_0_OplogImportedFunctionInvokedParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindImportedFunctionInvoked, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetImportedFunctionInvoked() GolemApi1_1_0_OplogImportedFunctionInvokedParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindImportedFunctionInvoked; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogImportedFunctionInvokedParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetImportedFunctionInvoked(v GolemApi1_1_0_OplogImportedFunctionInvokedParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindImportedFunctionInvoked
+}
+
+func GolemApi1_1_0_OplogOplogEntryExportedFunctionInvoked(v GolemApi1_1_0_OplogExportedFunctionInvokedParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindExportedFunctionInvoked, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetExportedFunctionInvoked() GolemApi1_1_0_OplogExportedFunctionInvokedParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindExportedFunctionInvoked; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogExportedFunctionInvokedParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetExportedFunctionInvoked(v GolemApi1_1_0_OplogExportedFunctionInvokedParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindExportedFunctionInvoked
+}
+
+func GolemApi1_1_0_OplogOplogEntryExportedFunctionCompleted(v GolemApi1_1_0_OplogExportedFunctionCompletedParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindExportedFunctionCompleted, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetExportedFunctionCompleted() GolemApi1_1_0_OplogExportedFunctionCompletedParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindExportedFunctionCompleted; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogExportedFunctionCompletedParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetExportedFunctionCompleted(v GolemApi1_1_0_OplogExportedFunctionCompletedParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindExportedFunctionCompleted
+}
+
+func GolemApi1_1_0_OplogOplogEntrySuspend(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindSuspend, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetSuspend() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindSuspend; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetSuspend(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindSuspend
+}
+
+func GolemApi1_1_0_OplogOplogEntryError(v GolemApi1_1_0_OplogErrorParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindError, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetError() GolemApi1_1_0_OplogErrorParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindError; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogErrorParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetError(v GolemApi1_1_0_OplogErrorParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindError
+}
+
+func GolemApi1_1_0_OplogOplogEntryNoOp(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindNoOp, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetNoOp() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindNoOp; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetNoOp(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindNoOp
+}
+
+func GolemApi1_1_0_OplogOplogEntryJump(v GolemApi1_1_0_OplogJumpParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindJump, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetJump() GolemApi1_1_0_OplogJumpParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindJump; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogJumpParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetJump(v GolemApi1_1_0_OplogJumpParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindJump
+}
+
+func GolemApi1_1_0_OplogOplogEntryInterrupted(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindInterrupted, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetInterrupted() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindInterrupted; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetInterrupted(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindInterrupted
+}
+
+func GolemApi1_1_0_OplogOplogEntryExited(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindExited, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetExited() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindExited; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetExited(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindExited
+}
+
+func GolemApi1_1_0_OplogOplogEntryChangeRetryPolicy(v GolemApi1_1_0_OplogChangeRetryPolicyParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindChangeRetryPolicy, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetChangeRetryPolicy() GolemApi1_1_0_OplogChangeRetryPolicyParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindChangeRetryPolicy; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogChangeRetryPolicyParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetChangeRetryPolicy(v GolemApi1_1_0_OplogChangeRetryPolicyParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindChangeRetryPolicy
+}
+
+func GolemApi1_1_0_OplogOplogEntryBeginAtomicRegion(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindBeginAtomicRegion, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetBeginAtomicRegion() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindBeginAtomicRegion; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetBeginAtomicRegion(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindBeginAtomicRegion
+}
+
+func GolemApi1_1_0_OplogOplogEntryEndAtomicRegion(v GolemApi1_1_0_OplogEndAtomicRegionParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindEndAtomicRegion, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetEndAtomicRegion() GolemApi1_1_0_OplogEndAtomicRegionParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindEndAtomicRegion; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogEndAtomicRegionParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetEndAtomicRegion(v GolemApi1_1_0_OplogEndAtomicRegionParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindEndAtomicRegion
+}
+
+func GolemApi1_1_0_OplogOplogEntryBeginRemoteWrite(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindBeginRemoteWrite, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetBeginRemoteWrite() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindBeginRemoteWrite; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetBeginRemoteWrite(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindBeginRemoteWrite
+}
+
+func GolemApi1_1_0_OplogOplogEntryEndRemoteWrite(v GolemApi1_1_0_OplogEndRemoteWriteParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindEndRemoteWrite, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetEndRemoteWrite() GolemApi1_1_0_OplogEndRemoteWriteParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindEndRemoteWrite; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogEndRemoteWriteParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetEndRemoteWrite(v GolemApi1_1_0_OplogEndRemoteWriteParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindEndRemoteWrite
+}
+
+func GolemApi1_1_0_OplogOplogEntryPendingWorkerInvocation(v GolemApi1_1_0_OplogPendingWorkerInvocationParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindPendingWorkerInvocation, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetPendingWorkerInvocation() GolemApi1_1_0_OplogPendingWorkerInvocationParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindPendingWorkerInvocation; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogPendingWorkerInvocationParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetPendingWorkerInvocation(v GolemApi1_1_0_OplogPendingWorkerInvocationParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindPendingWorkerInvocation
+}
+
+func GolemApi1_1_0_OplogOplogEntryPendingUpdate(v GolemApi1_1_0_OplogPendingUpdateParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindPendingUpdate, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetPendingUpdate() GolemApi1_1_0_OplogPendingUpdateParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindPendingUpdate; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogPendingUpdateParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetPendingUpdate(v GolemApi1_1_0_OplogPendingUpdateParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindPendingUpdate
+}
+
+func GolemApi1_1_0_OplogOplogEntrySuccessfulUpdate(v GolemApi1_1_0_OplogSuccessfulUpdateParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindSuccessfulUpdate, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetSuccessfulUpdate() GolemApi1_1_0_OplogSuccessfulUpdateParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindSuccessfulUpdate; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogSuccessfulUpdateParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetSuccessfulUpdate(v GolemApi1_1_0_OplogSuccessfulUpdateParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindSuccessfulUpdate
+}
+
+func GolemApi1_1_0_OplogOplogEntryFailedUpdate(v GolemApi1_1_0_OplogFailedUpdateParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindFailedUpdate, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetFailedUpdate() GolemApi1_1_0_OplogFailedUpdateParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindFailedUpdate; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogFailedUpdateParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetFailedUpdate(v GolemApi1_1_0_OplogFailedUpdateParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindFailedUpdate
+}
+
+func GolemApi1_1_0_OplogOplogEntryGrowMemory(v GolemApi1_1_0_OplogGrowMemoryParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindGrowMemory, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetGrowMemory() GolemApi1_1_0_OplogGrowMemoryParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindGrowMemory; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogGrowMemoryParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetGrowMemory(v GolemApi1_1_0_OplogGrowMemoryParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindGrowMemory
+}
+
+func GolemApi1_1_0_OplogOplogEntryCreateResource(v GolemApi1_1_0_OplogCreateResourceParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindCreateResource, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetCreateResource() GolemApi1_1_0_OplogCreateResourceParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindCreateResource; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogCreateResourceParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetCreateResource(v GolemApi1_1_0_OplogCreateResourceParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindCreateResource
+}
+
+func GolemApi1_1_0_OplogOplogEntryDropResource(v GolemApi1_1_0_OplogDropResourceParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindDropResource, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetDropResource() GolemApi1_1_0_OplogDropResourceParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindDropResource; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDropResourceParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetDropResource(v GolemApi1_1_0_OplogDropResourceParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindDropResource
+}
+
+func GolemApi1_1_0_OplogOplogEntryDescribeResource(v GolemApi1_1_0_OplogDescribeResourceParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindDescribeResource, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetDescribeResource() GolemApi1_1_0_OplogDescribeResourceParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindDescribeResource; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDescribeResourceParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetDescribeResource(v GolemApi1_1_0_OplogDescribeResourceParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindDescribeResource
+}
+
+func GolemApi1_1_0_OplogOplogEntryLog(v GolemApi1_1_0_OplogLogParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindLog, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetLog() GolemApi1_1_0_OplogLogParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindLog; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogLogParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetLog(v GolemApi1_1_0_OplogLogParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindLog
+}
+
+func GolemApi1_1_0_OplogOplogEntryRestart(v GolemApi1_1_0_OplogDatetime) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindRestart, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetRestart() GolemApi1_1_0_OplogDatetime {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindRestart; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDatetime)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetRestart(v GolemApi1_1_0_OplogDatetime) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindRestart
+}
+
+func GolemApi1_1_0_OplogOplogEntryActivatePlugin(v GolemApi1_1_0_OplogActivatePluginParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindActivatePlugin, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetActivatePlugin() GolemApi1_1_0_OplogActivatePluginParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindActivatePlugin; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogActivatePluginParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetActivatePlugin(v GolemApi1_1_0_OplogActivatePluginParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindActivatePlugin
+}
+
+func GolemApi1_1_0_OplogOplogEntryDeactivatePlugin(v GolemApi1_1_0_OplogDeactivatePluginParameters) GolemApi1_1_0_OplogOplogEntry {
+	return GolemApi1_1_0_OplogOplogEntry{kind: GolemApi1_1_0_OplogOplogEntryKindDeactivatePlugin, val: v}
+}
+
+func (n GolemApi1_1_0_OplogOplogEntry) GetDeactivatePlugin() GolemApi1_1_0_OplogDeactivatePluginParameters {
+	if g, w := n.Kind(), GolemApi1_1_0_OplogOplogEntryKindDeactivatePlugin; g != w {
+		panic(fmt.Sprintf("Attr kind is %v, not %v", g, w))
+	}
+	return n.val.(GolemApi1_1_0_OplogDeactivatePluginParameters)
+}
+
+func (n *GolemApi1_1_0_OplogOplogEntry) SetDeactivatePlugin(v GolemApi1_1_0_OplogDeactivatePluginParameters) {
+	n.val = v
+	n.kind = GolemApi1_1_0_OplogOplogEntryKindDeactivatePlugin
+}
+
+// GolemApi1_1_0_OplogGetOplog is a handle to imported resource get-oplog
+type GolemApi1_1_0_OplogGetOplog int32
+
+//go:wasmimport golem:api/oplog@1.1.0 [resource-drop]get-oplog
+func _GolemApi1_1_0_OplogGetOplog_drop(self GolemApi1_1_0_OplogGetOplog)
+
+func (self GolemApi1_1_0_OplogGetOplog) Drop() {
+	_GolemApi1_1_0_OplogGetOplog_drop(self)
+}
+
+// GolemApi1_1_0_OplogSearchOplog is a handle to imported resource search-oplog
+type GolemApi1_1_0_OplogSearchOplog int32
+
+//go:wasmimport golem:api/oplog@1.1.0 [resource-drop]search-oplog
+func _GolemApi1_1_0_OplogSearchOplog_drop(self GolemApi1_1_0_OplogSearchOplog)
+
+func (self GolemApi1_1_0_OplogSearchOplog) Drop() {
+	_GolemApi1_1_0_OplogSearchOplog_drop(self)
+}
+
+type GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT struct {
+	F0 GolemApi1_1_0_OplogOplogIndex
+	F1 GolemApi1_1_0_OplogOplogEntry
+}
+
+func NewGetOplog(worker_id GolemApi1_1_0_OplogWorkerId, start GolemApi1_1_0_OplogOplogIndex) GolemApi1_1_0_OplogGetOplog {
+	var lower_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_val C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_val_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_worker_id_val_component_id_uuid C.golem_api_1_1_0_host_uuid_t
+	lower_worker_id_val_component_id_uuid_high_bits := C.uint64_t(worker_id.ComponentId.Uuid.HighBits)
+	lower_worker_id_val_component_id_uuid.high_bits = lower_worker_id_val_component_id_uuid_high_bits
+	lower_worker_id_val_component_id_uuid_low_bits := C.uint64_t(worker_id.ComponentId.Uuid.LowBits)
+	lower_worker_id_val_component_id_uuid.low_bits = lower_worker_id_val_component_id_uuid_low_bits
+	lower_worker_id_val_component_id.uuid = lower_worker_id_val_component_id_uuid
+	lower_worker_id_val.component_id = lower_worker_id_val_component_id
+	var lower_worker_id_val_worker_name C.binding_string_t
+
+	// use unsafe.Pointer to avoid copy
+	lower_worker_id_val_worker_name.ptr = (*uint8)(unsafe.Pointer(C.CString(worker_id.WorkerName)))
+	lower_worker_id_val_worker_name.len = C.size_t(len(worker_id.WorkerName))
+	lower_worker_id_val.worker_name = lower_worker_id_val_worker_name
+	lower_worker_id = lower_worker_id_val
+	var lower_start C.golem_api_1_1_0_host_oplog_index_t
+	var lower_start_val C.uint64_t
+	lower_start_val_val := C.uint64_t(start)
+	lower_start_val = lower_start_val_val
+	lower_start = lower_start_val
+	ret := C.golem_api_1_1_0_oplog_constructor_get_oplog(&lower_worker_id, lower_start)
+	var lift_ret GolemApi1_1_0_OplogGetOplog
+	lift_ret = GolemApi1_1_0_OplogGetOplog(ret.__handle)
+
+	return lift_ret
+}
+
+func (self GolemApi1_1_0_OplogGetOplog) GetNext() Option[[]GolemApi1_1_0_OplogOplogEntry] {
+	var lower_self C.golem_api_1_1_0_oplog_borrow_get_oplog_t
+	lower_self.__handle = C.int32_t(self)
+	var ret C.golem_api_1_1_0_oplog_option_list_oplog_entry_t
+	C.golem_api_1_1_0_oplog_method_get_oplog_get_next(lower_self, &ret)
+	var lift_ret Option[[]GolemApi1_1_0_OplogOplogEntry]
+	if ret.is_some {
+		var lift_ret_val []GolemApi1_1_0_OplogOplogEntry
+		lift_ret_val = make([]GolemApi1_1_0_OplogOplogEntry, ret.val.len)
+		if ret.val.len > 0 {
+			for lift_ret_val_i := 0; lift_ret_val_i < int(ret.val.len); lift_ret_val_i++ {
+				var empty_lift_ret_val C.golem_api_1_1_0_oplog_oplog_entry_t
+				lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_oplog_entry_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.val.ptr)) +
+					uintptr(lift_ret_val_i)*unsafe.Sizeof(empty_lift_ret_val)))
+				var list_lift_ret_val GolemApi1_1_0_OplogOplogEntry
+				if lift_ret_val_ptr.tag == 0 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_create_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogCreateParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_WorkerId GolemApi1_1_0_OplogWorkerId
+					var list_lift_ret_val_val_WorkerId_val GolemApi1_1_0_HostWorkerId
+					var list_lift_ret_val_val_WorkerId_val_ComponentId GolemApi1_1_0_HostComponentId
+					var list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_HighBits uint64
+					list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_HighBits = uint64(list_lift_ret_val_ptr.worker_id.component_id.uuid.high_bits)
+					list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid.HighBits = list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_HighBits
+					var list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_LowBits uint64
+					list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_LowBits = uint64(list_lift_ret_val_ptr.worker_id.component_id.uuid.low_bits)
+					list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid.LowBits = list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid_LowBits
+					list_lift_ret_val_val_WorkerId_val_ComponentId.Uuid = list_lift_ret_val_val_WorkerId_val_ComponentId_Uuid
+					list_lift_ret_val_val_WorkerId_val.ComponentId = list_lift_ret_val_val_WorkerId_val_ComponentId
+					var list_lift_ret_val_val_WorkerId_val_WorkerName string
+					list_lift_ret_val_val_WorkerId_val_WorkerName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.worker_id.worker_name.ptr)), C.int(list_lift_ret_val_ptr.worker_id.worker_name.len))
+					list_lift_ret_val_val_WorkerId_val.WorkerName = list_lift_ret_val_val_WorkerId_val_WorkerName
+					list_lift_ret_val_val_WorkerId = list_lift_ret_val_val_WorkerId_val
+					list_lift_ret_val_val.WorkerId = list_lift_ret_val_val_WorkerId
+					var list_lift_ret_val_val_ComponentVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_val_ComponentVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_val_ComponentVersion_val_val uint64
+					list_lift_ret_val_val_ComponentVersion_val_val = uint64(list_lift_ret_val_ptr.component_version)
+					list_lift_ret_val_val_ComponentVersion_val = list_lift_ret_val_val_ComponentVersion_val_val
+					list_lift_ret_val_val_ComponentVersion = list_lift_ret_val_val_ComponentVersion_val
+					list_lift_ret_val_val.ComponentVersion = list_lift_ret_val_val_ComponentVersion
+					var list_lift_ret_val_val_Args []string
+					list_lift_ret_val_val_Args = make([]string, list_lift_ret_val_ptr.args.len)
+					if list_lift_ret_val_ptr.args.len > 0 {
+						for list_lift_ret_val_val_Args_i := 0; list_lift_ret_val_val_Args_i < int(list_lift_ret_val_ptr.args.len); list_lift_ret_val_val_Args_i++ {
+							var empty_list_lift_ret_val_val_Args C.binding_string_t
+							list_lift_ret_val_val_Args_ptr := *(*C.binding_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.args.ptr)) +
+								uintptr(list_lift_ret_val_val_Args_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Args)))
+							var list_list_lift_ret_val_val_Args string
+							list_list_lift_ret_val_val_Args = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Args_ptr.ptr)), C.int(list_lift_ret_val_val_Args_ptr.len))
+							list_lift_ret_val_val_Args[list_lift_ret_val_val_Args_i] = list_list_lift_ret_val_val_Args
+						}
+					}
+					list_lift_ret_val_val.Args = list_lift_ret_val_val_Args
+					var list_lift_ret_val_val_Env []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_val_Env = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_ptr.env.len)
+					if list_lift_ret_val_ptr.env.len > 0 {
+						for list_lift_ret_val_val_Env_i := 0; list_lift_ret_val_val_Env_i < int(list_lift_ret_val_ptr.env.len); list_lift_ret_val_val_Env_i++ {
+							var empty_list_lift_ret_val_val_Env C.binding_tuple2_string_string_t
+							list_lift_ret_val_val_Env_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.env.ptr)) +
+								uintptr(list_lift_ret_val_val_Env_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Env)))
+							var list_list_lift_ret_val_val_Env GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_val_Env_F0 string
+							list_list_lift_ret_val_val_Env_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Env_ptr.f0.ptr)), C.int(list_lift_ret_val_val_Env_ptr.f0.len))
+							list_list_lift_ret_val_val_Env.F0 = list_list_lift_ret_val_val_Env_F0
+							var list_list_lift_ret_val_val_Env_F1 string
+							list_list_lift_ret_val_val_Env_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Env_ptr.f1.ptr)), C.int(list_lift_ret_val_val_Env_ptr.f1.len))
+							list_list_lift_ret_val_val_Env.F1 = list_list_lift_ret_val_val_Env_F1
+							list_lift_ret_val_val_Env[list_lift_ret_val_val_Env_i] = list_list_lift_ret_val_val_Env
+						}
+					}
+					list_lift_ret_val_val.Env = list_lift_ret_val_val_Env
+					var list_lift_ret_val_val_AccountId GolemApi1_1_0_OplogAccountId
+					var list_lift_ret_val_val_AccountId_val GolemApi1_1_0_HostAccountId
+					var list_lift_ret_val_val_AccountId_val_Value string
+					list_lift_ret_val_val_AccountId_val_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.account_id.value.ptr)), C.int(list_lift_ret_val_ptr.account_id.value.len))
+					list_lift_ret_val_val_AccountId_val.Value = list_lift_ret_val_val_AccountId_val_Value
+					list_lift_ret_val_val_AccountId = list_lift_ret_val_val_AccountId_val
+					list_lift_ret_val_val.AccountId = list_lift_ret_val_val_AccountId
+					var list_lift_ret_val_val_Parent Option[GolemApi1_1_0_OplogWorkerId]
+					if list_lift_ret_val_ptr.parent.is_some {
+						var list_lift_ret_val_val_Parent_val GolemApi1_1_0_OplogWorkerId
+						var list_lift_ret_val_val_Parent_val_val GolemApi1_1_0_HostWorkerId
+						var list_lift_ret_val_val_Parent_val_val_ComponentId GolemApi1_1_0_HostComponentId
+						var list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid GolemApi1_1_0_HostUuid
+						var list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_HighBits uint64
+						list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_HighBits = uint64(list_lift_ret_val_ptr.parent.val.component_id.uuid.high_bits)
+						list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid.HighBits = list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_HighBits
+						var list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_LowBits uint64
+						list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_LowBits = uint64(list_lift_ret_val_ptr.parent.val.component_id.uuid.low_bits)
+						list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid.LowBits = list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid_LowBits
+						list_lift_ret_val_val_Parent_val_val_ComponentId.Uuid = list_lift_ret_val_val_Parent_val_val_ComponentId_Uuid
+						list_lift_ret_val_val_Parent_val_val.ComponentId = list_lift_ret_val_val_Parent_val_val_ComponentId
+						var list_lift_ret_val_val_Parent_val_val_WorkerName string
+						list_lift_ret_val_val_Parent_val_val_WorkerName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.parent.val.worker_name.ptr)), C.int(list_lift_ret_val_ptr.parent.val.worker_name.len))
+						list_lift_ret_val_val_Parent_val_val.WorkerName = list_lift_ret_val_val_Parent_val_val_WorkerName
+						list_lift_ret_val_val_Parent_val = list_lift_ret_val_val_Parent_val_val
+						list_lift_ret_val_val_Parent.Set(list_lift_ret_val_val_Parent_val)
+					} else {
+						list_lift_ret_val_val_Parent.Unset()
+					}
+					list_lift_ret_val_val.Parent = list_lift_ret_val_val_Parent
+					var list_lift_ret_val_val_ComponentSize uint64
+					list_lift_ret_val_val_ComponentSize = uint64(list_lift_ret_val_ptr.component_size)
+					list_lift_ret_val_val.ComponentSize = list_lift_ret_val_val_ComponentSize
+					var list_lift_ret_val_val_InitialTotalLinearMemorySize uint64
+					list_lift_ret_val_val_InitialTotalLinearMemorySize = uint64(list_lift_ret_val_ptr.initial_total_linear_memory_size)
+					list_lift_ret_val_val.InitialTotalLinearMemorySize = list_lift_ret_val_val_InitialTotalLinearMemorySize
+					var list_lift_ret_val_val_InitialActivePlugins []GolemApi1_1_0_OplogPluginInstallationDescription
+					list_lift_ret_val_val_InitialActivePlugins = make([]GolemApi1_1_0_OplogPluginInstallationDescription, list_lift_ret_val_ptr.initial_active_plugins.len)
+					if list_lift_ret_val_ptr.initial_active_plugins.len > 0 {
+						for list_lift_ret_val_val_InitialActivePlugins_i := 0; list_lift_ret_val_val_InitialActivePlugins_i < int(list_lift_ret_val_ptr.initial_active_plugins.len); list_lift_ret_val_val_InitialActivePlugins_i++ {
+							var empty_list_lift_ret_val_val_InitialActivePlugins C.golem_api_1_1_0_oplog_plugin_installation_description_t
+							list_lift_ret_val_val_InitialActivePlugins_ptr := *(*C.golem_api_1_1_0_oplog_plugin_installation_description_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.initial_active_plugins.ptr)) +
+								uintptr(list_lift_ret_val_val_InitialActivePlugins_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_InitialActivePlugins)))
+							var list_list_lift_ret_val_val_InitialActivePlugins GolemApi1_1_0_OplogPluginInstallationDescription
+							var list_list_lift_ret_val_val_InitialActivePlugins_InstallationId GolemApi1_1_0_OplogUuid
+							var list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val GolemApi1_1_0_HostUuid
+							var list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_HighBits uint64
+							list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_HighBits = uint64(list_lift_ret_val_val_InitialActivePlugins_ptr.installation_id.high_bits)
+							list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val.HighBits = list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_HighBits
+							var list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_LowBits uint64
+							list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_LowBits = uint64(list_lift_ret_val_val_InitialActivePlugins_ptr.installation_id.low_bits)
+							list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val.LowBits = list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val_LowBits
+							list_list_lift_ret_val_val_InitialActivePlugins_InstallationId = list_list_lift_ret_val_val_InitialActivePlugins_InstallationId_val
+							list_list_lift_ret_val_val_InitialActivePlugins.InstallationId = list_list_lift_ret_val_val_InitialActivePlugins_InstallationId
+							var list_list_lift_ret_val_val_InitialActivePlugins_Name string
+							list_list_lift_ret_val_val_InitialActivePlugins_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_InitialActivePlugins_ptr.name.ptr)), C.int(list_lift_ret_val_val_InitialActivePlugins_ptr.name.len))
+							list_list_lift_ret_val_val_InitialActivePlugins.Name = list_list_lift_ret_val_val_InitialActivePlugins_Name
+							var list_list_lift_ret_val_val_InitialActivePlugins_Version string
+							list_list_lift_ret_val_val_InitialActivePlugins_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_InitialActivePlugins_ptr.version.ptr)), C.int(list_lift_ret_val_val_InitialActivePlugins_ptr.version.len))
+							list_list_lift_ret_val_val_InitialActivePlugins.Version = list_list_lift_ret_val_val_InitialActivePlugins_Version
+							var list_list_lift_ret_val_val_InitialActivePlugins_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+							list_list_lift_ret_val_val_InitialActivePlugins_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_val_InitialActivePlugins_ptr.parameters.len)
+							if list_lift_ret_val_val_InitialActivePlugins_ptr.parameters.len > 0 {
+								for list_list_lift_ret_val_val_InitialActivePlugins_Parameters_i := 0; list_list_lift_ret_val_val_InitialActivePlugins_Parameters_i < int(list_lift_ret_val_val_InitialActivePlugins_ptr.parameters.len); list_list_lift_ret_val_val_InitialActivePlugins_Parameters_i++ {
+									var empty_list_list_lift_ret_val_val_InitialActivePlugins_Parameters C.binding_tuple2_string_string_t
+									list_list_lift_ret_val_val_InitialActivePlugins_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_InitialActivePlugins_ptr.parameters.ptr)) +
+										uintptr(list_list_lift_ret_val_val_InitialActivePlugins_Parameters_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_InitialActivePlugins_Parameters)))
+									var list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters GolemApi1_1_0_HostTuple2StringStringT
+									var list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F0 string
+									list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_InitialActivePlugins_Parameters_ptr.f0.ptr)), C.int(list_list_lift_ret_val_val_InitialActivePlugins_Parameters_ptr.f0.len))
+									list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters.F0 = list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F0
+									var list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F1 string
+									list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_InitialActivePlugins_Parameters_ptr.f1.ptr)), C.int(list_list_lift_ret_val_val_InitialActivePlugins_Parameters_ptr.f1.len))
+									list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters.F1 = list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters_F1
+									list_list_lift_ret_val_val_InitialActivePlugins_Parameters[list_list_lift_ret_val_val_InitialActivePlugins_Parameters_i] = list_list_list_lift_ret_val_val_InitialActivePlugins_Parameters
+								}
+							}
+							list_list_lift_ret_val_val_InitialActivePlugins.Parameters = list_list_lift_ret_val_val_InitialActivePlugins_Parameters
+							list_lift_ret_val_val_InitialActivePlugins[list_lift_ret_val_val_InitialActivePlugins_i] = list_list_lift_ret_val_val_InitialActivePlugins
+						}
+					}
+					list_lift_ret_val_val.InitialActivePlugins = list_lift_ret_val_val_InitialActivePlugins
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryCreate(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 1 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_imported_function_invoked_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogImportedFunctionInvokedParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_FunctionName string
+					list_lift_ret_val_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.function_name.ptr)), C.int(list_lift_ret_val_ptr.function_name.len))
+					list_lift_ret_val_val.FunctionName = list_lift_ret_val_val_FunctionName
+					var list_lift_ret_val_val_Request GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_val_Request_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_val_Request_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_val_Request_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_ptr.request.nodes.len)
+					if list_lift_ret_val_ptr.request.nodes.len > 0 {
+						for list_lift_ret_val_val_Request_val_Nodes_i := 0; list_lift_ret_val_val_Request_val_Nodes_i < int(list_lift_ret_val_ptr.request.nodes.len); list_lift_ret_val_val_Request_val_Nodes_i++ {
+							var empty_list_lift_ret_val_val_Request_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.request.nodes.ptr)) +
+								uintptr(list_lift_ret_val_val_Request_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Request_val_Nodes)))
+							var list_list_lift_ret_val_val_Request_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_val_Request_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_val_Request_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_val_Request_val_Nodes_val.F0 = list_list_lift_ret_val_val_Request_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Request_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val = list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_val_Request_val_Nodes_val_F1.Set(list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_val_Request_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes_val.F1 = list_list_lift_ret_val_val_Request_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Request_val_Nodes_val = uint32(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val []bool
+								list_list_lift_ret_val_val_Request_val_Nodes_val = make([]bool, list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Request_val_Nodes_val bool
+										list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val := list_list_lift_ret_val_val_Request_val_Nodes_val_ptr
+										list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_ptr.val)
+									list_list_lift_ret_val_val_Request_val_Nodes_val_val = list_list_lift_ret_val_val_Request_val_Nodes_val_val_val
+									list_list_lift_ret_val_val_Request_val_Nodes_val.Set(list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Request_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_val_Request_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Request_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Request_val_Nodes_val.SetErr(list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Request_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Request_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Request_val_Nodes_val.Set(list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val uint8
+								list_list_lift_ret_val_val_Request_val_Nodes_val = uint8(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val uint16
+								list_list_lift_ret_val_val_Request_val_Nodes_val = uint16(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Request_val_Nodes_val = uint32(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val uint64
+								list_list_lift_ret_val_val_Request_val_Nodes_val = uint64(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val int8
+								list_list_lift_ret_val_val_Request_val_Nodes_val = int8(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val int16
+								list_list_lift_ret_val_val_Request_val_Nodes_val = int16(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val int32
+								list_list_lift_ret_val_val_Request_val_Nodes_val = int32(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val int64
+								list_list_lift_ret_val_val_Request_val_Nodes_val = int64(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val float32
+								list_list_lift_ret_val_val_Request_val_Nodes_val = float32(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val float64
+								list_list_lift_ret_val_val_Request_val_Nodes_val = float64(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val rune
+								list_list_lift_ret_val_val_Request_val_Nodes_val = rune(list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								list_list_lift_ret_val_val_Request_val_Nodes_val := list_list_lift_ret_val_val_Request_val_Nodes_ptr
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val string
+								list_list_lift_ret_val_val_Request_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.len))
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_val_Request_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_val_Request_val_Nodes_val_F0.Value = list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_val_Request_val_Nodes_val.F0 = list_list_lift_ret_val_val_Request_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Request_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_val_Request_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_val_Request_val_Nodes_val.F1 = list_list_lift_ret_val_val_Request_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_val_Request_val_Nodes_val)
+							}
+							list_lift_ret_val_val_Request_val_Nodes[list_lift_ret_val_val_Request_val_Nodes_i] = list_list_lift_ret_val_val_Request_val_Nodes
+						}
+					}
+					list_lift_ret_val_val_Request_val.Nodes = list_lift_ret_val_val_Request_val_Nodes
+					list_lift_ret_val_val_Request = list_lift_ret_val_val_Request_val
+					list_lift_ret_val_val.Request = list_lift_ret_val_val_Request
+					var list_lift_ret_val_val_Response GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_val_Response_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_val_Response_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_val_Response_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_ptr.response.nodes.len)
+					if list_lift_ret_val_ptr.response.nodes.len > 0 {
+						for list_lift_ret_val_val_Response_val_Nodes_i := 0; list_lift_ret_val_val_Response_val_Nodes_i < int(list_lift_ret_val_ptr.response.nodes.len); list_lift_ret_val_val_Response_val_Nodes_i++ {
+							var empty_list_lift_ret_val_val_Response_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.response.nodes.ptr)) +
+								uintptr(list_lift_ret_val_val_Response_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Response_val_Nodes)))
+							var list_list_lift_ret_val_val_Response_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val = list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []bool
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]bool, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val bool
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val := list_list_lift_ret_val_val_Response_val_Nodes_val_ptr
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.val)
+									list_list_lift_ret_val_val_Response_val_Nodes_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Response_val_Nodes_val.SetErr(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint8
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint8(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint16
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint16(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int8
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int8(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int16
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int16(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val float32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = float32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val float64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = float64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val rune
+								list_list_lift_ret_val_val_Response_val_Nodes_val = rune(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								list_list_lift_ret_val_val_Response_val_Nodes_val := list_list_lift_ret_val_val_Response_val_Nodes_ptr
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val string
+								list_list_lift_ret_val_val_Response_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len))
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0.Value = list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							list_lift_ret_val_val_Response_val_Nodes[list_lift_ret_val_val_Response_val_Nodes_i] = list_list_lift_ret_val_val_Response_val_Nodes
+						}
+					}
+					list_lift_ret_val_val_Response_val.Nodes = list_lift_ret_val_val_Response_val_Nodes
+					list_lift_ret_val_val_Response = list_lift_ret_val_val_Response_val
+					list_lift_ret_val_val.Response = list_lift_ret_val_val_Response
+					var list_lift_ret_val_val_WrappedFunctionType GolemApi1_1_0_OplogWrappedFunctionType
+					if list_lift_ret_val_ptr.wrapped_function_type.tag == 0 {
+						list_lift_ret_val_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeReadLocal()
+					}
+					if list_lift_ret_val_ptr.wrapped_function_type.tag == 1 {
+						list_lift_ret_val_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteLocal()
+					}
+					if list_lift_ret_val_ptr.wrapped_function_type.tag == 2 {
+						list_lift_ret_val_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeReadRemote()
+					}
+					if list_lift_ret_val_ptr.wrapped_function_type.tag == 3 {
+						list_lift_ret_val_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemote()
+					}
+					if list_lift_ret_val_ptr.wrapped_function_type.tag == 4 {
+						list_lift_ret_val_val_WrappedFunctionType_ptr := *(*C.binding_option_oplog_index_t)(unsafe.Pointer(&list_lift_ret_val_ptr.wrapped_function_type.val))
+						var list_lift_ret_val_val_WrappedFunctionType_val Option[GolemApi1_1_0_OplogOplogIndex]
+						if list_lift_ret_val_val_WrappedFunctionType_ptr.is_some {
+							var list_lift_ret_val_val_WrappedFunctionType_val_val GolemApi1_1_0_OplogOplogIndex
+							var list_lift_ret_val_val_WrappedFunctionType_val_val_val GolemApi1_1_0_HostOplogIndex
+							var list_lift_ret_val_val_WrappedFunctionType_val_val_val_val uint64
+							list_lift_ret_val_val_WrappedFunctionType_val_val_val_val = uint64(list_lift_ret_val_val_WrappedFunctionType_ptr.val)
+							list_lift_ret_val_val_WrappedFunctionType_val_val_val = list_lift_ret_val_val_WrappedFunctionType_val_val_val_val
+							list_lift_ret_val_val_WrappedFunctionType_val_val = list_lift_ret_val_val_WrappedFunctionType_val_val_val
+							list_lift_ret_val_val_WrappedFunctionType_val.Set(list_lift_ret_val_val_WrappedFunctionType_val_val)
+						} else {
+							list_lift_ret_val_val_WrappedFunctionType_val.Unset()
+						}
+						list_lift_ret_val_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemoteBatched(list_lift_ret_val_val_WrappedFunctionType_val)
+					}
+					list_lift_ret_val_val.WrappedFunctionType = list_lift_ret_val_val_WrappedFunctionType
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryImportedFunctionInvoked(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 2 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_invoked_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogExportedFunctionInvokedParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_FunctionName string
+					list_lift_ret_val_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.function_name.ptr)), C.int(list_lift_ret_val_ptr.function_name.len))
+					list_lift_ret_val_val.FunctionName = list_lift_ret_val_val_FunctionName
+					var list_lift_ret_val_val_Request []GolemApi1_1_0_OplogWitValue
+					list_lift_ret_val_val_Request = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_ptr.request.len)
+					if list_lift_ret_val_ptr.request.len > 0 {
+						for list_lift_ret_val_val_Request_i := 0; list_lift_ret_val_val_Request_i < int(list_lift_ret_val_ptr.request.len); list_lift_ret_val_val_Request_i++ {
+							var empty_list_lift_ret_val_val_Request C.golem_api_1_1_0_oplog_wit_value_t
+							list_lift_ret_val_val_Request_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.request.ptr)) +
+								uintptr(list_lift_ret_val_val_Request_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Request)))
+							var list_list_lift_ret_val_val_Request GolemApi1_1_0_OplogWitValue
+							var list_list_lift_ret_val_val_Request_val GolemRpc0_1_0_TypesWitValue
+							var list_list_lift_ret_val_val_Request_val_Nodes []GolemRpc0_1_0_TypesWitNode
+							list_list_lift_ret_val_val_Request_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_val_Request_ptr.nodes.len)
+							if list_lift_ret_val_val_Request_ptr.nodes.len > 0 {
+								for list_list_lift_ret_val_val_Request_val_Nodes_i := 0; list_list_lift_ret_val_val_Request_val_Nodes_i < int(list_lift_ret_val_val_Request_ptr.nodes.len); list_list_lift_ret_val_val_Request_val_Nodes_i++ {
+									var empty_list_list_lift_ret_val_val_Request_val_Nodes C.golem_rpc_types_wit_node_t
+									list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_Request_ptr.nodes.ptr)) +
+										uintptr(list_list_lift_ret_val_val_Request_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Request_val_Nodes)))
+									var list_list_list_lift_ret_val_val_Request_val_Nodes GolemRpc0_1_0_TypesWitNode
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 0 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 1 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0 uint32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0)
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1.is_some {
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val int32
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1.val)
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val_val
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1_val)
+										} else {
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1.Unset()
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 2 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val uint32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 3 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val []bool
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val bool
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val := list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 4 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 5 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val[list_list_list_lift_ret_val_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 6 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.is_some {
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val int32
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.val)
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val.Set(list_list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val.Unset()
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 7 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+										if list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.is_err {
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val.SetErr(list_list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_Request_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_val_Request_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_val_Request_val_Nodes_val.Set(list_list_list_lift_ret_val_val_Request_val_Nodes_val_val)
+										}
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 8 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val uint8
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = uint8(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 9 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val uint16
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = uint16(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 10 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val uint32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 11 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val uint64
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = uint64(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 12 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val int8
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = int8(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 13 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val int16
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = int16(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 14 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val int32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = int32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 15 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val int64
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = int64(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 16 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val float32
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = float32(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 17 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val float64
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = float64(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 18 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val rune
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = rune(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 19 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val := list_list_list_lift_ret_val_val_Request_val_Nodes_ptr
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 20 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val string
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.len))
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_Request_val_Nodes_ptr.tag == 21 {
+										list_list_list_lift_ret_val_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value string
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f0.value.len))
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0_Value
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1 uint64
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_val_Request_val_Nodes_ptr.f1)
+										list_list_list_lift_ret_val_val_Request_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_Request_val_Nodes_val_F1
+										list_list_list_lift_ret_val_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_val_Request_val_Nodes_val)
+									}
+									list_list_lift_ret_val_val_Request_val_Nodes[list_list_lift_ret_val_val_Request_val_Nodes_i] = list_list_list_lift_ret_val_val_Request_val_Nodes
+								}
+							}
+							list_list_lift_ret_val_val_Request_val.Nodes = list_list_lift_ret_val_val_Request_val_Nodes
+							list_list_lift_ret_val_val_Request = list_list_lift_ret_val_val_Request_val
+							list_lift_ret_val_val_Request[list_lift_ret_val_val_Request_i] = list_list_lift_ret_val_val_Request
+						}
+					}
+					list_lift_ret_val_val.Request = list_lift_ret_val_val_Request
+					var list_lift_ret_val_val_IdempotencyKey string
+					list_lift_ret_val_val_IdempotencyKey = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.idempotency_key.ptr)), C.int(list_lift_ret_val_ptr.idempotency_key.len))
+					list_lift_ret_val_val.IdempotencyKey = list_lift_ret_val_val_IdempotencyKey
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryExportedFunctionInvoked(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 3 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_completed_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogExportedFunctionCompletedParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Response GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_val_Response_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_val_Response_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_val_Response_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_ptr.response.nodes.len)
+					if list_lift_ret_val_ptr.response.nodes.len > 0 {
+						for list_lift_ret_val_val_Response_val_Nodes_i := 0; list_lift_ret_val_val_Response_val_Nodes_i < int(list_lift_ret_val_ptr.response.nodes.len); list_lift_ret_val_val_Response_val_Nodes_i++ {
+							var empty_list_lift_ret_val_val_Response_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.response.nodes.ptr)) +
+								uintptr(list_lift_ret_val_val_Response_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Response_val_Nodes)))
+							var list_list_lift_ret_val_val_Response_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val = list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []bool
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]bool, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val bool
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val := list_list_lift_ret_val_val_Response_val_Nodes_val_ptr
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_val_Response_val_Nodes_val = list_list_list_lift_ret_val_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val[list_list_lift_ret_val_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr.val)
+									list_list_lift_ret_val_val_Response_val_Nodes_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_val_Response_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Response_val_Nodes_val.SetErr(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_val_Response_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint8
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint8(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint16
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint16(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val uint64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = uint64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int8
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int8(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int16
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int16(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val int64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = int64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val float32
+								list_list_lift_ret_val_val_Response_val_Nodes_val = float32(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val float64
+								list_list_lift_ret_val_val_Response_val_Nodes_val = float64(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val rune
+								list_list_lift_ret_val_val_Response_val_Nodes_val = rune(list_list_lift_ret_val_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								list_list_lift_ret_val_val_Response_val_Nodes_val := list_list_lift_ret_val_val_Response_val_Nodes_ptr
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val string
+								list_list_lift_ret_val_val_Response_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.len))
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_val_Response_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F0.Value = list_list_lift_ret_val_val_Response_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_val_Response_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_val_Response_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_val_Response_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_val_Response_val_Nodes_val)
+							}
+							list_lift_ret_val_val_Response_val_Nodes[list_lift_ret_val_val_Response_val_Nodes_i] = list_list_lift_ret_val_val_Response_val_Nodes
+						}
+					}
+					list_lift_ret_val_val_Response_val.Nodes = list_lift_ret_val_val_Response_val_Nodes
+					list_lift_ret_val_val_Response = list_lift_ret_val_val_Response_val
+					list_lift_ret_val_val.Response = list_lift_ret_val_val_Response
+					var list_lift_ret_val_val_ConsumedFuel int64
+					list_lift_ret_val_val_ConsumedFuel = int64(list_lift_ret_val_ptr.consumed_fuel)
+					list_lift_ret_val_val.ConsumedFuel = list_lift_ret_val_val_ConsumedFuel
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryExportedFunctionCompleted(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 4 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntrySuspend(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 5 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_error_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogErrorParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Error string
+					list_lift_ret_val_val_Error = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.error.ptr)), C.int(list_lift_ret_val_ptr.error.len))
+					list_lift_ret_val_val.Error = list_lift_ret_val_val_Error
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryError(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 6 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryNoOp(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 7 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_jump_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogJumpParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Start GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_val_Start_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_val_Start_val_val uint64
+					list_lift_ret_val_val_Start_val_val = uint64(list_lift_ret_val_ptr.start)
+					list_lift_ret_val_val_Start_val = list_lift_ret_val_val_Start_val_val
+					list_lift_ret_val_val_Start = list_lift_ret_val_val_Start_val
+					list_lift_ret_val_val.Start = list_lift_ret_val_val_Start
+					var list_lift_ret_val_val_End GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_val_End_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_val_End_val_val uint64
+					list_lift_ret_val_val_End_val_val = uint64(list_lift_ret_val_ptr.end)
+					list_lift_ret_val_val_End_val = list_lift_ret_val_val_End_val_val
+					list_lift_ret_val_val_End = list_lift_ret_val_val_End_val
+					list_lift_ret_val_val.End = list_lift_ret_val_val_End
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryJump(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 8 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryInterrupted(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 9 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryExited(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 10 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_change_retry_policy_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogChangeRetryPolicyParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_RetryPolicy GolemApi1_1_0_OplogRetryPolicy
+					var list_lift_ret_val_val_RetryPolicy_val GolemApi1_1_0_HostRetryPolicy
+					var list_lift_ret_val_val_RetryPolicy_val_MaxAttempts uint32
+					list_lift_ret_val_val_RetryPolicy_val_MaxAttempts = uint32(list_lift_ret_val_ptr.retry_policy.max_attempts)
+					list_lift_ret_val_val_RetryPolicy_val.MaxAttempts = list_lift_ret_val_val_RetryPolicy_val_MaxAttempts
+					var list_lift_ret_val_val_RetryPolicy_val_MinDelay GolemApi1_1_0_HostDuration
+					var list_lift_ret_val_val_RetryPolicy_val_MinDelay_val WasiClocks0_2_0_MonotonicClockDuration
+					var list_lift_ret_val_val_RetryPolicy_val_MinDelay_val_val uint64
+					list_lift_ret_val_val_RetryPolicy_val_MinDelay_val_val = uint64(list_lift_ret_val_ptr.retry_policy.min_delay)
+					list_lift_ret_val_val_RetryPolicy_val_MinDelay_val = list_lift_ret_val_val_RetryPolicy_val_MinDelay_val_val
+					list_lift_ret_val_val_RetryPolicy_val_MinDelay = list_lift_ret_val_val_RetryPolicy_val_MinDelay_val
+					list_lift_ret_val_val_RetryPolicy_val.MinDelay = list_lift_ret_val_val_RetryPolicy_val_MinDelay
+					var list_lift_ret_val_val_RetryPolicy_val_MaxDelay GolemApi1_1_0_HostDuration
+					var list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val WasiClocks0_2_0_MonotonicClockDuration
+					var list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val_val uint64
+					list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val_val = uint64(list_lift_ret_val_ptr.retry_policy.max_delay)
+					list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val = list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val_val
+					list_lift_ret_val_val_RetryPolicy_val_MaxDelay = list_lift_ret_val_val_RetryPolicy_val_MaxDelay_val
+					list_lift_ret_val_val_RetryPolicy_val.MaxDelay = list_lift_ret_val_val_RetryPolicy_val_MaxDelay
+					var list_lift_ret_val_val_RetryPolicy_val_Multiplier float64
+					list_lift_ret_val_val_RetryPolicy_val_Multiplier = float64(list_lift_ret_val_ptr.retry_policy.multiplier)
+					list_lift_ret_val_val_RetryPolicy_val.Multiplier = list_lift_ret_val_val_RetryPolicy_val_Multiplier
+					var list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor Option[float64]
+					if list_lift_ret_val_ptr.retry_policy.max_jitter_factor.is_some {
+						var list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor_val float64
+						list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor_val = float64(list_lift_ret_val_ptr.retry_policy.max_jitter_factor.val)
+						list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor.Set(list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor_val)
+					} else {
+						list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor.Unset()
+					}
+					list_lift_ret_val_val_RetryPolicy_val.MaxJitterFactor = list_lift_ret_val_val_RetryPolicy_val_MaxJitterFactor
+					list_lift_ret_val_val_RetryPolicy = list_lift_ret_val_val_RetryPolicy_val
+					list_lift_ret_val_val.RetryPolicy = list_lift_ret_val_val_RetryPolicy
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryChangeRetryPolicy(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 11 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryBeginAtomicRegion(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 12 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_end_atomic_region_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogEndAtomicRegionParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_BeginIndex GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_val_BeginIndex_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_val_BeginIndex_val_val uint64
+					list_lift_ret_val_val_BeginIndex_val_val = uint64(list_lift_ret_val_ptr.begin_index)
+					list_lift_ret_val_val_BeginIndex_val = list_lift_ret_val_val_BeginIndex_val_val
+					list_lift_ret_val_val_BeginIndex = list_lift_ret_val_val_BeginIndex_val
+					list_lift_ret_val_val.BeginIndex = list_lift_ret_val_val_BeginIndex
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryEndAtomicRegion(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 13 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryBeginRemoteWrite(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 14 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_end_remote_write_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogEndRemoteWriteParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_BeginIndex GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_val_BeginIndex_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_val_BeginIndex_val_val uint64
+					list_lift_ret_val_val_BeginIndex_val_val = uint64(list_lift_ret_val_ptr.begin_index)
+					list_lift_ret_val_val_BeginIndex_val = list_lift_ret_val_val_BeginIndex_val_val
+					list_lift_ret_val_val_BeginIndex = list_lift_ret_val_val_BeginIndex_val
+					list_lift_ret_val_val.BeginIndex = list_lift_ret_val_val_BeginIndex
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryEndRemoteWrite(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 15 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogPendingWorkerInvocationParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Invocation GolemApi1_1_0_OplogWorkerInvocation
+					if list_lift_ret_val_ptr.invocation.tag == 0 {
+						list_lift_ret_val_val_Invocation_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_invocation_parameters_t)(unsafe.Pointer(&list_lift_ret_val_ptr.invocation.val))
+						var list_lift_ret_val_val_Invocation_val GolemApi1_1_0_OplogExportedFunctionInvocationParameters
+						var list_lift_ret_val_val_Invocation_val_IdempotencyKey string
+						list_lift_ret_val_val_Invocation_val_IdempotencyKey = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Invocation_ptr.idempotency_key.ptr)), C.int(list_lift_ret_val_val_Invocation_ptr.idempotency_key.len))
+						list_lift_ret_val_val_Invocation_val.IdempotencyKey = list_lift_ret_val_val_Invocation_val_IdempotencyKey
+						var list_lift_ret_val_val_Invocation_val_FunctionName string
+						list_lift_ret_val_val_Invocation_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Invocation_ptr.function_name.ptr)), C.int(list_lift_ret_val_val_Invocation_ptr.function_name.len))
+						list_lift_ret_val_val_Invocation_val.FunctionName = list_lift_ret_val_val_Invocation_val_FunctionName
+						var list_lift_ret_val_val_Invocation_val_Input Option[[]GolemApi1_1_0_OplogWitValue]
+						if list_lift_ret_val_val_Invocation_ptr.input.is_some {
+							var list_lift_ret_val_val_Invocation_val_Input_val []GolemApi1_1_0_OplogWitValue
+							list_lift_ret_val_val_Invocation_val_Input_val = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_val_Invocation_ptr.input.val.len)
+							if list_lift_ret_val_val_Invocation_ptr.input.val.len > 0 {
+								for list_lift_ret_val_val_Invocation_val_Input_val_i := 0; list_lift_ret_val_val_Invocation_val_Input_val_i < int(list_lift_ret_val_val_Invocation_ptr.input.val.len); list_lift_ret_val_val_Invocation_val_Input_val_i++ {
+									var empty_list_lift_ret_val_val_Invocation_val_Input_val C.golem_api_1_1_0_oplog_wit_value_t
+									list_lift_ret_val_val_Invocation_val_Input_val_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_Invocation_ptr.input.val.ptr)) +
+										uintptr(list_lift_ret_val_val_Invocation_val_Input_val_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Invocation_val_Input_val)))
+									var list_list_lift_ret_val_val_Invocation_val_Input_val GolemApi1_1_0_OplogWitValue
+									var list_list_lift_ret_val_val_Invocation_val_Input_val_val GolemRpc0_1_0_TypesWitValue
+									var list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes []GolemRpc0_1_0_TypesWitNode
+									list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_val_Invocation_val_Input_val_ptr.nodes.len)
+									if list_lift_ret_val_val_Invocation_val_Input_val_ptr.nodes.len > 0 {
+										for list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_i := 0; list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_i < int(list_lift_ret_val_val_Invocation_val_Input_val_ptr.nodes.len); list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_i++ {
+											var empty_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes C.golem_rpc_types_wit_node_t
+											list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_Invocation_val_Input_val_ptr.nodes.ptr)) +
+												uintptr(list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes)))
+											var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes GolemRpc0_1_0_TypesWitNode
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 0 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 1 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0 uint32
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f0)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f1.is_some {
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val int32
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f1.val)
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1_val)
+												} else {
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1.Unset()
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 2 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val uint32
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 3 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val []bool
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val bool
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)))
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val := list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 4 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 5 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 6 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.is_some {
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val int32
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val)
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.Set(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val)
+												} else {
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.Unset()
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 7 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+												if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.is_err {
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+													if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr.is_some {
+														var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val int32
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr.val)
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val)
+													} else {
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val.Unset()
+													}
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.SetErr(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val)
+												} else {
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+													var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+													if list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr.is_some {
+														var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val int32
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_ptr.val)
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val_val
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val_val)
+													} else {
+														list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val.Unset()
+													}
+													list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.Set(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_val)
+												}
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 8 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val uint8
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = uint8(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 9 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val uint16
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = uint16(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 10 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val uint32
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 11 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val uint64
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = uint64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 12 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val int8
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = int8(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 13 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val int16
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = int16(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 14 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val int32
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = int32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 15 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val int64
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = int64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 16 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val float32
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = float32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 17 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val float64
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = float64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 18 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val rune
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = rune(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 19 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val := list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 20 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val string
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.len))
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 21 {
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0_Value string
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f0.value.len))
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0_Value
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F0
+												var list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1 uint64
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_ptr.f1)
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val_F1
+												list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes[list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes_i] = list_list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes
+										}
+									}
+									list_list_lift_ret_val_val_Invocation_val_Input_val_val.Nodes = list_list_lift_ret_val_val_Invocation_val_Input_val_val_Nodes
+									list_list_lift_ret_val_val_Invocation_val_Input_val = list_list_lift_ret_val_val_Invocation_val_Input_val_val
+									list_lift_ret_val_val_Invocation_val_Input_val[list_lift_ret_val_val_Invocation_val_Input_val_i] = list_list_lift_ret_val_val_Invocation_val_Input_val
+								}
+							}
+							list_lift_ret_val_val_Invocation_val_Input.Set(list_lift_ret_val_val_Invocation_val_Input_val)
+						} else {
+							list_lift_ret_val_val_Invocation_val_Input.Unset()
+						}
+						list_lift_ret_val_val_Invocation_val.Input = list_lift_ret_val_val_Invocation_val_Input
+						list_lift_ret_val_val_Invocation = GolemApi1_1_0_OplogWorkerInvocationExportedFunction(list_lift_ret_val_val_Invocation_val)
+					}
+					if list_lift_ret_val_ptr.invocation.tag == 1 {
+						list_lift_ret_val_val_Invocation_ptr := *(*C.golem_api_1_1_0_oplog_component_version_t)(unsafe.Pointer(&list_lift_ret_val_ptr.invocation.val))
+						var list_lift_ret_val_val_Invocation_val GolemApi1_1_0_OplogComponentVersion
+						var list_lift_ret_val_val_Invocation_val_val GolemApi1_1_0_HostComponentVersion
+						var list_lift_ret_val_val_Invocation_val_val_val uint64
+						list_lift_ret_val_val_Invocation_val_val_val = uint64(list_lift_ret_val_val_Invocation_ptr)
+						list_lift_ret_val_val_Invocation_val_val = list_lift_ret_val_val_Invocation_val_val_val
+						list_lift_ret_val_val_Invocation_val = list_lift_ret_val_val_Invocation_val_val
+						list_lift_ret_val_val_Invocation = GolemApi1_1_0_OplogWorkerInvocationManualUpdate(list_lift_ret_val_val_Invocation_val)
+					}
+					list_lift_ret_val_val.Invocation = list_lift_ret_val_val_Invocation
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryPendingWorkerInvocation(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 16 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_pending_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogPendingUpdateParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val_val uint64
+					list_lift_ret_val_val_TargetVersion_val_val = uint64(list_lift_ret_val_ptr.target_version)
+					list_lift_ret_val_val_TargetVersion_val = list_lift_ret_val_val_TargetVersion_val_val
+					list_lift_ret_val_val_TargetVersion = list_lift_ret_val_val_TargetVersion_val
+					list_lift_ret_val_val.TargetVersion = list_lift_ret_val_val_TargetVersion
+					var list_lift_ret_val_val_UpdateDescription GolemApi1_1_0_OplogUpdateDescription
+					if list_lift_ret_val_ptr.update_description.tag == 0 {
+						list_lift_ret_val_val_UpdateDescription = GolemApi1_1_0_OplogUpdateDescriptionAutoUpdate()
+					}
+					if list_lift_ret_val_ptr.update_description.tag == 1 {
+						list_lift_ret_val_val_UpdateDescription_ptr := *(*C.binding_list_u8_t)(unsafe.Pointer(&list_lift_ret_val_ptr.update_description.val))
+						var list_lift_ret_val_val_UpdateDescription_val []uint8
+						list_lift_ret_val_val_UpdateDescription_val = make([]uint8, list_lift_ret_val_val_UpdateDescription_ptr.len)
+						if list_lift_ret_val_val_UpdateDescription_ptr.len > 0 {
+							for list_lift_ret_val_val_UpdateDescription_val_i := 0; list_lift_ret_val_val_UpdateDescription_val_i < int(list_lift_ret_val_val_UpdateDescription_ptr.len); list_lift_ret_val_val_UpdateDescription_val_i++ {
+								var empty_list_lift_ret_val_val_UpdateDescription_val C.uint8_t
+								list_lift_ret_val_val_UpdateDescription_val_ptr := *(*C.uint8_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_UpdateDescription_ptr.ptr)) +
+									uintptr(list_lift_ret_val_val_UpdateDescription_val_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_UpdateDescription_val)))
+								var list_list_lift_ret_val_val_UpdateDescription_val uint8
+								list_list_lift_ret_val_val_UpdateDescription_val = uint8(list_lift_ret_val_val_UpdateDescription_val_ptr)
+								list_lift_ret_val_val_UpdateDescription_val[list_lift_ret_val_val_UpdateDescription_val_i] = list_list_lift_ret_val_val_UpdateDescription_val
+							}
+						}
+						list_lift_ret_val_val_UpdateDescription = GolemApi1_1_0_OplogUpdateDescriptionSnapshotBased(list_lift_ret_val_val_UpdateDescription_val)
+					}
+					list_lift_ret_val_val.UpdateDescription = list_lift_ret_val_val_UpdateDescription
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryPendingUpdate(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 17 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_successful_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogSuccessfulUpdateParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val_val uint64
+					list_lift_ret_val_val_TargetVersion_val_val = uint64(list_lift_ret_val_ptr.target_version)
+					list_lift_ret_val_val_TargetVersion_val = list_lift_ret_val_val_TargetVersion_val_val
+					list_lift_ret_val_val_TargetVersion = list_lift_ret_val_val_TargetVersion_val
+					list_lift_ret_val_val.TargetVersion = list_lift_ret_val_val_TargetVersion
+					var list_lift_ret_val_val_NewComponentSize uint64
+					list_lift_ret_val_val_NewComponentSize = uint64(list_lift_ret_val_ptr.new_component_size)
+					list_lift_ret_val_val.NewComponentSize = list_lift_ret_val_val_NewComponentSize
+					var list_lift_ret_val_val_NewActivePlugins []GolemApi1_1_0_OplogPluginInstallationDescription
+					list_lift_ret_val_val_NewActivePlugins = make([]GolemApi1_1_0_OplogPluginInstallationDescription, list_lift_ret_val_ptr.new_active_plugins.len)
+					if list_lift_ret_val_ptr.new_active_plugins.len > 0 {
+						for list_lift_ret_val_val_NewActivePlugins_i := 0; list_lift_ret_val_val_NewActivePlugins_i < int(list_lift_ret_val_ptr.new_active_plugins.len); list_lift_ret_val_val_NewActivePlugins_i++ {
+							var empty_list_lift_ret_val_val_NewActivePlugins C.golem_api_1_1_0_oplog_plugin_installation_description_t
+							list_lift_ret_val_val_NewActivePlugins_ptr := *(*C.golem_api_1_1_0_oplog_plugin_installation_description_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.new_active_plugins.ptr)) +
+								uintptr(list_lift_ret_val_val_NewActivePlugins_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_NewActivePlugins)))
+							var list_list_lift_ret_val_val_NewActivePlugins GolemApi1_1_0_OplogPluginInstallationDescription
+							var list_list_lift_ret_val_val_NewActivePlugins_InstallationId GolemApi1_1_0_OplogUuid
+							var list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val GolemApi1_1_0_HostUuid
+							var list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_HighBits uint64
+							list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_HighBits = uint64(list_lift_ret_val_val_NewActivePlugins_ptr.installation_id.high_bits)
+							list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val.HighBits = list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_HighBits
+							var list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_LowBits uint64
+							list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_LowBits = uint64(list_lift_ret_val_val_NewActivePlugins_ptr.installation_id.low_bits)
+							list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val.LowBits = list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val_LowBits
+							list_list_lift_ret_val_val_NewActivePlugins_InstallationId = list_list_lift_ret_val_val_NewActivePlugins_InstallationId_val
+							list_list_lift_ret_val_val_NewActivePlugins.InstallationId = list_list_lift_ret_val_val_NewActivePlugins_InstallationId
+							var list_list_lift_ret_val_val_NewActivePlugins_Name string
+							list_list_lift_ret_val_val_NewActivePlugins_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_NewActivePlugins_ptr.name.ptr)), C.int(list_lift_ret_val_val_NewActivePlugins_ptr.name.len))
+							list_list_lift_ret_val_val_NewActivePlugins.Name = list_list_lift_ret_val_val_NewActivePlugins_Name
+							var list_list_lift_ret_val_val_NewActivePlugins_Version string
+							list_list_lift_ret_val_val_NewActivePlugins_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_NewActivePlugins_ptr.version.ptr)), C.int(list_lift_ret_val_val_NewActivePlugins_ptr.version.len))
+							list_list_lift_ret_val_val_NewActivePlugins.Version = list_list_lift_ret_val_val_NewActivePlugins_Version
+							var list_list_lift_ret_val_val_NewActivePlugins_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+							list_list_lift_ret_val_val_NewActivePlugins_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_val_NewActivePlugins_ptr.parameters.len)
+							if list_lift_ret_val_val_NewActivePlugins_ptr.parameters.len > 0 {
+								for list_list_lift_ret_val_val_NewActivePlugins_Parameters_i := 0; list_list_lift_ret_val_val_NewActivePlugins_Parameters_i < int(list_lift_ret_val_val_NewActivePlugins_ptr.parameters.len); list_list_lift_ret_val_val_NewActivePlugins_Parameters_i++ {
+									var empty_list_list_lift_ret_val_val_NewActivePlugins_Parameters C.binding_tuple2_string_string_t
+									list_list_lift_ret_val_val_NewActivePlugins_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_NewActivePlugins_ptr.parameters.ptr)) +
+										uintptr(list_list_lift_ret_val_val_NewActivePlugins_Parameters_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_NewActivePlugins_Parameters)))
+									var list_list_list_lift_ret_val_val_NewActivePlugins_Parameters GolemApi1_1_0_HostTuple2StringStringT
+									var list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F0 string
+									list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_NewActivePlugins_Parameters_ptr.f0.ptr)), C.int(list_list_lift_ret_val_val_NewActivePlugins_Parameters_ptr.f0.len))
+									list_list_list_lift_ret_val_val_NewActivePlugins_Parameters.F0 = list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F0
+									var list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F1 string
+									list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_val_NewActivePlugins_Parameters_ptr.f1.ptr)), C.int(list_list_lift_ret_val_val_NewActivePlugins_Parameters_ptr.f1.len))
+									list_list_list_lift_ret_val_val_NewActivePlugins_Parameters.F1 = list_list_list_lift_ret_val_val_NewActivePlugins_Parameters_F1
+									list_list_lift_ret_val_val_NewActivePlugins_Parameters[list_list_lift_ret_val_val_NewActivePlugins_Parameters_i] = list_list_list_lift_ret_val_val_NewActivePlugins_Parameters
+								}
+							}
+							list_list_lift_ret_val_val_NewActivePlugins.Parameters = list_list_lift_ret_val_val_NewActivePlugins_Parameters
+							list_lift_ret_val_val_NewActivePlugins[list_lift_ret_val_val_NewActivePlugins_i] = list_list_lift_ret_val_val_NewActivePlugins
+						}
+					}
+					list_lift_ret_val_val.NewActivePlugins = list_lift_ret_val_val_NewActivePlugins
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntrySuccessfulUpdate(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 18 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_failed_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogFailedUpdateParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_val_TargetVersion_val_val uint64
+					list_lift_ret_val_val_TargetVersion_val_val = uint64(list_lift_ret_val_ptr.target_version)
+					list_lift_ret_val_val_TargetVersion_val = list_lift_ret_val_val_TargetVersion_val_val
+					list_lift_ret_val_val_TargetVersion = list_lift_ret_val_val_TargetVersion_val
+					list_lift_ret_val_val.TargetVersion = list_lift_ret_val_val_TargetVersion
+					var list_lift_ret_val_val_Details Option[string]
+					if list_lift_ret_val_ptr.details.is_some {
+						var list_lift_ret_val_val_Details_val string
+						list_lift_ret_val_val_Details_val = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.details.val.ptr)), C.int(list_lift_ret_val_ptr.details.val.len))
+						list_lift_ret_val_val_Details.Set(list_lift_ret_val_val_Details_val)
+					} else {
+						list_lift_ret_val_val_Details.Unset()
+					}
+					list_lift_ret_val_val.Details = list_lift_ret_val_val_Details
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryFailedUpdate(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 19 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_grow_memory_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogGrowMemoryParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Delta uint64
+					list_lift_ret_val_val_Delta = uint64(list_lift_ret_val_ptr.delta)
+					list_lift_ret_val_val.Delta = list_lift_ret_val_val_Delta
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryGrowMemory(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 20 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_create_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogCreateResourceParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_val_ResourceId_val uint64
+					list_lift_ret_val_val_ResourceId_val = uint64(list_lift_ret_val_ptr.resource_id)
+					list_lift_ret_val_val_ResourceId = list_lift_ret_val_val_ResourceId_val
+					list_lift_ret_val_val.ResourceId = list_lift_ret_val_val_ResourceId
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryCreateResource(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 21 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_drop_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDropResourceParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_val_ResourceId_val uint64
+					list_lift_ret_val_val_ResourceId_val = uint64(list_lift_ret_val_ptr.resource_id)
+					list_lift_ret_val_val_ResourceId = list_lift_ret_val_val_ResourceId_val
+					list_lift_ret_val_val.ResourceId = list_lift_ret_val_val_ResourceId
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryDropResource(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 22 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_describe_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDescribeResourceParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_val_ResourceId_val uint64
+					list_lift_ret_val_val_ResourceId_val = uint64(list_lift_ret_val_ptr.resource_id)
+					list_lift_ret_val_val_ResourceId = list_lift_ret_val_val_ResourceId_val
+					list_lift_ret_val_val.ResourceId = list_lift_ret_val_val_ResourceId
+					var list_lift_ret_val_val_ResourceName string
+					list_lift_ret_val_val_ResourceName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.resource_name.ptr)), C.int(list_lift_ret_val_ptr.resource_name.len))
+					list_lift_ret_val_val.ResourceName = list_lift_ret_val_val_ResourceName
+					var list_lift_ret_val_val_ResourceParams []GolemApi1_1_0_OplogWitValue
+					list_lift_ret_val_val_ResourceParams = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_ptr.resource_params.len)
+					if list_lift_ret_val_ptr.resource_params.len > 0 {
+						for list_lift_ret_val_val_ResourceParams_i := 0; list_lift_ret_val_val_ResourceParams_i < int(list_lift_ret_val_ptr.resource_params.len); list_lift_ret_val_val_ResourceParams_i++ {
+							var empty_list_lift_ret_val_val_ResourceParams C.golem_api_1_1_0_oplog_wit_value_t
+							list_lift_ret_val_val_ResourceParams_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.resource_params.ptr)) +
+								uintptr(list_lift_ret_val_val_ResourceParams_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_ResourceParams)))
+							var list_list_lift_ret_val_val_ResourceParams GolemApi1_1_0_OplogWitValue
+							var list_list_lift_ret_val_val_ResourceParams_val GolemRpc0_1_0_TypesWitValue
+							var list_list_lift_ret_val_val_ResourceParams_val_Nodes []GolemRpc0_1_0_TypesWitNode
+							list_list_lift_ret_val_val_ResourceParams_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_val_ResourceParams_ptr.nodes.len)
+							if list_lift_ret_val_val_ResourceParams_ptr.nodes.len > 0 {
+								for list_list_lift_ret_val_val_ResourceParams_val_Nodes_i := 0; list_list_lift_ret_val_val_ResourceParams_val_Nodes_i < int(list_lift_ret_val_val_ResourceParams_ptr.nodes.len); list_list_lift_ret_val_val_ResourceParams_val_Nodes_i++ {
+									var empty_list_list_lift_ret_val_val_ResourceParams_val_Nodes C.golem_rpc_types_wit_node_t
+									list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_val_ResourceParams_ptr.nodes.ptr)) +
+										uintptr(list_list_lift_ret_val_val_ResourceParams_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_val_ResourceParams_val_Nodes)))
+									var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes GolemRpc0_1_0_TypesWitNode
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 0 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 1 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0 uint32
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f0)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f1.is_some {
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val_val int32
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f1.val)
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val_val
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1_val)
+										} else {
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1.Unset()
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 2 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val uint32
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 3 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val []bool
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val bool
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)))
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val := list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 4 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 5 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 6 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.is_some {
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val int32
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val)
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.Set(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.Unset()
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 7 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+										if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.is_err {
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.SetErr(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val.Set(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.Set(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_val)
+										}
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 8 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val uint8
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = uint8(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 9 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val uint16
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = uint16(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 10 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val uint32
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = uint32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 11 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val uint64
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = uint64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 12 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val int8
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = int8(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 13 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val int16
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = int16(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 14 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val int32
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = int32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 15 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val int64
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = int64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 16 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val float32
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = float32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 17 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val float64
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = float64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 18 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val rune
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = rune(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 19 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val := list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 20 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val string
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.len))
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.tag == 21 {
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0_Value string
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f0.value.len))
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0_Value
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.F0 = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1 uint64
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_ptr.f1)
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val.F1 = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val_F1
+										list_list_list_lift_ret_val_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_val_ResourceParams_val_Nodes_val)
+									}
+									list_list_lift_ret_val_val_ResourceParams_val_Nodes[list_list_lift_ret_val_val_ResourceParams_val_Nodes_i] = list_list_list_lift_ret_val_val_ResourceParams_val_Nodes
+								}
+							}
+							list_list_lift_ret_val_val_ResourceParams_val.Nodes = list_list_lift_ret_val_val_ResourceParams_val_Nodes
+							list_list_lift_ret_val_val_ResourceParams = list_list_lift_ret_val_val_ResourceParams_val
+							list_lift_ret_val_val_ResourceParams[list_lift_ret_val_val_ResourceParams_i] = list_list_lift_ret_val_val_ResourceParams
+						}
+					}
+					list_lift_ret_val_val.ResourceParams = list_lift_ret_val_val_ResourceParams
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryDescribeResource(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 23 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_log_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogLogParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Level GolemApi1_1_0_OplogLogLevel
+					if list_lift_ret_val_ptr.level == 0 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelStdout()
+					}
+					if list_lift_ret_val_ptr.level == 1 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelStderr()
+					}
+					if list_lift_ret_val_ptr.level == 2 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelTrace()
+					}
+					if list_lift_ret_val_ptr.level == 3 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelDebug()
+					}
+					if list_lift_ret_val_ptr.level == 4 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelInfo()
+					}
+					if list_lift_ret_val_ptr.level == 5 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelWarn()
+					}
+					if list_lift_ret_val_ptr.level == 6 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelError()
+					}
+					if list_lift_ret_val_ptr.level == 7 {
+						list_lift_ret_val_val_Level = GolemApi1_1_0_OplogLogLevelCritical()
+					}
+					list_lift_ret_val_val.Level = list_lift_ret_val_val_Level
+					var list_lift_ret_val_val_Context string
+					list_lift_ret_val_val_Context = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.context.ptr)), C.int(list_lift_ret_val_ptr.context.len))
+					list_lift_ret_val_val.Context = list_lift_ret_val_val_Context
+					var list_lift_ret_val_val_Message string
+					list_lift_ret_val_val_Message = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.message.ptr)), C.int(list_lift_ret_val_ptr.message.len))
+					list_lift_ret_val_val.Message = list_lift_ret_val_val_Message
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryLog(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 24 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_val_Seconds uint64
+					list_lift_ret_val_val_val_Seconds = uint64(list_lift_ret_val_ptr.seconds)
+					list_lift_ret_val_val_val.Seconds = list_lift_ret_val_val_val_Seconds
+					var list_lift_ret_val_val_val_Nanoseconds uint32
+					list_lift_ret_val_val_val_Nanoseconds = uint32(list_lift_ret_val_ptr.nanoseconds)
+					list_lift_ret_val_val_val.Nanoseconds = list_lift_ret_val_val_val_Nanoseconds
+					list_lift_ret_val_val = list_lift_ret_val_val_val
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryRestart(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 25 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_activate_plugin_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogActivatePluginParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Plugin GolemApi1_1_0_OplogPluginInstallationDescription
+					var list_lift_ret_val_val_Plugin_InstallationId GolemApi1_1_0_OplogUuid
+					var list_lift_ret_val_val_Plugin_InstallationId_val GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_val_Plugin_InstallationId_val_HighBits uint64
+					list_lift_ret_val_val_Plugin_InstallationId_val_HighBits = uint64(list_lift_ret_val_ptr.plugin.installation_id.high_bits)
+					list_lift_ret_val_val_Plugin_InstallationId_val.HighBits = list_lift_ret_val_val_Plugin_InstallationId_val_HighBits
+					var list_lift_ret_val_val_Plugin_InstallationId_val_LowBits uint64
+					list_lift_ret_val_val_Plugin_InstallationId_val_LowBits = uint64(list_lift_ret_val_ptr.plugin.installation_id.low_bits)
+					list_lift_ret_val_val_Plugin_InstallationId_val.LowBits = list_lift_ret_val_val_Plugin_InstallationId_val_LowBits
+					list_lift_ret_val_val_Plugin_InstallationId = list_lift_ret_val_val_Plugin_InstallationId_val
+					list_lift_ret_val_val_Plugin.InstallationId = list_lift_ret_val_val_Plugin_InstallationId
+					var list_lift_ret_val_val_Plugin_Name string
+					list_lift_ret_val_val_Plugin_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.plugin.name.ptr)), C.int(list_lift_ret_val_ptr.plugin.name.len))
+					list_lift_ret_val_val_Plugin.Name = list_lift_ret_val_val_Plugin_Name
+					var list_lift_ret_val_val_Plugin_Version string
+					list_lift_ret_val_val_Plugin_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.plugin.version.ptr)), C.int(list_lift_ret_val_ptr.plugin.version.len))
+					list_lift_ret_val_val_Plugin.Version = list_lift_ret_val_val_Plugin_Version
+					var list_lift_ret_val_val_Plugin_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_val_Plugin_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_ptr.plugin.parameters.len)
+					if list_lift_ret_val_ptr.plugin.parameters.len > 0 {
+						for list_lift_ret_val_val_Plugin_Parameters_i := 0; list_lift_ret_val_val_Plugin_Parameters_i < int(list_lift_ret_val_ptr.plugin.parameters.len); list_lift_ret_val_val_Plugin_Parameters_i++ {
+							var empty_list_lift_ret_val_val_Plugin_Parameters C.binding_tuple2_string_string_t
+							list_lift_ret_val_val_Plugin_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.plugin.parameters.ptr)) +
+								uintptr(list_lift_ret_val_val_Plugin_Parameters_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Plugin_Parameters)))
+							var list_list_lift_ret_val_val_Plugin_Parameters GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_val_Plugin_Parameters_F0 string
+							list_list_lift_ret_val_val_Plugin_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Plugin_Parameters_ptr.f0.ptr)), C.int(list_lift_ret_val_val_Plugin_Parameters_ptr.f0.len))
+							list_list_lift_ret_val_val_Plugin_Parameters.F0 = list_list_lift_ret_val_val_Plugin_Parameters_F0
+							var list_list_lift_ret_val_val_Plugin_Parameters_F1 string
+							list_list_lift_ret_val_val_Plugin_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Plugin_Parameters_ptr.f1.ptr)), C.int(list_lift_ret_val_val_Plugin_Parameters_ptr.f1.len))
+							list_list_lift_ret_val_val_Plugin_Parameters.F1 = list_list_lift_ret_val_val_Plugin_Parameters_F1
+							list_lift_ret_val_val_Plugin_Parameters[list_lift_ret_val_val_Plugin_Parameters_i] = list_list_lift_ret_val_val_Plugin_Parameters
+						}
+					}
+					list_lift_ret_val_val_Plugin.Parameters = list_lift_ret_val_val_Plugin_Parameters
+					list_lift_ret_val_val.Plugin = list_lift_ret_val_val_Plugin
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryActivatePlugin(list_lift_ret_val_val)
+				}
+				if lift_ret_val_ptr.tag == 26 {
+					list_lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_deactivate_plugin_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.val))
+					var list_lift_ret_val_val GolemApi1_1_0_OplogDeactivatePluginParameters
+					var list_lift_ret_val_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_ptr.timestamp.seconds)
+					list_lift_ret_val_val_Timestamp_val.Seconds = list_lift_ret_val_val_Timestamp_val_Seconds
+					var list_lift_ret_val_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_val_Timestamp_val.Nanoseconds = list_lift_ret_val_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_val_Timestamp = list_lift_ret_val_val_Timestamp_val
+					list_lift_ret_val_val.Timestamp = list_lift_ret_val_val_Timestamp
+					var list_lift_ret_val_val_Plugin GolemApi1_1_0_OplogPluginInstallationDescription
+					var list_lift_ret_val_val_Plugin_InstallationId GolemApi1_1_0_OplogUuid
+					var list_lift_ret_val_val_Plugin_InstallationId_val GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_val_Plugin_InstallationId_val_HighBits uint64
+					list_lift_ret_val_val_Plugin_InstallationId_val_HighBits = uint64(list_lift_ret_val_ptr.plugin.installation_id.high_bits)
+					list_lift_ret_val_val_Plugin_InstallationId_val.HighBits = list_lift_ret_val_val_Plugin_InstallationId_val_HighBits
+					var list_lift_ret_val_val_Plugin_InstallationId_val_LowBits uint64
+					list_lift_ret_val_val_Plugin_InstallationId_val_LowBits = uint64(list_lift_ret_val_ptr.plugin.installation_id.low_bits)
+					list_lift_ret_val_val_Plugin_InstallationId_val.LowBits = list_lift_ret_val_val_Plugin_InstallationId_val_LowBits
+					list_lift_ret_val_val_Plugin_InstallationId = list_lift_ret_val_val_Plugin_InstallationId_val
+					list_lift_ret_val_val_Plugin.InstallationId = list_lift_ret_val_val_Plugin_InstallationId
+					var list_lift_ret_val_val_Plugin_Name string
+					list_lift_ret_val_val_Plugin_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.plugin.name.ptr)), C.int(list_lift_ret_val_ptr.plugin.name.len))
+					list_lift_ret_val_val_Plugin.Name = list_lift_ret_val_val_Plugin_Name
+					var list_lift_ret_val_val_Plugin_Version string
+					list_lift_ret_val_val_Plugin_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_ptr.plugin.version.ptr)), C.int(list_lift_ret_val_ptr.plugin.version.len))
+					list_lift_ret_val_val_Plugin.Version = list_lift_ret_val_val_Plugin_Version
+					var list_lift_ret_val_val_Plugin_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_val_Plugin_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_ptr.plugin.parameters.len)
+					if list_lift_ret_val_ptr.plugin.parameters.len > 0 {
+						for list_lift_ret_val_val_Plugin_Parameters_i := 0; list_lift_ret_val_val_Plugin_Parameters_i < int(list_lift_ret_val_ptr.plugin.parameters.len); list_lift_ret_val_val_Plugin_Parameters_i++ {
+							var empty_list_lift_ret_val_val_Plugin_Parameters C.binding_tuple2_string_string_t
+							list_lift_ret_val_val_Plugin_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_ptr.plugin.parameters.ptr)) +
+								uintptr(list_lift_ret_val_val_Plugin_Parameters_i)*unsafe.Sizeof(empty_list_lift_ret_val_val_Plugin_Parameters)))
+							var list_list_lift_ret_val_val_Plugin_Parameters GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_val_Plugin_Parameters_F0 string
+							list_list_lift_ret_val_val_Plugin_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Plugin_Parameters_ptr.f0.ptr)), C.int(list_lift_ret_val_val_Plugin_Parameters_ptr.f0.len))
+							list_list_lift_ret_val_val_Plugin_Parameters.F0 = list_list_lift_ret_val_val_Plugin_Parameters_F0
+							var list_list_lift_ret_val_val_Plugin_Parameters_F1 string
+							list_list_lift_ret_val_val_Plugin_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_val_Plugin_Parameters_ptr.f1.ptr)), C.int(list_lift_ret_val_val_Plugin_Parameters_ptr.f1.len))
+							list_list_lift_ret_val_val_Plugin_Parameters.F1 = list_list_lift_ret_val_val_Plugin_Parameters_F1
+							list_lift_ret_val_val_Plugin_Parameters[list_lift_ret_val_val_Plugin_Parameters_i] = list_list_lift_ret_val_val_Plugin_Parameters
+						}
+					}
+					list_lift_ret_val_val_Plugin.Parameters = list_lift_ret_val_val_Plugin_Parameters
+					list_lift_ret_val_val.Plugin = list_lift_ret_val_val_Plugin
+					list_lift_ret_val = GolemApi1_1_0_OplogOplogEntryDeactivatePlugin(list_lift_ret_val_val)
+				}
+				lift_ret_val[lift_ret_val_i] = list_lift_ret_val
+			}
+		}
+		lift_ret.Set(lift_ret_val)
+	} else {
+		lift_ret.Unset()
+	}
+	return lift_ret
+}
+
+func NewSearchOplog(worker_id GolemApi1_1_0_OplogWorkerId, text string) GolemApi1_1_0_OplogSearchOplog {
+	var lower_worker_id C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_val C.golem_api_1_1_0_host_worker_id_t
+	var lower_worker_id_val_component_id C.golem_api_1_1_0_host_component_id_t
+	var lower_worker_id_val_component_id_uuid C.golem_api_1_1_0_host_uuid_t
+	lower_worker_id_val_component_id_uuid_high_bits := C.uint64_t(worker_id.ComponentId.Uuid.HighBits)
+	lower_worker_id_val_component_id_uuid.high_bits = lower_worker_id_val_component_id_uuid_high_bits
+	lower_worker_id_val_component_id_uuid_low_bits := C.uint64_t(worker_id.ComponentId.Uuid.LowBits)
+	lower_worker_id_val_component_id_uuid.low_bits = lower_worker_id_val_component_id_uuid_low_bits
+	lower_worker_id_val_component_id.uuid = lower_worker_id_val_component_id_uuid
+	lower_worker_id_val.component_id = lower_worker_id_val_component_id
+	var lower_worker_id_val_worker_name C.binding_string_t
+
+	// use unsafe.Pointer to avoid copy
+	lower_worker_id_val_worker_name.ptr = (*uint8)(unsafe.Pointer(C.CString(worker_id.WorkerName)))
+	lower_worker_id_val_worker_name.len = C.size_t(len(worker_id.WorkerName))
+	lower_worker_id_val.worker_name = lower_worker_id_val_worker_name
+	lower_worker_id = lower_worker_id_val
+	var lower_text C.binding_string_t
+
+	// use unsafe.Pointer to avoid copy
+	lower_text.ptr = (*uint8)(unsafe.Pointer(C.CString(text)))
+	lower_text.len = C.size_t(len(text))
+	ret := C.golem_api_1_1_0_oplog_constructor_search_oplog(&lower_worker_id, &lower_text)
+	var lift_ret GolemApi1_1_0_OplogSearchOplog
+	lift_ret = GolemApi1_1_0_OplogSearchOplog(ret.__handle)
+
+	return lift_ret
+}
+
+func (self GolemApi1_1_0_OplogSearchOplog) GetNext() Option[[]GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT] {
+	var lower_self C.golem_api_1_1_0_oplog_borrow_search_oplog_t
+	lower_self.__handle = C.int32_t(self)
+	var ret C.golem_api_1_1_0_oplog_option_list_tuple2_oplog_index_oplog_entry_t
+	C.golem_api_1_1_0_oplog_method_search_oplog_get_next(lower_self, &ret)
+	var lift_ret Option[[]GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT]
+	if ret.is_some {
+		var lift_ret_val []GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT
+		lift_ret_val = make([]GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT, ret.val.len)
+		if ret.val.len > 0 {
+			for lift_ret_val_i := 0; lift_ret_val_i < int(ret.val.len); lift_ret_val_i++ {
+				var empty_lift_ret_val C.golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_t
+				lift_ret_val_ptr := *(*C.golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_t)(unsafe.Pointer(uintptr(unsafe.Pointer(ret.val.ptr)) +
+					uintptr(lift_ret_val_i)*unsafe.Sizeof(empty_lift_ret_val)))
+				var list_lift_ret_val GolemApi1_1_0_OplogTuple2OplogIndexOplogEntryT
+				var list_lift_ret_val_F0 GolemApi1_1_0_OplogOplogIndex
+				var list_lift_ret_val_F0_val GolemApi1_1_0_HostOplogIndex
+				var list_lift_ret_val_F0_val_val uint64
+				list_lift_ret_val_F0_val_val = uint64(lift_ret_val_ptr.f0)
+				list_lift_ret_val_F0_val = list_lift_ret_val_F0_val_val
+				list_lift_ret_val_F0 = list_lift_ret_val_F0_val
+				list_lift_ret_val.F0 = list_lift_ret_val_F0
+				var list_lift_ret_val_F1 GolemApi1_1_0_OplogOplogEntry
+				if lift_ret_val_ptr.f1.tag == 0 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_create_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogCreateParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_WorkerId GolemApi1_1_0_OplogWorkerId
+					var list_lift_ret_val_F1_val_WorkerId_val GolemApi1_1_0_HostWorkerId
+					var list_lift_ret_val_F1_val_WorkerId_val_ComponentId GolemApi1_1_0_HostComponentId
+					var list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_HighBits uint64
+					list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_HighBits = uint64(list_lift_ret_val_F1_ptr.worker_id.component_id.uuid.high_bits)
+					list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid.HighBits = list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_HighBits
+					var list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_LowBits uint64
+					list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_LowBits = uint64(list_lift_ret_val_F1_ptr.worker_id.component_id.uuid.low_bits)
+					list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid.LowBits = list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid_LowBits
+					list_lift_ret_val_F1_val_WorkerId_val_ComponentId.Uuid = list_lift_ret_val_F1_val_WorkerId_val_ComponentId_Uuid
+					list_lift_ret_val_F1_val_WorkerId_val.ComponentId = list_lift_ret_val_F1_val_WorkerId_val_ComponentId
+					var list_lift_ret_val_F1_val_WorkerId_val_WorkerName string
+					list_lift_ret_val_F1_val_WorkerId_val_WorkerName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.worker_id.worker_name.ptr)), C.int(list_lift_ret_val_F1_ptr.worker_id.worker_name.len))
+					list_lift_ret_val_F1_val_WorkerId_val.WorkerName = list_lift_ret_val_F1_val_WorkerId_val_WorkerName
+					list_lift_ret_val_F1_val_WorkerId = list_lift_ret_val_F1_val_WorkerId_val
+					list_lift_ret_val_F1_val.WorkerId = list_lift_ret_val_F1_val_WorkerId
+					var list_lift_ret_val_F1_val_ComponentVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_F1_val_ComponentVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_F1_val_ComponentVersion_val_val uint64
+					list_lift_ret_val_F1_val_ComponentVersion_val_val = uint64(list_lift_ret_val_F1_ptr.component_version)
+					list_lift_ret_val_F1_val_ComponentVersion_val = list_lift_ret_val_F1_val_ComponentVersion_val_val
+					list_lift_ret_val_F1_val_ComponentVersion = list_lift_ret_val_F1_val_ComponentVersion_val
+					list_lift_ret_val_F1_val.ComponentVersion = list_lift_ret_val_F1_val_ComponentVersion
+					var list_lift_ret_val_F1_val_Args []string
+					list_lift_ret_val_F1_val_Args = make([]string, list_lift_ret_val_F1_ptr.args.len)
+					if list_lift_ret_val_F1_ptr.args.len > 0 {
+						for list_lift_ret_val_F1_val_Args_i := 0; list_lift_ret_val_F1_val_Args_i < int(list_lift_ret_val_F1_ptr.args.len); list_lift_ret_val_F1_val_Args_i++ {
+							var empty_list_lift_ret_val_F1_val_Args C.binding_string_t
+							list_lift_ret_val_F1_val_Args_ptr := *(*C.binding_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.args.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Args_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Args)))
+							var list_list_lift_ret_val_F1_val_Args string
+							list_list_lift_ret_val_F1_val_Args = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Args_ptr.ptr)), C.int(list_lift_ret_val_F1_val_Args_ptr.len))
+							list_lift_ret_val_F1_val_Args[list_lift_ret_val_F1_val_Args_i] = list_list_lift_ret_val_F1_val_Args
+						}
+					}
+					list_lift_ret_val_F1_val.Args = list_lift_ret_val_F1_val_Args
+					var list_lift_ret_val_F1_val_Env []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_F1_val_Env = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_F1_ptr.env.len)
+					if list_lift_ret_val_F1_ptr.env.len > 0 {
+						for list_lift_ret_val_F1_val_Env_i := 0; list_lift_ret_val_F1_val_Env_i < int(list_lift_ret_val_F1_ptr.env.len); list_lift_ret_val_F1_val_Env_i++ {
+							var empty_list_lift_ret_val_F1_val_Env C.binding_tuple2_string_string_t
+							list_lift_ret_val_F1_val_Env_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.env.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Env_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Env)))
+							var list_list_lift_ret_val_F1_val_Env GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_F1_val_Env_F0 string
+							list_list_lift_ret_val_F1_val_Env_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Env_ptr.f0.ptr)), C.int(list_lift_ret_val_F1_val_Env_ptr.f0.len))
+							list_list_lift_ret_val_F1_val_Env.F0 = list_list_lift_ret_val_F1_val_Env_F0
+							var list_list_lift_ret_val_F1_val_Env_F1 string
+							list_list_lift_ret_val_F1_val_Env_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Env_ptr.f1.ptr)), C.int(list_lift_ret_val_F1_val_Env_ptr.f1.len))
+							list_list_lift_ret_val_F1_val_Env.F1 = list_list_lift_ret_val_F1_val_Env_F1
+							list_lift_ret_val_F1_val_Env[list_lift_ret_val_F1_val_Env_i] = list_list_lift_ret_val_F1_val_Env
+						}
+					}
+					list_lift_ret_val_F1_val.Env = list_lift_ret_val_F1_val_Env
+					var list_lift_ret_val_F1_val_AccountId GolemApi1_1_0_OplogAccountId
+					var list_lift_ret_val_F1_val_AccountId_val GolemApi1_1_0_HostAccountId
+					var list_lift_ret_val_F1_val_AccountId_val_Value string
+					list_lift_ret_val_F1_val_AccountId_val_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.account_id.value.ptr)), C.int(list_lift_ret_val_F1_ptr.account_id.value.len))
+					list_lift_ret_val_F1_val_AccountId_val.Value = list_lift_ret_val_F1_val_AccountId_val_Value
+					list_lift_ret_val_F1_val_AccountId = list_lift_ret_val_F1_val_AccountId_val
+					list_lift_ret_val_F1_val.AccountId = list_lift_ret_val_F1_val_AccountId
+					var list_lift_ret_val_F1_val_Parent Option[GolemApi1_1_0_OplogWorkerId]
+					if list_lift_ret_val_F1_ptr.parent.is_some {
+						var list_lift_ret_val_F1_val_Parent_val GolemApi1_1_0_OplogWorkerId
+						var list_lift_ret_val_F1_val_Parent_val_val GolemApi1_1_0_HostWorkerId
+						var list_lift_ret_val_F1_val_Parent_val_val_ComponentId GolemApi1_1_0_HostComponentId
+						var list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid GolemApi1_1_0_HostUuid
+						var list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_HighBits uint64
+						list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_HighBits = uint64(list_lift_ret_val_F1_ptr.parent.val.component_id.uuid.high_bits)
+						list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid.HighBits = list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_HighBits
+						var list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_LowBits uint64
+						list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_LowBits = uint64(list_lift_ret_val_F1_ptr.parent.val.component_id.uuid.low_bits)
+						list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid.LowBits = list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid_LowBits
+						list_lift_ret_val_F1_val_Parent_val_val_ComponentId.Uuid = list_lift_ret_val_F1_val_Parent_val_val_ComponentId_Uuid
+						list_lift_ret_val_F1_val_Parent_val_val.ComponentId = list_lift_ret_val_F1_val_Parent_val_val_ComponentId
+						var list_lift_ret_val_F1_val_Parent_val_val_WorkerName string
+						list_lift_ret_val_F1_val_Parent_val_val_WorkerName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.parent.val.worker_name.ptr)), C.int(list_lift_ret_val_F1_ptr.parent.val.worker_name.len))
+						list_lift_ret_val_F1_val_Parent_val_val.WorkerName = list_lift_ret_val_F1_val_Parent_val_val_WorkerName
+						list_lift_ret_val_F1_val_Parent_val = list_lift_ret_val_F1_val_Parent_val_val
+						list_lift_ret_val_F1_val_Parent.Set(list_lift_ret_val_F1_val_Parent_val)
+					} else {
+						list_lift_ret_val_F1_val_Parent.Unset()
+					}
+					list_lift_ret_val_F1_val.Parent = list_lift_ret_val_F1_val_Parent
+					var list_lift_ret_val_F1_val_ComponentSize uint64
+					list_lift_ret_val_F1_val_ComponentSize = uint64(list_lift_ret_val_F1_ptr.component_size)
+					list_lift_ret_val_F1_val.ComponentSize = list_lift_ret_val_F1_val_ComponentSize
+					var list_lift_ret_val_F1_val_InitialTotalLinearMemorySize uint64
+					list_lift_ret_val_F1_val_InitialTotalLinearMemorySize = uint64(list_lift_ret_val_F1_ptr.initial_total_linear_memory_size)
+					list_lift_ret_val_F1_val.InitialTotalLinearMemorySize = list_lift_ret_val_F1_val_InitialTotalLinearMemorySize
+					var list_lift_ret_val_F1_val_InitialActivePlugins []GolemApi1_1_0_OplogPluginInstallationDescription
+					list_lift_ret_val_F1_val_InitialActivePlugins = make([]GolemApi1_1_0_OplogPluginInstallationDescription, list_lift_ret_val_F1_ptr.initial_active_plugins.len)
+					if list_lift_ret_val_F1_ptr.initial_active_plugins.len > 0 {
+						for list_lift_ret_val_F1_val_InitialActivePlugins_i := 0; list_lift_ret_val_F1_val_InitialActivePlugins_i < int(list_lift_ret_val_F1_ptr.initial_active_plugins.len); list_lift_ret_val_F1_val_InitialActivePlugins_i++ {
+							var empty_list_lift_ret_val_F1_val_InitialActivePlugins C.golem_api_1_1_0_oplog_plugin_installation_description_t
+							list_lift_ret_val_F1_val_InitialActivePlugins_ptr := *(*C.golem_api_1_1_0_oplog_plugin_installation_description_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.initial_active_plugins.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_InitialActivePlugins_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_InitialActivePlugins)))
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins GolemApi1_1_0_OplogPluginInstallationDescription
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId GolemApi1_1_0_OplogUuid
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val GolemApi1_1_0_HostUuid
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_HighBits uint64
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_HighBits = uint64(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.installation_id.high_bits)
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val.HighBits = list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_HighBits
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_LowBits uint64
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_LowBits = uint64(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.installation_id.low_bits)
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val.LowBits = list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val_LowBits
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId = list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId_val
+							list_list_lift_ret_val_F1_val_InitialActivePlugins.InstallationId = list_list_lift_ret_val_F1_val_InitialActivePlugins_InstallationId
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_Name string
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.name.ptr)), C.int(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.name.len))
+							list_list_lift_ret_val_F1_val_InitialActivePlugins.Name = list_list_lift_ret_val_F1_val_InitialActivePlugins_Name
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_Version string
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.version.ptr)), C.int(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.version.len))
+							list_list_lift_ret_val_F1_val_InitialActivePlugins.Version = list_list_lift_ret_val_F1_val_InitialActivePlugins_Version
+							var list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+							list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_F1_val_InitialActivePlugins_ptr.parameters.len)
+							if list_lift_ret_val_F1_val_InitialActivePlugins_ptr.parameters.len > 0 {
+								for list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_i := 0; list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_i < int(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.parameters.len); list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_i++ {
+									var empty_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters C.binding_tuple2_string_string_t
+									list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_InitialActivePlugins_ptr.parameters.ptr)) +
+										uintptr(list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters)))
+									var list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters GolemApi1_1_0_HostTuple2StringStringT
+									var list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F0 string
+									list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_ptr.f0.ptr)), C.int(list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_ptr.f0.len))
+									list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters.F0 = list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F0
+									var list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F1 string
+									list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_ptr.f1.ptr)), C.int(list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_ptr.f1.len))
+									list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters.F1 = list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_F1
+									list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters[list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters_i] = list_list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters
+								}
+							}
+							list_list_lift_ret_val_F1_val_InitialActivePlugins.Parameters = list_list_lift_ret_val_F1_val_InitialActivePlugins_Parameters
+							list_lift_ret_val_F1_val_InitialActivePlugins[list_lift_ret_val_F1_val_InitialActivePlugins_i] = list_list_lift_ret_val_F1_val_InitialActivePlugins
+						}
+					}
+					list_lift_ret_val_F1_val.InitialActivePlugins = list_lift_ret_val_F1_val_InitialActivePlugins
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryCreate(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 1 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_imported_function_invoked_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogImportedFunctionInvokedParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_FunctionName string
+					list_lift_ret_val_F1_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.function_name.ptr)), C.int(list_lift_ret_val_F1_ptr.function_name.len))
+					list_lift_ret_val_F1_val.FunctionName = list_lift_ret_val_F1_val_FunctionName
+					var list_lift_ret_val_F1_val_Request GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_F1_val_Request_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_F1_val_Request_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_F1_val_Request_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_ptr.request.nodes.len)
+					if list_lift_ret_val_F1_ptr.request.nodes.len > 0 {
+						for list_lift_ret_val_F1_val_Request_val_Nodes_i := 0; list_lift_ret_val_F1_val_Request_val_Nodes_i < int(list_lift_ret_val_F1_ptr.request.nodes.len); list_lift_ret_val_F1_val_Request_val_Nodes_i++ {
+							var empty_list_lift_ret_val_F1_val_Request_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.request.nodes.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Request_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Request_val_Nodes)))
+							var list_list_lift_ret_val_F1_val_Request_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1.Set(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val []bool
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]bool, list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val bool
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val := list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val)
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val.SetErr(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint8
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint8(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint16
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint16(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint64
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint64(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val int8
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int8(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val int16
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int16(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val int32
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val int64
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int64(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val float32
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = float32(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val float64
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = float64(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val rune
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = rune(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val := list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val string
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len))
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0.Value = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+							}
+							list_lift_ret_val_F1_val_Request_val_Nodes[list_lift_ret_val_F1_val_Request_val_Nodes_i] = list_list_lift_ret_val_F1_val_Request_val_Nodes
+						}
+					}
+					list_lift_ret_val_F1_val_Request_val.Nodes = list_lift_ret_val_F1_val_Request_val_Nodes
+					list_lift_ret_val_F1_val_Request = list_lift_ret_val_F1_val_Request_val
+					list_lift_ret_val_F1_val.Request = list_lift_ret_val_F1_val_Request
+					var list_lift_ret_val_F1_val_Response GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_F1_val_Response_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_F1_val_Response_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_F1_val_Response_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_ptr.response.nodes.len)
+					if list_lift_ret_val_F1_ptr.response.nodes.len > 0 {
+						for list_lift_ret_val_F1_val_Response_val_Nodes_i := 0; list_lift_ret_val_F1_val_Response_val_Nodes_i < int(list_lift_ret_val_F1_ptr.response.nodes.len); list_lift_ret_val_F1_val_Response_val_Nodes_i++ {
+							var empty_list_lift_ret_val_F1_val_Response_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.response.nodes.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Response_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Response_val_Nodes)))
+							var list_list_lift_ret_val_F1_val_Response_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []bool
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]bool, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val bool
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val := list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val)
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.SetErr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint8
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint8(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint16
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint16(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int8
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int8(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int16
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int16(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val float32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = float32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val float64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = float64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val rune
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = rune(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val := list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val string
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0.Value = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							list_lift_ret_val_F1_val_Response_val_Nodes[list_lift_ret_val_F1_val_Response_val_Nodes_i] = list_list_lift_ret_val_F1_val_Response_val_Nodes
+						}
+					}
+					list_lift_ret_val_F1_val_Response_val.Nodes = list_lift_ret_val_F1_val_Response_val_Nodes
+					list_lift_ret_val_F1_val_Response = list_lift_ret_val_F1_val_Response_val
+					list_lift_ret_val_F1_val.Response = list_lift_ret_val_F1_val_Response
+					var list_lift_ret_val_F1_val_WrappedFunctionType GolemApi1_1_0_OplogWrappedFunctionType
+					if list_lift_ret_val_F1_ptr.wrapped_function_type.tag == 0 {
+						list_lift_ret_val_F1_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeReadLocal()
+					}
+					if list_lift_ret_val_F1_ptr.wrapped_function_type.tag == 1 {
+						list_lift_ret_val_F1_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteLocal()
+					}
+					if list_lift_ret_val_F1_ptr.wrapped_function_type.tag == 2 {
+						list_lift_ret_val_F1_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeReadRemote()
+					}
+					if list_lift_ret_val_F1_ptr.wrapped_function_type.tag == 3 {
+						list_lift_ret_val_F1_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemote()
+					}
+					if list_lift_ret_val_F1_ptr.wrapped_function_type.tag == 4 {
+						list_lift_ret_val_F1_val_WrappedFunctionType_ptr := *(*C.binding_option_oplog_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_ptr.wrapped_function_type.val))
+						var list_lift_ret_val_F1_val_WrappedFunctionType_val Option[GolemApi1_1_0_OplogOplogIndex]
+						if list_lift_ret_val_F1_val_WrappedFunctionType_ptr.is_some {
+							var list_lift_ret_val_F1_val_WrappedFunctionType_val_val GolemApi1_1_0_OplogOplogIndex
+							var list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val GolemApi1_1_0_HostOplogIndex
+							var list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val_val uint64
+							list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val_val = uint64(list_lift_ret_val_F1_val_WrappedFunctionType_ptr.val)
+							list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val = list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val_val
+							list_lift_ret_val_F1_val_WrappedFunctionType_val_val = list_lift_ret_val_F1_val_WrappedFunctionType_val_val_val
+							list_lift_ret_val_F1_val_WrappedFunctionType_val.Set(list_lift_ret_val_F1_val_WrappedFunctionType_val_val)
+						} else {
+							list_lift_ret_val_F1_val_WrappedFunctionType_val.Unset()
+						}
+						list_lift_ret_val_F1_val_WrappedFunctionType = GolemApi1_1_0_OplogWrappedFunctionTypeWriteRemoteBatched(list_lift_ret_val_F1_val_WrappedFunctionType_val)
+					}
+					list_lift_ret_val_F1_val.WrappedFunctionType = list_lift_ret_val_F1_val_WrappedFunctionType
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryImportedFunctionInvoked(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 2 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_invoked_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogExportedFunctionInvokedParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_FunctionName string
+					list_lift_ret_val_F1_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.function_name.ptr)), C.int(list_lift_ret_val_F1_ptr.function_name.len))
+					list_lift_ret_val_F1_val.FunctionName = list_lift_ret_val_F1_val_FunctionName
+					var list_lift_ret_val_F1_val_Request []GolemApi1_1_0_OplogWitValue
+					list_lift_ret_val_F1_val_Request = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_F1_ptr.request.len)
+					if list_lift_ret_val_F1_ptr.request.len > 0 {
+						for list_lift_ret_val_F1_val_Request_i := 0; list_lift_ret_val_F1_val_Request_i < int(list_lift_ret_val_F1_ptr.request.len); list_lift_ret_val_F1_val_Request_i++ {
+							var empty_list_lift_ret_val_F1_val_Request C.golem_api_1_1_0_oplog_wit_value_t
+							list_lift_ret_val_F1_val_Request_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.request.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Request_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Request)))
+							var list_list_lift_ret_val_F1_val_Request GolemApi1_1_0_OplogWitValue
+							var list_list_lift_ret_val_F1_val_Request_val GolemRpc0_1_0_TypesWitValue
+							var list_list_lift_ret_val_F1_val_Request_val_Nodes []GolemRpc0_1_0_TypesWitNode
+							list_list_lift_ret_val_F1_val_Request_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_val_Request_ptr.nodes.len)
+							if list_lift_ret_val_F1_val_Request_ptr.nodes.len > 0 {
+								for list_list_lift_ret_val_F1_val_Request_val_Nodes_i := 0; list_list_lift_ret_val_F1_val_Request_val_Nodes_i < int(list_lift_ret_val_F1_val_Request_ptr.nodes.len); list_list_lift_ret_val_F1_val_Request_val_Nodes_i++ {
+									var empty_list_list_lift_ret_val_F1_val_Request_val_Nodes C.golem_rpc_types_wit_node_t
+									list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_Request_ptr.nodes.ptr)) +
+										uintptr(list_list_lift_ret_val_F1_val_Request_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Request_val_Nodes)))
+									var list_list_list_lift_ret_val_F1_val_Request_val_Nodes GolemRpc0_1_0_TypesWitNode
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 0 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 1 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 uint32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1.is_some {
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val int32
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1.val)
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val_val
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1.Unset()
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 2 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 3 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val []bool
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val bool
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val := list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 4 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 5 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 6 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.is_some {
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val int32
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val)
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Unset()
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 7 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+										if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.is_err {
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.SetErr(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_val)
+										}
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 8 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint8
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint8(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 9 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint16
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint16(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 10 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 11 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val uint64
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = uint64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 12 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val int8
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int8(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 13 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val int16
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int16(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 14 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val int32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 15 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val int64
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = int64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 16 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val float32
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = float32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 17 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val float64
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = float64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 18 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val rune
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = rune(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 19 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val := list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 20 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val string
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.len))
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.tag == 21 {
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value string
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f0.value.len))
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0_Value
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 uint64
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_ptr.f1)
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val_F1
+										list_list_list_lift_ret_val_F1_val_Request_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_F1_val_Request_val_Nodes_val)
+									}
+									list_list_lift_ret_val_F1_val_Request_val_Nodes[list_list_lift_ret_val_F1_val_Request_val_Nodes_i] = list_list_list_lift_ret_val_F1_val_Request_val_Nodes
+								}
+							}
+							list_list_lift_ret_val_F1_val_Request_val.Nodes = list_list_lift_ret_val_F1_val_Request_val_Nodes
+							list_list_lift_ret_val_F1_val_Request = list_list_lift_ret_val_F1_val_Request_val
+							list_lift_ret_val_F1_val_Request[list_lift_ret_val_F1_val_Request_i] = list_list_lift_ret_val_F1_val_Request
+						}
+					}
+					list_lift_ret_val_F1_val.Request = list_lift_ret_val_F1_val_Request
+					var list_lift_ret_val_F1_val_IdempotencyKey string
+					list_lift_ret_val_F1_val_IdempotencyKey = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.idempotency_key.ptr)), C.int(list_lift_ret_val_F1_ptr.idempotency_key.len))
+					list_lift_ret_val_F1_val.IdempotencyKey = list_lift_ret_val_F1_val_IdempotencyKey
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryExportedFunctionInvoked(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 3 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_completed_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogExportedFunctionCompletedParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Response GolemApi1_1_0_OplogWitValue
+					var list_lift_ret_val_F1_val_Response_val GolemRpc0_1_0_TypesWitValue
+					var list_lift_ret_val_F1_val_Response_val_Nodes []GolemRpc0_1_0_TypesWitNode
+					list_lift_ret_val_F1_val_Response_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_ptr.response.nodes.len)
+					if list_lift_ret_val_F1_ptr.response.nodes.len > 0 {
+						for list_lift_ret_val_F1_val_Response_val_Nodes_i := 0; list_lift_ret_val_F1_val_Response_val_Nodes_i < int(list_lift_ret_val_F1_ptr.response.nodes.len); list_lift_ret_val_F1_val_Response_val_Nodes_i++ {
+							var empty_list_lift_ret_val_F1_val_Response_val_Nodes C.golem_rpc_types_wit_node_t
+							list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.response.nodes.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Response_val_Nodes_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Response_val_Nodes)))
+							var list_list_lift_ret_val_F1_val_Response_val_Nodes GolemRpc0_1_0_TypesWitNode
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 0 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 1 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1.is_some {
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val int32
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1.val)
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val_val
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 2 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 3 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []bool
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]bool, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val bool
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val := list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 4 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 5 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len)
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len > 0 {
+									for list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i := 0; list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i < int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len); list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i++ {
+										var empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val C.golem_rpc_types_node_index_t
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)) +
+											uintptr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Response_val_Nodes_val)))
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val int32
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr)
+										list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val[list_list_lift_ret_val_F1_val_Response_val_Nodes_val_i] = list_list_list_lift_ret_val_F1_val_Response_val_Nodes_val
+									}
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 6 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.is_some {
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val int32
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val)
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Unset()
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 7 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+								if list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.is_err {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.SetErr(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								} else {
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+									var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+									if list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.is_some {
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+										var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val int32
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_ptr.val)
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val_val
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val_val)
+									} else {
+										list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val.Unset()
+									}
+									list_list_lift_ret_val_F1_val_Response_val_Nodes_val.Set(list_list_lift_ret_val_F1_val_Response_val_Nodes_val_val)
+								}
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 8 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint8
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint8(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 9 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint16
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint16(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 10 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 11 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val uint64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = uint64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 12 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int8
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int8(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 13 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int16
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int16(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 14 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 15 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val int64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = int64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 16 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val float32
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = float32(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 17 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val float64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = float64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 18 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val rune
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = rune(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 19 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val := list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 20 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val string
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.ptr)), C.int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.len))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							if list_lift_ret_val_F1_val_Response_val_Nodes_ptr.tag == 21 {
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_lift_ret_val_F1_val_Response_val_Nodes_ptr.val))
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value string
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f0.value.len))
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0.Value = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0_Value
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F0 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F0
+								var list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 uint64
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1 = uint64(list_list_lift_ret_val_F1_val_Response_val_Nodes_ptr.f1)
+								list_list_lift_ret_val_F1_val_Response_val_Nodes_val.F1 = list_list_lift_ret_val_F1_val_Response_val_Nodes_val_F1
+								list_list_lift_ret_val_F1_val_Response_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_lift_ret_val_F1_val_Response_val_Nodes_val)
+							}
+							list_lift_ret_val_F1_val_Response_val_Nodes[list_lift_ret_val_F1_val_Response_val_Nodes_i] = list_list_lift_ret_val_F1_val_Response_val_Nodes
+						}
+					}
+					list_lift_ret_val_F1_val_Response_val.Nodes = list_lift_ret_val_F1_val_Response_val_Nodes
+					list_lift_ret_val_F1_val_Response = list_lift_ret_val_F1_val_Response_val
+					list_lift_ret_val_F1_val.Response = list_lift_ret_val_F1_val_Response
+					var list_lift_ret_val_F1_val_ConsumedFuel int64
+					list_lift_ret_val_F1_val_ConsumedFuel = int64(list_lift_ret_val_F1_ptr.consumed_fuel)
+					list_lift_ret_val_F1_val.ConsumedFuel = list_lift_ret_val_F1_val_ConsumedFuel
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryExportedFunctionCompleted(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 4 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntrySuspend(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 5 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_error_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogErrorParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Error string
+					list_lift_ret_val_F1_val_Error = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.error.ptr)), C.int(list_lift_ret_val_F1_ptr.error.len))
+					list_lift_ret_val_F1_val.Error = list_lift_ret_val_F1_val_Error
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryError(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 6 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryNoOp(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 7 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_jump_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogJumpParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Start GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_F1_val_Start_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_F1_val_Start_val_val uint64
+					list_lift_ret_val_F1_val_Start_val_val = uint64(list_lift_ret_val_F1_ptr.start)
+					list_lift_ret_val_F1_val_Start_val = list_lift_ret_val_F1_val_Start_val_val
+					list_lift_ret_val_F1_val_Start = list_lift_ret_val_F1_val_Start_val
+					list_lift_ret_val_F1_val.Start = list_lift_ret_val_F1_val_Start
+					var list_lift_ret_val_F1_val_End GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_F1_val_End_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_F1_val_End_val_val uint64
+					list_lift_ret_val_F1_val_End_val_val = uint64(list_lift_ret_val_F1_ptr.end)
+					list_lift_ret_val_F1_val_End_val = list_lift_ret_val_F1_val_End_val_val
+					list_lift_ret_val_F1_val_End = list_lift_ret_val_F1_val_End_val
+					list_lift_ret_val_F1_val.End = list_lift_ret_val_F1_val_End
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryJump(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 8 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryInterrupted(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 9 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryExited(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 10 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_change_retry_policy_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogChangeRetryPolicyParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_RetryPolicy GolemApi1_1_0_OplogRetryPolicy
+					var list_lift_ret_val_F1_val_RetryPolicy_val GolemApi1_1_0_HostRetryPolicy
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MaxAttempts uint32
+					list_lift_ret_val_F1_val_RetryPolicy_val_MaxAttempts = uint32(list_lift_ret_val_F1_ptr.retry_policy.max_attempts)
+					list_lift_ret_val_F1_val_RetryPolicy_val.MaxAttempts = list_lift_ret_val_F1_val_RetryPolicy_val_MaxAttempts
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay GolemApi1_1_0_HostDuration
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val WasiClocks0_2_0_MonotonicClockDuration
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val_val uint64
+					list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val_val = uint64(list_lift_ret_val_F1_ptr.retry_policy.min_delay)
+					list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val = list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val_val
+					list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay = list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay_val
+					list_lift_ret_val_F1_val_RetryPolicy_val.MinDelay = list_lift_ret_val_F1_val_RetryPolicy_val_MinDelay
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay GolemApi1_1_0_HostDuration
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val WasiClocks0_2_0_MonotonicClockDuration
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val_val uint64
+					list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val_val = uint64(list_lift_ret_val_F1_ptr.retry_policy.max_delay)
+					list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val = list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val_val
+					list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay = list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay_val
+					list_lift_ret_val_F1_val_RetryPolicy_val.MaxDelay = list_lift_ret_val_F1_val_RetryPolicy_val_MaxDelay
+					var list_lift_ret_val_F1_val_RetryPolicy_val_Multiplier float64
+					list_lift_ret_val_F1_val_RetryPolicy_val_Multiplier = float64(list_lift_ret_val_F1_ptr.retry_policy.multiplier)
+					list_lift_ret_val_F1_val_RetryPolicy_val.Multiplier = list_lift_ret_val_F1_val_RetryPolicy_val_Multiplier
+					var list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor Option[float64]
+					if list_lift_ret_val_F1_ptr.retry_policy.max_jitter_factor.is_some {
+						var list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor_val float64
+						list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor_val = float64(list_lift_ret_val_F1_ptr.retry_policy.max_jitter_factor.val)
+						list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor.Set(list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor_val)
+					} else {
+						list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor.Unset()
+					}
+					list_lift_ret_val_F1_val_RetryPolicy_val.MaxJitterFactor = list_lift_ret_val_F1_val_RetryPolicy_val_MaxJitterFactor
+					list_lift_ret_val_F1_val_RetryPolicy = list_lift_ret_val_F1_val_RetryPolicy_val
+					list_lift_ret_val_F1_val.RetryPolicy = list_lift_ret_val_F1_val_RetryPolicy
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryChangeRetryPolicy(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 11 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryBeginAtomicRegion(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 12 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_end_atomic_region_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogEndAtomicRegionParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_BeginIndex GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_F1_val_BeginIndex_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_F1_val_BeginIndex_val_val uint64
+					list_lift_ret_val_F1_val_BeginIndex_val_val = uint64(list_lift_ret_val_F1_ptr.begin_index)
+					list_lift_ret_val_F1_val_BeginIndex_val = list_lift_ret_val_F1_val_BeginIndex_val_val
+					list_lift_ret_val_F1_val_BeginIndex = list_lift_ret_val_F1_val_BeginIndex_val
+					list_lift_ret_val_F1_val.BeginIndex = list_lift_ret_val_F1_val_BeginIndex
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryEndAtomicRegion(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 13 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryBeginRemoteWrite(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 14 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_end_remote_write_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogEndRemoteWriteParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_BeginIndex GolemApi1_1_0_OplogOplogIndex
+					var list_lift_ret_val_F1_val_BeginIndex_val GolemApi1_1_0_HostOplogIndex
+					var list_lift_ret_val_F1_val_BeginIndex_val_val uint64
+					list_lift_ret_val_F1_val_BeginIndex_val_val = uint64(list_lift_ret_val_F1_ptr.begin_index)
+					list_lift_ret_val_F1_val_BeginIndex_val = list_lift_ret_val_F1_val_BeginIndex_val_val
+					list_lift_ret_val_F1_val_BeginIndex = list_lift_ret_val_F1_val_BeginIndex_val
+					list_lift_ret_val_F1_val.BeginIndex = list_lift_ret_val_F1_val_BeginIndex
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryEndRemoteWrite(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 15 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogPendingWorkerInvocationParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Invocation GolemApi1_1_0_OplogWorkerInvocation
+					if list_lift_ret_val_F1_ptr.invocation.tag == 0 {
+						list_lift_ret_val_F1_val_Invocation_ptr := *(*C.golem_api_1_1_0_oplog_exported_function_invocation_parameters_t)(unsafe.Pointer(&list_lift_ret_val_F1_ptr.invocation.val))
+						var list_lift_ret_val_F1_val_Invocation_val GolemApi1_1_0_OplogExportedFunctionInvocationParameters
+						var list_lift_ret_val_F1_val_Invocation_val_IdempotencyKey string
+						list_lift_ret_val_F1_val_Invocation_val_IdempotencyKey = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Invocation_ptr.idempotency_key.ptr)), C.int(list_lift_ret_val_F1_val_Invocation_ptr.idempotency_key.len))
+						list_lift_ret_val_F1_val_Invocation_val.IdempotencyKey = list_lift_ret_val_F1_val_Invocation_val_IdempotencyKey
+						var list_lift_ret_val_F1_val_Invocation_val_FunctionName string
+						list_lift_ret_val_F1_val_Invocation_val_FunctionName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Invocation_ptr.function_name.ptr)), C.int(list_lift_ret_val_F1_val_Invocation_ptr.function_name.len))
+						list_lift_ret_val_F1_val_Invocation_val.FunctionName = list_lift_ret_val_F1_val_Invocation_val_FunctionName
+						var list_lift_ret_val_F1_val_Invocation_val_Input Option[[]GolemApi1_1_0_OplogWitValue]
+						if list_lift_ret_val_F1_val_Invocation_ptr.input.is_some {
+							var list_lift_ret_val_F1_val_Invocation_val_Input_val []GolemApi1_1_0_OplogWitValue
+							list_lift_ret_val_F1_val_Invocation_val_Input_val = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_F1_val_Invocation_ptr.input.val.len)
+							if list_lift_ret_val_F1_val_Invocation_ptr.input.val.len > 0 {
+								for list_lift_ret_val_F1_val_Invocation_val_Input_val_i := 0; list_lift_ret_val_F1_val_Invocation_val_Input_val_i < int(list_lift_ret_val_F1_val_Invocation_ptr.input.val.len); list_lift_ret_val_F1_val_Invocation_val_Input_val_i++ {
+									var empty_list_lift_ret_val_F1_val_Invocation_val_Input_val C.golem_api_1_1_0_oplog_wit_value_t
+									list_lift_ret_val_F1_val_Invocation_val_Input_val_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_Invocation_ptr.input.val.ptr)) +
+										uintptr(list_lift_ret_val_F1_val_Invocation_val_Input_val_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Invocation_val_Input_val)))
+									var list_list_lift_ret_val_F1_val_Invocation_val_Input_val GolemApi1_1_0_OplogWitValue
+									var list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val GolemRpc0_1_0_TypesWitValue
+									var list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes []GolemRpc0_1_0_TypesWitNode
+									list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_val_Invocation_val_Input_val_ptr.nodes.len)
+									if list_lift_ret_val_F1_val_Invocation_val_Input_val_ptr.nodes.len > 0 {
+										for list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_i := 0; list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_i < int(list_lift_ret_val_F1_val_Invocation_val_Input_val_ptr.nodes.len); list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_i++ {
+											var empty_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes C.golem_rpc_types_wit_node_t
+											list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_Invocation_val_Input_val_ptr.nodes.ptr)) +
+												uintptr(list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes)))
+											var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes GolemRpc0_1_0_TypesWitNode
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 0 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 1 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0 uint32
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f0)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f1.is_some {
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val int32
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f1.val)
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val_val
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1_val)
+												} else {
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1.Unset()
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 2 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val uint32
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 3 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val []bool
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val bool
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)))
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val := list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 4 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 5 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len)
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len > 0 {
+													for list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i++ {
+														var empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val C.golem_rpc_types_node_index_t
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)) +
+															uintptr(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)))
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val int32
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr)
+														list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val[list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val
+													}
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 6 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.is_some {
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val int32
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val)
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val)
+												} else {
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.Unset()
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 7 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+												if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.is_err {
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+													if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr.is_some {
+														var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val int32
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr.val)
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val)
+													} else {
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val.Unset()
+													}
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.SetErr(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val)
+												} else {
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+													var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+													if list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr.is_some {
+														var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+														var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val int32
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_ptr.val)
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val_val
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val_val)
+													} else {
+														list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val.Unset()
+													}
+													list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_val)
+												}
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 8 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val uint8
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = uint8(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 9 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val uint16
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = uint16(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 10 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val uint32
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 11 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val uint64
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = uint64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 12 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val int8
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = int8(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 13 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val int16
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = int16(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 14 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val int32
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = int32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 15 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val int64
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = int64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 16 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val float32
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = float32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 17 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val float64
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = float64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 18 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val rune
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = rune(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 19 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val := list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 20 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val string
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.len))
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											if list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.tag == 21 {
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.val))
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0_Value string
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f0.value.len))
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0_Value
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F0
+												var list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1 uint64
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_ptr.f1)
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val_F1
+												list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_val)
+											}
+											list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes[list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes_i] = list_list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes
+										}
+									}
+									list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val.Nodes = list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val_Nodes
+									list_list_lift_ret_val_F1_val_Invocation_val_Input_val = list_list_lift_ret_val_F1_val_Invocation_val_Input_val_val
+									list_lift_ret_val_F1_val_Invocation_val_Input_val[list_lift_ret_val_F1_val_Invocation_val_Input_val_i] = list_list_lift_ret_val_F1_val_Invocation_val_Input_val
+								}
+							}
+							list_lift_ret_val_F1_val_Invocation_val_Input.Set(list_lift_ret_val_F1_val_Invocation_val_Input_val)
+						} else {
+							list_lift_ret_val_F1_val_Invocation_val_Input.Unset()
+						}
+						list_lift_ret_val_F1_val_Invocation_val.Input = list_lift_ret_val_F1_val_Invocation_val_Input
+						list_lift_ret_val_F1_val_Invocation = GolemApi1_1_0_OplogWorkerInvocationExportedFunction(list_lift_ret_val_F1_val_Invocation_val)
+					}
+					if list_lift_ret_val_F1_ptr.invocation.tag == 1 {
+						list_lift_ret_val_F1_val_Invocation_ptr := *(*C.golem_api_1_1_0_oplog_component_version_t)(unsafe.Pointer(&list_lift_ret_val_F1_ptr.invocation.val))
+						var list_lift_ret_val_F1_val_Invocation_val GolemApi1_1_0_OplogComponentVersion
+						var list_lift_ret_val_F1_val_Invocation_val_val GolemApi1_1_0_HostComponentVersion
+						var list_lift_ret_val_F1_val_Invocation_val_val_val uint64
+						list_lift_ret_val_F1_val_Invocation_val_val_val = uint64(list_lift_ret_val_F1_val_Invocation_ptr)
+						list_lift_ret_val_F1_val_Invocation_val_val = list_lift_ret_val_F1_val_Invocation_val_val_val
+						list_lift_ret_val_F1_val_Invocation_val = list_lift_ret_val_F1_val_Invocation_val_val
+						list_lift_ret_val_F1_val_Invocation = GolemApi1_1_0_OplogWorkerInvocationManualUpdate(list_lift_ret_val_F1_val_Invocation_val)
+					}
+					list_lift_ret_val_F1_val.Invocation = list_lift_ret_val_F1_val_Invocation
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryPendingWorkerInvocation(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 16 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_pending_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogPendingUpdateParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val_val uint64
+					list_lift_ret_val_F1_val_TargetVersion_val_val = uint64(list_lift_ret_val_F1_ptr.target_version)
+					list_lift_ret_val_F1_val_TargetVersion_val = list_lift_ret_val_F1_val_TargetVersion_val_val
+					list_lift_ret_val_F1_val_TargetVersion = list_lift_ret_val_F1_val_TargetVersion_val
+					list_lift_ret_val_F1_val.TargetVersion = list_lift_ret_val_F1_val_TargetVersion
+					var list_lift_ret_val_F1_val_UpdateDescription GolemApi1_1_0_OplogUpdateDescription
+					if list_lift_ret_val_F1_ptr.update_description.tag == 0 {
+						list_lift_ret_val_F1_val_UpdateDescription = GolemApi1_1_0_OplogUpdateDescriptionAutoUpdate()
+					}
+					if list_lift_ret_val_F1_ptr.update_description.tag == 1 {
+						list_lift_ret_val_F1_val_UpdateDescription_ptr := *(*C.binding_list_u8_t)(unsafe.Pointer(&list_lift_ret_val_F1_ptr.update_description.val))
+						var list_lift_ret_val_F1_val_UpdateDescription_val []uint8
+						list_lift_ret_val_F1_val_UpdateDescription_val = make([]uint8, list_lift_ret_val_F1_val_UpdateDescription_ptr.len)
+						if list_lift_ret_val_F1_val_UpdateDescription_ptr.len > 0 {
+							for list_lift_ret_val_F1_val_UpdateDescription_val_i := 0; list_lift_ret_val_F1_val_UpdateDescription_val_i < int(list_lift_ret_val_F1_val_UpdateDescription_ptr.len); list_lift_ret_val_F1_val_UpdateDescription_val_i++ {
+								var empty_list_lift_ret_val_F1_val_UpdateDescription_val C.uint8_t
+								list_lift_ret_val_F1_val_UpdateDescription_val_ptr := *(*C.uint8_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_UpdateDescription_ptr.ptr)) +
+									uintptr(list_lift_ret_val_F1_val_UpdateDescription_val_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_UpdateDescription_val)))
+								var list_list_lift_ret_val_F1_val_UpdateDescription_val uint8
+								list_list_lift_ret_val_F1_val_UpdateDescription_val = uint8(list_lift_ret_val_F1_val_UpdateDescription_val_ptr)
+								list_lift_ret_val_F1_val_UpdateDescription_val[list_lift_ret_val_F1_val_UpdateDescription_val_i] = list_list_lift_ret_val_F1_val_UpdateDescription_val
+							}
+						}
+						list_lift_ret_val_F1_val_UpdateDescription = GolemApi1_1_0_OplogUpdateDescriptionSnapshotBased(list_lift_ret_val_F1_val_UpdateDescription_val)
+					}
+					list_lift_ret_val_F1_val.UpdateDescription = list_lift_ret_val_F1_val_UpdateDescription
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryPendingUpdate(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 17 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_successful_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogSuccessfulUpdateParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val_val uint64
+					list_lift_ret_val_F1_val_TargetVersion_val_val = uint64(list_lift_ret_val_F1_ptr.target_version)
+					list_lift_ret_val_F1_val_TargetVersion_val = list_lift_ret_val_F1_val_TargetVersion_val_val
+					list_lift_ret_val_F1_val_TargetVersion = list_lift_ret_val_F1_val_TargetVersion_val
+					list_lift_ret_val_F1_val.TargetVersion = list_lift_ret_val_F1_val_TargetVersion
+					var list_lift_ret_val_F1_val_NewComponentSize uint64
+					list_lift_ret_val_F1_val_NewComponentSize = uint64(list_lift_ret_val_F1_ptr.new_component_size)
+					list_lift_ret_val_F1_val.NewComponentSize = list_lift_ret_val_F1_val_NewComponentSize
+					var list_lift_ret_val_F1_val_NewActivePlugins []GolemApi1_1_0_OplogPluginInstallationDescription
+					list_lift_ret_val_F1_val_NewActivePlugins = make([]GolemApi1_1_0_OplogPluginInstallationDescription, list_lift_ret_val_F1_ptr.new_active_plugins.len)
+					if list_lift_ret_val_F1_ptr.new_active_plugins.len > 0 {
+						for list_lift_ret_val_F1_val_NewActivePlugins_i := 0; list_lift_ret_val_F1_val_NewActivePlugins_i < int(list_lift_ret_val_F1_ptr.new_active_plugins.len); list_lift_ret_val_F1_val_NewActivePlugins_i++ {
+							var empty_list_lift_ret_val_F1_val_NewActivePlugins C.golem_api_1_1_0_oplog_plugin_installation_description_t
+							list_lift_ret_val_F1_val_NewActivePlugins_ptr := *(*C.golem_api_1_1_0_oplog_plugin_installation_description_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.new_active_plugins.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_NewActivePlugins_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_NewActivePlugins)))
+							var list_list_lift_ret_val_F1_val_NewActivePlugins GolemApi1_1_0_OplogPluginInstallationDescription
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId GolemApi1_1_0_OplogUuid
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val GolemApi1_1_0_HostUuid
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_HighBits uint64
+							list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_HighBits = uint64(list_lift_ret_val_F1_val_NewActivePlugins_ptr.installation_id.high_bits)
+							list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val.HighBits = list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_HighBits
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_LowBits uint64
+							list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_LowBits = uint64(list_lift_ret_val_F1_val_NewActivePlugins_ptr.installation_id.low_bits)
+							list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val.LowBits = list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val_LowBits
+							list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId = list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId_val
+							list_list_lift_ret_val_F1_val_NewActivePlugins.InstallationId = list_list_lift_ret_val_F1_val_NewActivePlugins_InstallationId
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_Name string
+							list_list_lift_ret_val_F1_val_NewActivePlugins_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_NewActivePlugins_ptr.name.ptr)), C.int(list_lift_ret_val_F1_val_NewActivePlugins_ptr.name.len))
+							list_list_lift_ret_val_F1_val_NewActivePlugins.Name = list_list_lift_ret_val_F1_val_NewActivePlugins_Name
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_Version string
+							list_list_lift_ret_val_F1_val_NewActivePlugins_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_NewActivePlugins_ptr.version.ptr)), C.int(list_lift_ret_val_F1_val_NewActivePlugins_ptr.version.len))
+							list_list_lift_ret_val_F1_val_NewActivePlugins.Version = list_list_lift_ret_val_F1_val_NewActivePlugins_Version
+							var list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+							list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_F1_val_NewActivePlugins_ptr.parameters.len)
+							if list_lift_ret_val_F1_val_NewActivePlugins_ptr.parameters.len > 0 {
+								for list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_i := 0; list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_i < int(list_lift_ret_val_F1_val_NewActivePlugins_ptr.parameters.len); list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_i++ {
+									var empty_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters C.binding_tuple2_string_string_t
+									list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_NewActivePlugins_ptr.parameters.ptr)) +
+										uintptr(list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters)))
+									var list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters GolemApi1_1_0_HostTuple2StringStringT
+									var list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F0 string
+									list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_ptr.f0.ptr)), C.int(list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_ptr.f0.len))
+									list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters.F0 = list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F0
+									var list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F1 string
+									list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_ptr.f1.ptr)), C.int(list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_ptr.f1.len))
+									list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters.F1 = list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_F1
+									list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters[list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters_i] = list_list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters
+								}
+							}
+							list_list_lift_ret_val_F1_val_NewActivePlugins.Parameters = list_list_lift_ret_val_F1_val_NewActivePlugins_Parameters
+							list_lift_ret_val_F1_val_NewActivePlugins[list_lift_ret_val_F1_val_NewActivePlugins_i] = list_list_lift_ret_val_F1_val_NewActivePlugins
+						}
+					}
+					list_lift_ret_val_F1_val.NewActivePlugins = list_lift_ret_val_F1_val_NewActivePlugins
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntrySuccessfulUpdate(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 18 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_failed_update_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogFailedUpdateParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_TargetVersion GolemApi1_1_0_OplogComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val GolemApi1_1_0_HostComponentVersion
+					var list_lift_ret_val_F1_val_TargetVersion_val_val uint64
+					list_lift_ret_val_F1_val_TargetVersion_val_val = uint64(list_lift_ret_val_F1_ptr.target_version)
+					list_lift_ret_val_F1_val_TargetVersion_val = list_lift_ret_val_F1_val_TargetVersion_val_val
+					list_lift_ret_val_F1_val_TargetVersion = list_lift_ret_val_F1_val_TargetVersion_val
+					list_lift_ret_val_F1_val.TargetVersion = list_lift_ret_val_F1_val_TargetVersion
+					var list_lift_ret_val_F1_val_Details Option[string]
+					if list_lift_ret_val_F1_ptr.details.is_some {
+						var list_lift_ret_val_F1_val_Details_val string
+						list_lift_ret_val_F1_val_Details_val = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.details.val.ptr)), C.int(list_lift_ret_val_F1_ptr.details.val.len))
+						list_lift_ret_val_F1_val_Details.Set(list_lift_ret_val_F1_val_Details_val)
+					} else {
+						list_lift_ret_val_F1_val_Details.Unset()
+					}
+					list_lift_ret_val_F1_val.Details = list_lift_ret_val_F1_val_Details
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryFailedUpdate(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 19 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_grow_memory_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogGrowMemoryParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Delta uint64
+					list_lift_ret_val_F1_val_Delta = uint64(list_lift_ret_val_F1_ptr.delta)
+					list_lift_ret_val_F1_val.Delta = list_lift_ret_val_F1_val_Delta
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryGrowMemory(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 20 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_create_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogCreateResourceParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_F1_val_ResourceId_val uint64
+					list_lift_ret_val_F1_val_ResourceId_val = uint64(list_lift_ret_val_F1_ptr.resource_id)
+					list_lift_ret_val_F1_val_ResourceId = list_lift_ret_val_F1_val_ResourceId_val
+					list_lift_ret_val_F1_val.ResourceId = list_lift_ret_val_F1_val_ResourceId
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryCreateResource(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 21 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_drop_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDropResourceParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_F1_val_ResourceId_val uint64
+					list_lift_ret_val_F1_val_ResourceId_val = uint64(list_lift_ret_val_F1_ptr.resource_id)
+					list_lift_ret_val_F1_val_ResourceId = list_lift_ret_val_F1_val_ResourceId_val
+					list_lift_ret_val_F1_val.ResourceId = list_lift_ret_val_F1_val_ResourceId
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryDropResource(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 22 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_describe_resource_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDescribeResourceParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_ResourceId GolemApi1_1_0_OplogWorkerResourceId
+					var list_lift_ret_val_F1_val_ResourceId_val uint64
+					list_lift_ret_val_F1_val_ResourceId_val = uint64(list_lift_ret_val_F1_ptr.resource_id)
+					list_lift_ret_val_F1_val_ResourceId = list_lift_ret_val_F1_val_ResourceId_val
+					list_lift_ret_val_F1_val.ResourceId = list_lift_ret_val_F1_val_ResourceId
+					var list_lift_ret_val_F1_val_ResourceName string
+					list_lift_ret_val_F1_val_ResourceName = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.resource_name.ptr)), C.int(list_lift_ret_val_F1_ptr.resource_name.len))
+					list_lift_ret_val_F1_val.ResourceName = list_lift_ret_val_F1_val_ResourceName
+					var list_lift_ret_val_F1_val_ResourceParams []GolemApi1_1_0_OplogWitValue
+					list_lift_ret_val_F1_val_ResourceParams = make([]GolemApi1_1_0_OplogWitValue, list_lift_ret_val_F1_ptr.resource_params.len)
+					if list_lift_ret_val_F1_ptr.resource_params.len > 0 {
+						for list_lift_ret_val_F1_val_ResourceParams_i := 0; list_lift_ret_val_F1_val_ResourceParams_i < int(list_lift_ret_val_F1_ptr.resource_params.len); list_lift_ret_val_F1_val_ResourceParams_i++ {
+							var empty_list_lift_ret_val_F1_val_ResourceParams C.golem_api_1_1_0_oplog_wit_value_t
+							list_lift_ret_val_F1_val_ResourceParams_ptr := *(*C.golem_api_1_1_0_oplog_wit_value_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.resource_params.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_ResourceParams_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_ResourceParams)))
+							var list_list_lift_ret_val_F1_val_ResourceParams GolemApi1_1_0_OplogWitValue
+							var list_list_lift_ret_val_F1_val_ResourceParams_val GolemRpc0_1_0_TypesWitValue
+							var list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes []GolemRpc0_1_0_TypesWitNode
+							list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = make([]GolemRpc0_1_0_TypesWitNode, list_lift_ret_val_F1_val_ResourceParams_ptr.nodes.len)
+							if list_lift_ret_val_F1_val_ResourceParams_ptr.nodes.len > 0 {
+								for list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_i := 0; list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_i < int(list_lift_ret_val_F1_val_ResourceParams_ptr.nodes.len); list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_i++ {
+									var empty_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes C.golem_rpc_types_wit_node_t
+									list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_wit_node_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_val_ResourceParams_ptr.nodes.ptr)) +
+										uintptr(list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_i)*unsafe.Sizeof(empty_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes)))
+									var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes GolemRpc0_1_0_TypesWitNode
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 0 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeRecordValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 1 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_tuple2_u32_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesTuple2U32OptionNodeIndexTT
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0 uint32
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0 = uint32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f0)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1 Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f1.is_some {
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val_val int32
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f1.val)
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val_val
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1.Set(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1.Unset()
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeVariantValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 2 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val uint32
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeEnumValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 3 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_bool_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val []bool
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = make([]bool, list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val bool
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*bool)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)))
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val := list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeFlagsValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 4 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeTupleValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 5 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_list_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val []GolemRpc0_1_0_TypesNodeIndex
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = make([]GolemRpc0_1_0_TypesNodeIndex, list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len)
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len > 0 {
+											for list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i := 0; list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i < int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len); list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i++ {
+												var empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val C.golem_rpc_types_node_index_t
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*C.golem_rpc_types_node_index_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.ptr)) +
+													uintptr(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i)*unsafe.Sizeof(empty_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)))
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val int32
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr)
+												list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val[list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_i] = list_list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val
+											}
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeListValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 6 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val Option[GolemRpc0_1_0_TypesNodeIndex]
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.is_some {
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val GolemRpc0_1_0_TypesNodeIndex
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val int32
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val)
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.Unset()
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeOptionValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 7 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_result_option_node_index_option_node_index_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val Result[Option[GolemRpc0_1_0_TypesNodeIndex], Option[GolemRpc0_1_0_TypesNodeIndex]]
+										if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.is_err {
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.SetErr(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val)
+										} else {
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr := *(*C.binding_option_node_index_t)(unsafe.Pointer(&list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+											var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val Option[GolemRpc0_1_0_TypesNodeIndex]
+											if list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr.is_some {
+												var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val GolemRpc0_1_0_TypesNodeIndex
+												var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val int32
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_ptr.val)
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val_val
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val.Set(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val_val)
+											} else {
+												list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val.Unset()
+											}
+											list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.Set(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_val)
+										}
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeResultValue(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 8 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val uint8
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = uint8(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU8(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 9 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val uint16
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = uint16(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU16(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 10 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val uint32
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = uint32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 11 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val uint64
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = uint64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimU64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 12 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.int8_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val int8
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = int8(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS8(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 13 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.int16_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val int16
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = int16(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS16(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 14 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.int32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val int32
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = int32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 15 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.int64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val int64
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = int64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimS64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 16 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.float)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val float32
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = float32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat32(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 17 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.double)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val float64
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = float64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimFloat64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 18 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.uint32_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val rune
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = rune(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimChar(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 19 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*bool)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val := list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimBool(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 20 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.binding_string_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val string
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.ptr)), C.int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.len))
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodePrimString(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									if list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.tag == 21 {
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr := *(*C.golem_rpc_types_tuple2_uri_u64_t)(unsafe.Pointer(&list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.val))
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val GolemRpc0_1_0_TypesTuple2UriU64T
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0 GolemRpc0_1_0_TypesUri
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0_Value string
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0_Value = C.GoStringN((*C.char)(unsafe.Pointer(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f0.value.ptr)), C.int(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f0.value.len))
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0.Value = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0_Value
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.F0 = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F0
+										var list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1 uint64
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1 = uint64(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_ptr.f1)
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val.F1 = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val_F1
+										list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes = GolemRpc0_1_0_TypesWitNodeHandle(list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_val)
+									}
+									list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes[list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes_i] = list_list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes
+								}
+							}
+							list_list_lift_ret_val_F1_val_ResourceParams_val.Nodes = list_list_lift_ret_val_F1_val_ResourceParams_val_Nodes
+							list_list_lift_ret_val_F1_val_ResourceParams = list_list_lift_ret_val_F1_val_ResourceParams_val
+							list_lift_ret_val_F1_val_ResourceParams[list_lift_ret_val_F1_val_ResourceParams_i] = list_list_lift_ret_val_F1_val_ResourceParams
+						}
+					}
+					list_lift_ret_val_F1_val.ResourceParams = list_lift_ret_val_F1_val_ResourceParams
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryDescribeResource(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 23 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_log_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogLogParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Level GolemApi1_1_0_OplogLogLevel
+					if list_lift_ret_val_F1_ptr.level == 0 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelStdout()
+					}
+					if list_lift_ret_val_F1_ptr.level == 1 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelStderr()
+					}
+					if list_lift_ret_val_F1_ptr.level == 2 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelTrace()
+					}
+					if list_lift_ret_val_F1_ptr.level == 3 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelDebug()
+					}
+					if list_lift_ret_val_F1_ptr.level == 4 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelInfo()
+					}
+					if list_lift_ret_val_F1_ptr.level == 5 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelWarn()
+					}
+					if list_lift_ret_val_F1_ptr.level == 6 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelError()
+					}
+					if list_lift_ret_val_F1_ptr.level == 7 {
+						list_lift_ret_val_F1_val_Level = GolemApi1_1_0_OplogLogLevelCritical()
+					}
+					list_lift_ret_val_F1_val.Level = list_lift_ret_val_F1_val_Level
+					var list_lift_ret_val_F1_val_Context string
+					list_lift_ret_val_F1_val_Context = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.context.ptr)), C.int(list_lift_ret_val_F1_ptr.context.len))
+					list_lift_ret_val_F1_val.Context = list_lift_ret_val_F1_val_Context
+					var list_lift_ret_val_F1_val_Message string
+					list_lift_ret_val_F1_val_Message = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.message.ptr)), C.int(list_lift_ret_val_F1_ptr.message.len))
+					list_lift_ret_val_F1_val.Message = list_lift_ret_val_F1_val_Message
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryLog(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 24 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_datetime_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_val_Seconds uint64
+					list_lift_ret_val_F1_val_val_Seconds = uint64(list_lift_ret_val_F1_ptr.seconds)
+					list_lift_ret_val_F1_val_val.Seconds = list_lift_ret_val_F1_val_val_Seconds
+					var list_lift_ret_val_F1_val_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.nanoseconds)
+					list_lift_ret_val_F1_val_val.Nanoseconds = list_lift_ret_val_F1_val_val_Nanoseconds
+					list_lift_ret_val_F1_val = list_lift_ret_val_F1_val_val
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryRestart(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 25 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_activate_plugin_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogActivatePluginParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Plugin GolemApi1_1_0_OplogPluginInstallationDescription
+					var list_lift_ret_val_F1_val_Plugin_InstallationId GolemApi1_1_0_OplogUuid
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits uint64
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits = uint64(list_lift_ret_val_F1_ptr.plugin.installation_id.high_bits)
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val.HighBits = list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits uint64
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits = uint64(list_lift_ret_val_F1_ptr.plugin.installation_id.low_bits)
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val.LowBits = list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits
+					list_lift_ret_val_F1_val_Plugin_InstallationId = list_lift_ret_val_F1_val_Plugin_InstallationId_val
+					list_lift_ret_val_F1_val_Plugin.InstallationId = list_lift_ret_val_F1_val_Plugin_InstallationId
+					var list_lift_ret_val_F1_val_Plugin_Name string
+					list_lift_ret_val_F1_val_Plugin_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.name.ptr)), C.int(list_lift_ret_val_F1_ptr.plugin.name.len))
+					list_lift_ret_val_F1_val_Plugin.Name = list_lift_ret_val_F1_val_Plugin_Name
+					var list_lift_ret_val_F1_val_Plugin_Version string
+					list_lift_ret_val_F1_val_Plugin_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.version.ptr)), C.int(list_lift_ret_val_F1_ptr.plugin.version.len))
+					list_lift_ret_val_F1_val_Plugin.Version = list_lift_ret_val_F1_val_Plugin_Version
+					var list_lift_ret_val_F1_val_Plugin_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_F1_val_Plugin_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_F1_ptr.plugin.parameters.len)
+					if list_lift_ret_val_F1_ptr.plugin.parameters.len > 0 {
+						for list_lift_ret_val_F1_val_Plugin_Parameters_i := 0; list_lift_ret_val_F1_val_Plugin_Parameters_i < int(list_lift_ret_val_F1_ptr.plugin.parameters.len); list_lift_ret_val_F1_val_Plugin_Parameters_i++ {
+							var empty_list_lift_ret_val_F1_val_Plugin_Parameters C.binding_tuple2_string_string_t
+							list_lift_ret_val_F1_val_Plugin_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.parameters.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Plugin_Parameters_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Plugin_Parameters)))
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters_F0 string
+							list_list_lift_ret_val_F1_val_Plugin_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f0.ptr)), C.int(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f0.len))
+							list_list_lift_ret_val_F1_val_Plugin_Parameters.F0 = list_list_lift_ret_val_F1_val_Plugin_Parameters_F0
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters_F1 string
+							list_list_lift_ret_val_F1_val_Plugin_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f1.ptr)), C.int(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f1.len))
+							list_list_lift_ret_val_F1_val_Plugin_Parameters.F1 = list_list_lift_ret_val_F1_val_Plugin_Parameters_F1
+							list_lift_ret_val_F1_val_Plugin_Parameters[list_lift_ret_val_F1_val_Plugin_Parameters_i] = list_list_lift_ret_val_F1_val_Plugin_Parameters
+						}
+					}
+					list_lift_ret_val_F1_val_Plugin.Parameters = list_lift_ret_val_F1_val_Plugin_Parameters
+					list_lift_ret_val_F1_val.Plugin = list_lift_ret_val_F1_val_Plugin
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryActivatePlugin(list_lift_ret_val_F1_val)
+				}
+				if lift_ret_val_ptr.f1.tag == 26 {
+					list_lift_ret_val_F1_ptr := *(*C.golem_api_1_1_0_oplog_deactivate_plugin_parameters_t)(unsafe.Pointer(&lift_ret_val_ptr.f1.val))
+					var list_lift_ret_val_F1_val GolemApi1_1_0_OplogDeactivatePluginParameters
+					var list_lift_ret_val_F1_val_Timestamp GolemApi1_1_0_OplogDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val WasiClocks0_2_0_WallClockDatetime
+					var list_lift_ret_val_F1_val_Timestamp_val_Seconds uint64
+					list_lift_ret_val_F1_val_Timestamp_val_Seconds = uint64(list_lift_ret_val_F1_ptr.timestamp.seconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Seconds = list_lift_ret_val_F1_val_Timestamp_val_Seconds
+					var list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds uint32
+					list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds = uint32(list_lift_ret_val_F1_ptr.timestamp.nanoseconds)
+					list_lift_ret_val_F1_val_Timestamp_val.Nanoseconds = list_lift_ret_val_F1_val_Timestamp_val_Nanoseconds
+					list_lift_ret_val_F1_val_Timestamp = list_lift_ret_val_F1_val_Timestamp_val
+					list_lift_ret_val_F1_val.Timestamp = list_lift_ret_val_F1_val_Timestamp
+					var list_lift_ret_val_F1_val_Plugin GolemApi1_1_0_OplogPluginInstallationDescription
+					var list_lift_ret_val_F1_val_Plugin_InstallationId GolemApi1_1_0_OplogUuid
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val GolemApi1_1_0_HostUuid
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits uint64
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits = uint64(list_lift_ret_val_F1_ptr.plugin.installation_id.high_bits)
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val.HighBits = list_lift_ret_val_F1_val_Plugin_InstallationId_val_HighBits
+					var list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits uint64
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits = uint64(list_lift_ret_val_F1_ptr.plugin.installation_id.low_bits)
+					list_lift_ret_val_F1_val_Plugin_InstallationId_val.LowBits = list_lift_ret_val_F1_val_Plugin_InstallationId_val_LowBits
+					list_lift_ret_val_F1_val_Plugin_InstallationId = list_lift_ret_val_F1_val_Plugin_InstallationId_val
+					list_lift_ret_val_F1_val_Plugin.InstallationId = list_lift_ret_val_F1_val_Plugin_InstallationId
+					var list_lift_ret_val_F1_val_Plugin_Name string
+					list_lift_ret_val_F1_val_Plugin_Name = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.name.ptr)), C.int(list_lift_ret_val_F1_ptr.plugin.name.len))
+					list_lift_ret_val_F1_val_Plugin.Name = list_lift_ret_val_F1_val_Plugin_Name
+					var list_lift_ret_val_F1_val_Plugin_Version string
+					list_lift_ret_val_F1_val_Plugin_Version = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.version.ptr)), C.int(list_lift_ret_val_F1_ptr.plugin.version.len))
+					list_lift_ret_val_F1_val_Plugin.Version = list_lift_ret_val_F1_val_Plugin_Version
+					var list_lift_ret_val_F1_val_Plugin_Parameters []GolemApi1_1_0_HostTuple2StringStringT
+					list_lift_ret_val_F1_val_Plugin_Parameters = make([]GolemApi1_1_0_HostTuple2StringStringT, list_lift_ret_val_F1_ptr.plugin.parameters.len)
+					if list_lift_ret_val_F1_ptr.plugin.parameters.len > 0 {
+						for list_lift_ret_val_F1_val_Plugin_Parameters_i := 0; list_lift_ret_val_F1_val_Plugin_Parameters_i < int(list_lift_ret_val_F1_ptr.plugin.parameters.len); list_lift_ret_val_F1_val_Plugin_Parameters_i++ {
+							var empty_list_lift_ret_val_F1_val_Plugin_Parameters C.binding_tuple2_string_string_t
+							list_lift_ret_val_F1_val_Plugin_Parameters_ptr := *(*C.binding_tuple2_string_string_t)(unsafe.Pointer(uintptr(unsafe.Pointer(list_lift_ret_val_F1_ptr.plugin.parameters.ptr)) +
+								uintptr(list_lift_ret_val_F1_val_Plugin_Parameters_i)*unsafe.Sizeof(empty_list_lift_ret_val_F1_val_Plugin_Parameters)))
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters GolemApi1_1_0_HostTuple2StringStringT
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters_F0 string
+							list_list_lift_ret_val_F1_val_Plugin_Parameters_F0 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f0.ptr)), C.int(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f0.len))
+							list_list_lift_ret_val_F1_val_Plugin_Parameters.F0 = list_list_lift_ret_val_F1_val_Plugin_Parameters_F0
+							var list_list_lift_ret_val_F1_val_Plugin_Parameters_F1 string
+							list_list_lift_ret_val_F1_val_Plugin_Parameters_F1 = C.GoStringN((*C.char)(unsafe.Pointer(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f1.ptr)), C.int(list_lift_ret_val_F1_val_Plugin_Parameters_ptr.f1.len))
+							list_list_lift_ret_val_F1_val_Plugin_Parameters.F1 = list_list_lift_ret_val_F1_val_Plugin_Parameters_F1
+							list_lift_ret_val_F1_val_Plugin_Parameters[list_lift_ret_val_F1_val_Plugin_Parameters_i] = list_list_lift_ret_val_F1_val_Plugin_Parameters
+						}
+					}
+					list_lift_ret_val_F1_val_Plugin.Parameters = list_lift_ret_val_F1_val_Plugin_Parameters
+					list_lift_ret_val_F1_val.Plugin = list_lift_ret_val_F1_val_Plugin
+					list_lift_ret_val_F1 = GolemApi1_1_0_OplogOplogEntryDeactivatePlugin(list_lift_ret_val_F1_val)
+				}
+				list_lift_ret_val.F1 = list_lift_ret_val_F1
+				lift_ret_val[lift_ret_val_i] = list_lift_ret_val
+			}
+		}
 		lift_ret.Set(lift_ret_val)
 	} else {
 		lift_ret.Unset()
@@ -4773,38 +10548,6 @@ func WasiCli0_2_0_EnvironmentInitialCwd() Option[string] {
 	} else {
 		lift_ret.Unset()
 	}
-	return lift_ret
-}
-
-// Import functions from wasi:clocks/wall-clock@0.2.0
-type WasiClocks0_2_0_WallClockDatetime struct {
-	Seconds     uint64
-	Nanoseconds uint32
-}
-
-func WasiClocks0_2_0_WallClockNow() WasiClocks0_2_0_WallClockDatetime {
-	var ret C.wasi_clocks_wall_clock_datetime_t
-	C.wasi_clocks_wall_clock_now(&ret)
-	var lift_ret WasiClocks0_2_0_WallClockDatetime
-	var lift_ret_Seconds uint64
-	lift_ret_Seconds = uint64(ret.seconds)
-	lift_ret.Seconds = lift_ret_Seconds
-	var lift_ret_Nanoseconds uint32
-	lift_ret_Nanoseconds = uint32(ret.nanoseconds)
-	lift_ret.Nanoseconds = lift_ret_Nanoseconds
-	return lift_ret
-}
-
-func WasiClocks0_2_0_WallClockResolution() WasiClocks0_2_0_WallClockDatetime {
-	var ret C.wasi_clocks_wall_clock_datetime_t
-	C.wasi_clocks_wall_clock_resolution(&ret)
-	var lift_ret WasiClocks0_2_0_WallClockDatetime
-	var lift_ret_Seconds uint64
-	lift_ret_Seconds = uint64(ret.seconds)
-	lift_ret.Seconds = lift_ret_Seconds
-	var lift_ret_Nanoseconds uint32
-	lift_ret_Nanoseconds = uint32(ret.nanoseconds)
-	lift_ret.Nanoseconds = lift_ret_Nanoseconds
 	return lift_ret
 }
 
