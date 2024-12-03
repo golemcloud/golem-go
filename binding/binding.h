@@ -198,165 +198,177 @@ typedef uint64_t wasi_clocks_monotonic_clock_duration_t;
 
 typedef wasi_io_poll_own_pollable_t wasi_clocks_monotonic_clock_own_pollable_t;
 
-typedef golem_rpc_types_uri_t golem_api_host_uri_t;
+typedef golem_rpc_types_uri_t golem_api_1_1_0_host_uri_t;
 
-typedef wasi_clocks_monotonic_clock_duration_t golem_api_host_duration_t;
+typedef wasi_clocks_monotonic_clock_duration_t golem_api_1_1_0_host_duration_t;
 
 // An index into the persistent log storing all performed operations of a worker
-typedef uint64_t golem_api_host_oplog_index_t;
+typedef uint64_t golem_api_1_1_0_host_oplog_index_t;
 
 // Represents a Golem component's version
-typedef uint64_t golem_api_host_component_version_t;
+typedef uint64_t golem_api_1_1_0_host_component_version_t;
 
 // UUID
-typedef struct golem_api_host_uuid_t {
+typedef struct golem_api_1_1_0_host_uuid_t {
   uint64_t   high_bits;
   uint64_t   low_bits;
-} golem_api_host_uuid_t;
+} golem_api_1_1_0_host_uuid_t;
 
 // Represents a Golem component
-typedef struct golem_api_host_component_id_t {
-  golem_api_host_uuid_t   uuid;
-} golem_api_host_component_id_t;
+typedef struct golem_api_1_1_0_host_component_id_t {
+  golem_api_1_1_0_host_uuid_t   uuid;
+} golem_api_1_1_0_host_component_id_t;
 
 // Represents a Golem worker
-typedef struct golem_api_host_worker_id_t {
-  golem_api_host_component_id_t   component_id;
+typedef struct golem_api_1_1_0_host_worker_id_t {
+  golem_api_1_1_0_host_component_id_t   component_id;
   binding_string_t   worker_name;
-} golem_api_host_worker_id_t;
+} golem_api_1_1_0_host_worker_id_t;
 
 // A promise ID is a value that can be passed to an external Golem API to complete that promise
 // from an arbitrary external source, while Golem workers can await for this completion.
-typedef struct golem_api_host_promise_id_t {
-  golem_api_host_worker_id_t   worker_id;
-  golem_api_host_oplog_index_t   oplog_idx;
-} golem_api_host_promise_id_t;
+typedef struct golem_api_1_1_0_host_promise_id_t {
+  golem_api_1_1_0_host_worker_id_t   worker_id;
+  golem_api_1_1_0_host_oplog_index_t   oplog_idx;
+} golem_api_1_1_0_host_promise_id_t;
+
+// Represents a Golem Cloud account
+typedef struct golem_api_1_1_0_host_account_id_t {
+  binding_string_t   value;
+} golem_api_1_1_0_host_account_id_t;
+
+typedef struct {
+  bool is_some;
+  double val;
+} binding_option_f64_t;
 
 // Configures how the executor retries failures
-typedef struct golem_api_host_retry_policy_t {
+typedef struct golem_api_1_1_0_host_retry_policy_t {
   // The maximum number of retries before the worker becomes permanently failed
   uint32_t   max_attempts;
   // The minimum delay between retries (applied to the first retry)
-  golem_api_host_duration_t   min_delay;
+  golem_api_1_1_0_host_duration_t   min_delay;
   // The maximum delay between retries
-  golem_api_host_duration_t   max_delay;
+  golem_api_1_1_0_host_duration_t   max_delay;
   // Multiplier applied to the delay on each retry to implement exponential backoff
   double   multiplier;
-} golem_api_host_retry_policy_t;
+  // The maximum amount of jitter to add to the delay
+  binding_option_f64_t   max_jitter_factor;
+} golem_api_1_1_0_host_retry_policy_t;
 
 // Configurable persistence level for workers
-typedef struct golem_api_host_persistence_level_t {
+typedef struct golem_api_1_1_0_host_persistence_level_t {
   uint8_t tag;
-} golem_api_host_persistence_level_t;
+} golem_api_1_1_0_host_persistence_level_t;
 
-#define GOLEM_API_HOST_PERSISTENCE_LEVEL_PERSIST_NOTHING 0
-#define GOLEM_API_HOST_PERSISTENCE_LEVEL_PERSIST_REMOTE_SIDE_EFFECTS 1
-#define GOLEM_API_HOST_PERSISTENCE_LEVEL_SMART 2
+#define GOLEM_API_1_1_0_HOST_PERSISTENCE_LEVEL_PERSIST_NOTHING 0
+#define GOLEM_API_1_1_0_HOST_PERSISTENCE_LEVEL_PERSIST_REMOTE_SIDE_EFFECTS 1
+#define GOLEM_API_1_1_0_HOST_PERSISTENCE_LEVEL_SMART 2
 
 // Describes how to update a worker to a different component version
-typedef uint8_t golem_api_host_update_mode_t;
+typedef uint8_t golem_api_1_1_0_host_update_mode_t;
 
 // Automatic update tries to recover the worker using the new component version
 // and may fail if there is a divergence.
-#define GOLEM_API_HOST_UPDATE_MODE_AUTOMATIC 0
+#define GOLEM_API_1_1_0_HOST_UPDATE_MODE_AUTOMATIC 0
 // Manual, snapshot-based update uses a user-defined implementation of the `save-snapshot` interface
 // to store the worker's state, and a user-defined implementation of the `load-snapshot` interface to
 // load it into the new version.
-#define GOLEM_API_HOST_UPDATE_MODE_SNAPSHOT_BASED 1
+#define GOLEM_API_1_1_0_HOST_UPDATE_MODE_SNAPSHOT_BASED 1
 
-typedef uint8_t golem_api_host_filter_comparator_t;
+typedef uint8_t golem_api_1_1_0_host_filter_comparator_t;
 
-#define GOLEM_API_HOST_FILTER_COMPARATOR_EQUAL 0
-#define GOLEM_API_HOST_FILTER_COMPARATOR_NOT_EQUAL 1
-#define GOLEM_API_HOST_FILTER_COMPARATOR_GREATER_EQUAL 2
-#define GOLEM_API_HOST_FILTER_COMPARATOR_GREATER 3
-#define GOLEM_API_HOST_FILTER_COMPARATOR_LESS_EQUAL 4
-#define GOLEM_API_HOST_FILTER_COMPARATOR_LESS 5
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_EQUAL 0
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_NOT_EQUAL 1
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_GREATER_EQUAL 2
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_GREATER 3
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_LESS_EQUAL 4
+#define GOLEM_API_1_1_0_HOST_FILTER_COMPARATOR_LESS 5
 
-typedef uint8_t golem_api_host_string_filter_comparator_t;
+typedef uint8_t golem_api_1_1_0_host_string_filter_comparator_t;
 
-#define GOLEM_API_HOST_STRING_FILTER_COMPARATOR_EQUAL 0
-#define GOLEM_API_HOST_STRING_FILTER_COMPARATOR_NOT_EQUAL 1
-#define GOLEM_API_HOST_STRING_FILTER_COMPARATOR_LIKE 2
-#define GOLEM_API_HOST_STRING_FILTER_COMPARATOR_NOT_LIKE 3
+#define GOLEM_API_1_1_0_HOST_STRING_FILTER_COMPARATOR_EQUAL 0
+#define GOLEM_API_1_1_0_HOST_STRING_FILTER_COMPARATOR_NOT_EQUAL 1
+#define GOLEM_API_1_1_0_HOST_STRING_FILTER_COMPARATOR_LIKE 2
+#define GOLEM_API_1_1_0_HOST_STRING_FILTER_COMPARATOR_NOT_LIKE 3
 
-typedef uint8_t golem_api_host_worker_status_t;
+typedef uint8_t golem_api_1_1_0_host_worker_status_t;
 
 // The worker is running an invoked function
-#define GOLEM_API_HOST_WORKER_STATUS_RUNNING 0
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_RUNNING 0
 // The worker is ready to run an invoked function
-#define GOLEM_API_HOST_WORKER_STATUS_IDLE 1
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_IDLE 1
 // An invocation is active but waiting for something (sleeping, waiting for a promise)
-#define GOLEM_API_HOST_WORKER_STATUS_SUSPENDED 2
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_SUSPENDED 2
 // The last invocation was interrupted but will be resumed
-#define GOLEM_API_HOST_WORKER_STATUS_INTERRUPTED 3
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_INTERRUPTED 3
 // The last invocation failed and a retry was scheduled
-#define GOLEM_API_HOST_WORKER_STATUS_RETRYING 4
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_RETRYING 4
 // The last invocation failed and the worker can no longer be used
-#define GOLEM_API_HOST_WORKER_STATUS_FAILED 5
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_FAILED 5
 // The worker exited after a successful invocation and can no longer be invoked
-#define GOLEM_API_HOST_WORKER_STATUS_EXITED 6
+#define GOLEM_API_1_1_0_HOST_WORKER_STATUS_EXITED 6
 
-typedef struct golem_api_host_worker_name_filter_t {
-  golem_api_host_string_filter_comparator_t   comparator;
+typedef struct golem_api_1_1_0_host_worker_name_filter_t {
+  golem_api_1_1_0_host_string_filter_comparator_t   comparator;
   binding_string_t   value;
-} golem_api_host_worker_name_filter_t;
+} golem_api_1_1_0_host_worker_name_filter_t;
 
-typedef struct golem_api_host_worker_status_filter_t {
-  golem_api_host_filter_comparator_t   comparator;
-  golem_api_host_worker_status_t   value;
-} golem_api_host_worker_status_filter_t;
+typedef struct golem_api_1_1_0_host_worker_status_filter_t {
+  golem_api_1_1_0_host_filter_comparator_t   comparator;
+  golem_api_1_1_0_host_worker_status_t   value;
+} golem_api_1_1_0_host_worker_status_filter_t;
 
-typedef struct golem_api_host_worker_version_filter_t {
-  golem_api_host_filter_comparator_t   comparator;
+typedef struct golem_api_1_1_0_host_worker_version_filter_t {
+  golem_api_1_1_0_host_filter_comparator_t   comparator;
   uint64_t   value;
-} golem_api_host_worker_version_filter_t;
+} golem_api_1_1_0_host_worker_version_filter_t;
 
-typedef struct golem_api_host_worker_created_at_filter_t {
-  golem_api_host_filter_comparator_t   comparator;
+typedef struct golem_api_1_1_0_host_worker_created_at_filter_t {
+  golem_api_1_1_0_host_filter_comparator_t   comparator;
   uint64_t   value;
-} golem_api_host_worker_created_at_filter_t;
+} golem_api_1_1_0_host_worker_created_at_filter_t;
 
-typedef struct golem_api_host_worker_env_filter_t {
+typedef struct golem_api_1_1_0_host_worker_env_filter_t {
   binding_string_t   name;
-  golem_api_host_string_filter_comparator_t   comparator;
+  golem_api_1_1_0_host_string_filter_comparator_t   comparator;
   binding_string_t   value;
-} golem_api_host_worker_env_filter_t;
+} golem_api_1_1_0_host_worker_env_filter_t;
 
-typedef struct golem_api_host_worker_property_filter_t {
+typedef struct golem_api_1_1_0_host_worker_property_filter_t {
   uint8_t tag;
   union {
-    golem_api_host_worker_name_filter_t     name;
-    golem_api_host_worker_status_filter_t     status;
-    golem_api_host_worker_version_filter_t     version;
-    golem_api_host_worker_created_at_filter_t     created_at;
-    golem_api_host_worker_env_filter_t     env;
+    golem_api_1_1_0_host_worker_name_filter_t     name;
+    golem_api_1_1_0_host_worker_status_filter_t     status;
+    golem_api_1_1_0_host_worker_version_filter_t     version;
+    golem_api_1_1_0_host_worker_created_at_filter_t     created_at;
+    golem_api_1_1_0_host_worker_env_filter_t     env;
   } val;
-} golem_api_host_worker_property_filter_t;
+} golem_api_1_1_0_host_worker_property_filter_t;
 
-#define GOLEM_API_HOST_WORKER_PROPERTY_FILTER_NAME 0
-#define GOLEM_API_HOST_WORKER_PROPERTY_FILTER_STATUS 1
-#define GOLEM_API_HOST_WORKER_PROPERTY_FILTER_VERSION 2
-#define GOLEM_API_HOST_WORKER_PROPERTY_FILTER_CREATED_AT 3
-#define GOLEM_API_HOST_WORKER_PROPERTY_FILTER_ENV 4
-
-typedef struct {
-  golem_api_host_worker_property_filter_t *ptr;
-  size_t len;
-} golem_api_host_list_worker_property_filter_t;
-
-typedef struct golem_api_host_worker_all_filter_t {
-  golem_api_host_list_worker_property_filter_t   filters;
-} golem_api_host_worker_all_filter_t;
+#define GOLEM_API_1_1_0_HOST_WORKER_PROPERTY_FILTER_NAME 0
+#define GOLEM_API_1_1_0_HOST_WORKER_PROPERTY_FILTER_STATUS 1
+#define GOLEM_API_1_1_0_HOST_WORKER_PROPERTY_FILTER_VERSION 2
+#define GOLEM_API_1_1_0_HOST_WORKER_PROPERTY_FILTER_CREATED_AT 3
+#define GOLEM_API_1_1_0_HOST_WORKER_PROPERTY_FILTER_ENV 4
 
 typedef struct {
-  golem_api_host_worker_all_filter_t *ptr;
+  golem_api_1_1_0_host_worker_property_filter_t *ptr;
   size_t len;
-} golem_api_host_list_worker_all_filter_t;
+} golem_api_1_1_0_host_list_worker_property_filter_t;
 
-typedef struct golem_api_host_worker_any_filter_t {
-  golem_api_host_list_worker_all_filter_t   filters;
-} golem_api_host_worker_any_filter_t;
+typedef struct golem_api_1_1_0_host_worker_all_filter_t {
+  golem_api_1_1_0_host_list_worker_property_filter_t   filters;
+} golem_api_1_1_0_host_worker_all_filter_t;
+
+typedef struct {
+  golem_api_1_1_0_host_worker_all_filter_t *ptr;
+  size_t len;
+} golem_api_1_1_0_host_list_worker_all_filter_t;
+
+typedef struct golem_api_1_1_0_host_worker_any_filter_t {
+  golem_api_1_1_0_host_list_worker_all_filter_t   filters;
+} golem_api_1_1_0_host_worker_any_filter_t;
 
 typedef struct {
   binding_string_t *ptr;
@@ -373,37 +385,37 @@ typedef struct {
   size_t len;
 } binding_list_tuple2_string_string_t;
 
-typedef struct golem_api_host_worker_metadata_t {
-  golem_api_host_worker_id_t   worker_id;
+typedef struct golem_api_1_1_0_host_worker_metadata_t {
+  golem_api_1_1_0_host_worker_id_t   worker_id;
   binding_list_string_t   args;
   binding_list_tuple2_string_string_t   env;
-  golem_api_host_worker_status_t   status;
+  golem_api_1_1_0_host_worker_status_t   status;
   uint64_t   component_version;
   uint64_t   retry_count;
-} golem_api_host_worker_metadata_t;
+} golem_api_1_1_0_host_worker_metadata_t;
 
-typedef struct golem_api_host_own_get_workers_t {
+typedef struct golem_api_1_1_0_host_own_get_workers_t {
   int32_t __handle;
-} golem_api_host_own_get_workers_t;
+} golem_api_1_1_0_host_own_get_workers_t;
 
-typedef struct golem_api_host_borrow_get_workers_t {
+typedef struct golem_api_1_1_0_host_borrow_get_workers_t {
   int32_t __handle;
-} golem_api_host_borrow_get_workers_t;
+} golem_api_1_1_0_host_borrow_get_workers_t;
 
 typedef struct {
   bool is_some;
-  golem_api_host_worker_any_filter_t val;
-} golem_api_host_option_worker_any_filter_t;
+  golem_api_1_1_0_host_worker_any_filter_t val;
+} golem_api_1_1_0_host_option_worker_any_filter_t;
 
 typedef struct {
-  golem_api_host_worker_metadata_t *ptr;
+  golem_api_1_1_0_host_worker_metadata_t *ptr;
   size_t len;
-} golem_api_host_list_worker_metadata_t;
+} golem_api_1_1_0_host_list_worker_metadata_t;
 
 typedef struct {
   bool is_some;
-  golem_api_host_list_worker_metadata_t val;
-} golem_api_host_option_list_worker_metadata_t;
+  golem_api_1_1_0_host_list_worker_metadata_t val;
+} golem_api_1_1_0_host_option_list_worker_metadata_t;
 
 typedef struct {
   uint8_t *ptr;
@@ -412,8 +424,396 @@ typedef struct {
 
 typedef struct {
   bool is_some;
-  golem_api_host_worker_metadata_t val;
-} golem_api_host_option_worker_metadata_t;
+  golem_api_1_1_0_host_worker_metadata_t val;
+} golem_api_1_1_0_host_option_worker_metadata_t;
+
+// A time and date in seconds plus nanoseconds.
+typedef struct wasi_clocks_wall_clock_datetime_t {
+  uint64_t   seconds;
+  uint32_t   nanoseconds;
+} wasi_clocks_wall_clock_datetime_t;
+
+typedef wasi_clocks_wall_clock_datetime_t golem_api_1_1_0_oplog_datetime_t;
+
+typedef golem_rpc_types_wit_value_t golem_api_1_1_0_oplog_wit_value_t;
+
+typedef golem_api_1_1_0_host_account_id_t golem_api_1_1_0_oplog_account_id_t;
+
+typedef golem_api_1_1_0_host_component_version_t golem_api_1_1_0_oplog_component_version_t;
+
+typedef golem_api_1_1_0_host_oplog_index_t golem_api_1_1_0_oplog_oplog_index_t;
+
+typedef golem_api_1_1_0_host_retry_policy_t golem_api_1_1_0_oplog_retry_policy_t;
+
+typedef golem_api_1_1_0_host_uuid_t golem_api_1_1_0_oplog_uuid_t;
+
+typedef golem_api_1_1_0_host_worker_id_t golem_api_1_1_0_oplog_worker_id_t;
+
+typedef struct {
+  bool is_some;
+  golem_api_1_1_0_oplog_oplog_index_t val;
+} binding_option_oplog_index_t;
+
+typedef struct golem_api_1_1_0_oplog_wrapped_function_type_t {
+  uint8_t tag;
+  union {
+    binding_option_oplog_index_t     write_remote_batched;
+  } val;
+} golem_api_1_1_0_oplog_wrapped_function_type_t;
+
+// The side-effect reads from the worker's local state (for example local file system,
+// random generator, etc.)
+#define GOLEM_API_1_1_0_OPLOG_WRAPPED_FUNCTION_TYPE_READ_LOCAL 0
+// The side-effect writes to the worker's local state (for example local file system)
+#define GOLEM_API_1_1_0_OPLOG_WRAPPED_FUNCTION_TYPE_WRITE_LOCAL 1
+// The side-effect reads from external state (for example a key-value store)
+#define GOLEM_API_1_1_0_OPLOG_WRAPPED_FUNCTION_TYPE_READ_REMOTE 2
+// The side-effect manipulates external state (for example an RPC call)
+#define GOLEM_API_1_1_0_OPLOG_WRAPPED_FUNCTION_TYPE_WRITE_REMOTE 3
+// The side-effect manipulates external state through multiple invoked functions (for example
+// a HTTP request where reading the response involves multiple host function calls)
+// 
+// On the first invocation of the batch, the parameter should be `None` - this triggers
+// writing a `BeginRemoteWrite` entry in the oplog. Followup invocations should contain
+// this entry's index as the parameter. In batched remote writes it is the caller's responsibility
+// to manually write an `EndRemoteWrite` entry (using `end_function`) when the operation is completed.
+#define GOLEM_API_1_1_0_OPLOG_WRAPPED_FUNCTION_TYPE_WRITE_REMOTE_BATCHED 4
+
+typedef struct golem_api_1_1_0_oplog_plugin_installation_description_t {
+  golem_api_1_1_0_oplog_uuid_t   installation_id;
+  binding_string_t   name;
+  binding_string_t   version;
+  binding_list_tuple2_string_string_t   parameters;
+} golem_api_1_1_0_oplog_plugin_installation_description_t;
+
+typedef struct {
+  bool is_some;
+  golem_api_1_1_0_oplog_worker_id_t val;
+} golem_api_1_1_0_oplog_option_worker_id_t;
+
+typedef struct {
+  golem_api_1_1_0_oplog_plugin_installation_description_t *ptr;
+  size_t len;
+} golem_api_1_1_0_oplog_list_plugin_installation_description_t;
+
+typedef struct golem_api_1_1_0_oplog_create_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_worker_id_t   worker_id;
+  golem_api_1_1_0_oplog_component_version_t   component_version;
+  binding_list_string_t   args;
+  binding_list_tuple2_string_string_t   env;
+  golem_api_1_1_0_oplog_account_id_t   account_id;
+  golem_api_1_1_0_oplog_option_worker_id_t   parent;
+  uint64_t   component_size;
+  uint64_t   initial_total_linear_memory_size;
+  golem_api_1_1_0_oplog_list_plugin_installation_description_t   initial_active_plugins;
+} golem_api_1_1_0_oplog_create_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_imported_function_invoked_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  binding_string_t   function_name;
+  golem_api_1_1_0_oplog_wit_value_t   request;
+  golem_api_1_1_0_oplog_wit_value_t   response;
+  golem_api_1_1_0_oplog_wrapped_function_type_t   wrapped_function_type;
+} golem_api_1_1_0_oplog_imported_function_invoked_parameters_t;
+
+typedef struct {
+  golem_api_1_1_0_oplog_wit_value_t *ptr;
+  size_t len;
+} golem_api_1_1_0_oplog_list_wit_value_t;
+
+typedef struct golem_api_1_1_0_oplog_exported_function_invoked_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  binding_string_t   function_name;
+  golem_api_1_1_0_oplog_list_wit_value_t   request;
+  binding_string_t   idempotency_key;
+} golem_api_1_1_0_oplog_exported_function_invoked_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_exported_function_completed_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_wit_value_t   response;
+  int64_t   consumed_fuel;
+} golem_api_1_1_0_oplog_exported_function_completed_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_error_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  binding_string_t   error;
+} golem_api_1_1_0_oplog_error_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_jump_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_oplog_index_t   start;
+  golem_api_1_1_0_oplog_oplog_index_t   end;
+} golem_api_1_1_0_oplog_jump_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_change_retry_policy_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_retry_policy_t   retry_policy;
+} golem_api_1_1_0_oplog_change_retry_policy_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_end_atomic_region_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_oplog_index_t   begin_index;
+} golem_api_1_1_0_oplog_end_atomic_region_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_end_remote_write_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_oplog_index_t   begin_index;
+} golem_api_1_1_0_oplog_end_remote_write_parameters_t;
+
+typedef struct {
+  bool is_some;
+  golem_api_1_1_0_oplog_list_wit_value_t val;
+} golem_api_1_1_0_oplog_option_list_wit_value_t;
+
+typedef struct golem_api_1_1_0_oplog_exported_function_invocation_parameters_t {
+  binding_string_t   idempotency_key;
+  binding_string_t   function_name;
+  golem_api_1_1_0_oplog_option_list_wit_value_t   input;
+} golem_api_1_1_0_oplog_exported_function_invocation_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_worker_invocation_t {
+  uint8_t tag;
+  union {
+    golem_api_1_1_0_oplog_exported_function_invocation_parameters_t     exported_function;
+    golem_api_1_1_0_oplog_component_version_t     manual_update;
+  } val;
+} golem_api_1_1_0_oplog_worker_invocation_t;
+
+#define GOLEM_API_1_1_0_OPLOG_WORKER_INVOCATION_EXPORTED_FUNCTION 0
+#define GOLEM_API_1_1_0_OPLOG_WORKER_INVOCATION_MANUAL_UPDATE 1
+
+typedef struct golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_worker_invocation_t   invocation;
+} golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_update_description_t {
+  uint8_t tag;
+  union {
+    binding_list_u8_t     snapshot_based;
+  } val;
+} golem_api_1_1_0_oplog_update_description_t;
+
+// Automatic update by replaying the oplog on the new version
+#define GOLEM_API_1_1_0_OPLOG_UPDATE_DESCRIPTION_AUTO_UPDATE 0
+// Custom update by loading a given snapshot on the new version
+#define GOLEM_API_1_1_0_OPLOG_UPDATE_DESCRIPTION_SNAPSHOT_BASED 1
+
+typedef struct golem_api_1_1_0_oplog_pending_update_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_component_version_t   target_version;
+  golem_api_1_1_0_oplog_update_description_t   update_description;
+} golem_api_1_1_0_oplog_pending_update_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_successful_update_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_component_version_t   target_version;
+  uint64_t   new_component_size;
+  golem_api_1_1_0_oplog_list_plugin_installation_description_t   new_active_plugins;
+} golem_api_1_1_0_oplog_successful_update_parameters_t;
+
+typedef struct {
+  bool is_some;
+  binding_string_t val;
+} binding_option_string_t;
+
+typedef struct golem_api_1_1_0_oplog_failed_update_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_component_version_t   target_version;
+  binding_option_string_t   details;
+} golem_api_1_1_0_oplog_failed_update_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_grow_memory_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  uint64_t   delta;
+} golem_api_1_1_0_oplog_grow_memory_parameters_t;
+
+typedef uint64_t golem_api_1_1_0_oplog_worker_resource_id_t;
+
+typedef struct golem_api_1_1_0_oplog_create_resource_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_worker_resource_id_t   resource_id;
+} golem_api_1_1_0_oplog_create_resource_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_drop_resource_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_worker_resource_id_t   resource_id;
+} golem_api_1_1_0_oplog_drop_resource_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_describe_resource_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_worker_resource_id_t   resource_id;
+  binding_string_t   resource_name;
+  golem_api_1_1_0_oplog_list_wit_value_t   resource_params;
+} golem_api_1_1_0_oplog_describe_resource_parameters_t;
+
+typedef uint8_t golem_api_1_1_0_oplog_log_level_t;
+
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_STDOUT 0
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_STDERR 1
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_TRACE 2
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_DEBUG 3
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_INFO 4
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_WARN 5
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_ERROR 6
+#define GOLEM_API_1_1_0_OPLOG_LOG_LEVEL_CRITICAL 7
+
+typedef struct golem_api_1_1_0_oplog_log_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_log_level_t   level;
+  binding_string_t   context;
+  binding_string_t   message;
+} golem_api_1_1_0_oplog_log_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_activate_plugin_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_plugin_installation_description_t   plugin;
+} golem_api_1_1_0_oplog_activate_plugin_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_deactivate_plugin_parameters_t {
+  golem_api_1_1_0_oplog_datetime_t   timestamp;
+  golem_api_1_1_0_oplog_plugin_installation_description_t   plugin;
+} golem_api_1_1_0_oplog_deactivate_plugin_parameters_t;
+
+typedef struct golem_api_1_1_0_oplog_oplog_entry_t {
+  uint8_t tag;
+  union {
+    golem_api_1_1_0_oplog_create_parameters_t     create;
+    golem_api_1_1_0_oplog_imported_function_invoked_parameters_t     imported_function_invoked;
+    golem_api_1_1_0_oplog_exported_function_invoked_parameters_t     exported_function_invoked;
+    golem_api_1_1_0_oplog_exported_function_completed_parameters_t     exported_function_completed;
+    golem_api_1_1_0_oplog_datetime_t     suspend;
+    golem_api_1_1_0_oplog_error_parameters_t     error;
+    golem_api_1_1_0_oplog_datetime_t     no_op;
+    golem_api_1_1_0_oplog_jump_parameters_t     jump;
+    golem_api_1_1_0_oplog_datetime_t     interrupted;
+    golem_api_1_1_0_oplog_datetime_t     exited;
+    golem_api_1_1_0_oplog_change_retry_policy_parameters_t     change_retry_policy;
+    golem_api_1_1_0_oplog_datetime_t     begin_atomic_region;
+    golem_api_1_1_0_oplog_end_atomic_region_parameters_t     end_atomic_region;
+    golem_api_1_1_0_oplog_datetime_t     begin_remote_write;
+    golem_api_1_1_0_oplog_end_remote_write_parameters_t     end_remote_write;
+    golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t     pending_worker_invocation;
+    golem_api_1_1_0_oplog_pending_update_parameters_t     pending_update;
+    golem_api_1_1_0_oplog_successful_update_parameters_t     successful_update;
+    golem_api_1_1_0_oplog_failed_update_parameters_t     failed_update;
+    golem_api_1_1_0_oplog_grow_memory_parameters_t     grow_memory;
+    golem_api_1_1_0_oplog_create_resource_parameters_t     create_resource;
+    golem_api_1_1_0_oplog_drop_resource_parameters_t     drop_resource;
+    golem_api_1_1_0_oplog_describe_resource_parameters_t     describe_resource;
+    golem_api_1_1_0_oplog_log_parameters_t     log;
+    golem_api_1_1_0_oplog_datetime_t     restart;
+    golem_api_1_1_0_oplog_activate_plugin_parameters_t     activate_plugin;
+    golem_api_1_1_0_oplog_deactivate_plugin_parameters_t     deactivate_plugin;
+  } val;
+} golem_api_1_1_0_oplog_oplog_entry_t;
+
+// The initial worker oplog entry
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_CREATE 0
+// The worker invoked a host function
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_IMPORTED_FUNCTION_INVOKED 1
+// The worker has been invoked
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_EXPORTED_FUNCTION_INVOKED 2
+// The worker has completed an invocation
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_EXPORTED_FUNCTION_COMPLETED 3
+// Worker suspended
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_SUSPEND 4
+// Worker failed
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_ERROR 5
+// Marker entry added when get-oplog-index is called from the worker, to make the jumping behavior
+// more predictable.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_NO_OP 6
+// The worker needs to recover up to the given target oplog index and continue running from
+// the source oplog index from there
+// `jump` is an oplog region representing that from the end of that region we want to go back to the start and
+// ignore all recorded operations in between.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_JUMP 7
+// Indicates that the worker has been interrupted at this point.
+// Only used to recompute the worker's (cached) status, has no effect on execution.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_INTERRUPTED 8
+// Indicates that the worker has been exited using WASI's exit function.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_EXITED 9
+// Overrides the worker's retry policy
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_CHANGE_RETRY_POLICY 10
+// Begins an atomic region. All oplog entries after `BeginAtomicRegion` are to be ignored during
+// recovery except if there is a corresponding `EndAtomicRegion` entry.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_BEGIN_ATOMIC_REGION 11
+// Ends an atomic region. All oplog entries between the corresponding `BeginAtomicRegion` and this
+// entry are to be considered during recovery, and the begin/end markers can be removed during oplog
+// compaction.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_END_ATOMIC_REGION 12
+// Begins a remote write operation. Only used when idempotence mode is off. In this case each
+// remote write must be surrounded by a `BeginRemoteWrite` and `EndRemoteWrite` log pair and
+// unfinished remote writes cannot be recovered.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_BEGIN_REMOTE_WRITE 13
+// Marks the end of a remote write operation. Only used when idempotence mode is off.
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_END_REMOTE_WRITE 14
+// An invocation request arrived while the worker was busy
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_PENDING_WORKER_INVOCATION 15
+// An update request arrived and will be applied as soon the worker restarts
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_PENDING_UPDATE 16
+// An update was successfully applied
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_SUCCESSFUL_UPDATE 17
+// An update failed to be applied
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_FAILED_UPDATE 18
+// Increased total linear memory size
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_GROW_MEMORY 19
+// Created a resource instance
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_CREATE_RESOURCE 20
+// Dropped a resource instance
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_DROP_RESOURCE 21
+// Adds additional information for a created resource instance
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_DESCRIBE_RESOURCE 22
+// The worker emitted a log message
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_LOG 23
+// The worker's has been restarted, forgetting all its history
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_RESTART 24
+// Activates a plugin
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_ACTIVATE_PLUGIN 25
+// Deactivates a plugin
+#define GOLEM_API_1_1_0_OPLOG_OPLOG_ENTRY_DEACTIVATE_PLUGIN 26
+
+typedef struct golem_api_1_1_0_oplog_own_get_oplog_t {
+  int32_t __handle;
+} golem_api_1_1_0_oplog_own_get_oplog_t;
+
+typedef struct golem_api_1_1_0_oplog_borrow_get_oplog_t {
+  int32_t __handle;
+} golem_api_1_1_0_oplog_borrow_get_oplog_t;
+
+typedef struct golem_api_1_1_0_oplog_own_search_oplog_t {
+  int32_t __handle;
+} golem_api_1_1_0_oplog_own_search_oplog_t;
+
+typedef struct golem_api_1_1_0_oplog_borrow_search_oplog_t {
+  int32_t __handle;
+} golem_api_1_1_0_oplog_borrow_search_oplog_t;
+
+typedef struct {
+  golem_api_1_1_0_oplog_oplog_entry_t *ptr;
+  size_t len;
+} golem_api_1_1_0_oplog_list_oplog_entry_t;
+
+typedef struct {
+  bool is_some;
+  golem_api_1_1_0_oplog_list_oplog_entry_t val;
+} golem_api_1_1_0_oplog_option_list_oplog_entry_t;
+
+typedef struct {
+  golem_api_1_1_0_oplog_oplog_index_t f0;
+  golem_api_1_1_0_oplog_oplog_entry_t f1;
+} golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_t;
+
+typedef struct {
+  golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_t *ptr;
+  size_t len;
+} golem_api_1_1_0_oplog_list_tuple2_oplog_index_oplog_entry_t;
+
+typedef struct {
+  bool is_some;
+  golem_api_1_1_0_oplog_list_tuple2_oplog_index_oplog_entry_t val;
+} golem_api_1_1_0_oplog_option_list_tuple2_oplog_index_oplog_entry_t;
 
 typedef struct wasi_io_error_own_error_t {
   int32_t __handle;
@@ -719,17 +1119,6 @@ typedef struct {
     wasi_blobstore_blobstore_error_t err;
   } val;
 } wasi_blobstore_blobstore_result_bool_error_t;
-
-typedef struct {
-  bool is_some;
-  binding_string_t val;
-} binding_option_string_t;
-
-// A time and date in seconds plus nanoseconds.
-typedef struct wasi_clocks_wall_clock_datetime_t {
-  uint64_t   seconds;
-  uint32_t   nanoseconds;
-} wasi_clocks_wall_clock_datetime_t;
 
 typedef wasi_clocks_wall_clock_datetime_t wasi_filesystem_types_datetime_t;
 
@@ -1844,65 +2233,89 @@ extern wasi_clocks_monotonic_clock_own_pollable_t wasi_clocks_monotonic_clock_su
 // occured.
 extern wasi_clocks_monotonic_clock_own_pollable_t wasi_clocks_monotonic_clock_subscribe_duration(wasi_clocks_monotonic_clock_duration_t when);
 
-// Imported Functions from `golem:api/host@0.2.0`
-extern golem_api_host_own_get_workers_t golem_api_host_constructor_get_workers(golem_api_host_component_id_t *component_id, golem_api_host_option_worker_any_filter_t *filter, bool precise);
-extern void golem_api_host_method_get_workers_get_next(golem_api_host_borrow_get_workers_t self, golem_api_host_option_list_worker_metadata_t *ret);
+// Imported Functions from `golem:api/host@1.1.0`
+extern golem_api_1_1_0_host_own_get_workers_t golem_api_1_1_0_host_constructor_get_workers(golem_api_1_1_0_host_component_id_t *component_id, golem_api_1_1_0_host_option_worker_any_filter_t *filter, bool precise);
+extern void golem_api_1_1_0_host_method_get_workers_get_next(golem_api_1_1_0_host_borrow_get_workers_t self, golem_api_1_1_0_host_option_list_worker_metadata_t *ret);
 // Create a new promise
-extern void golem_api_host_create_promise(golem_api_host_promise_id_t *ret);
+extern void golem_api_1_1_0_host_create_promise(golem_api_1_1_0_host_promise_id_t *ret);
 // Suspends execution until the given promise gets completed, and returns the payload passed to
 // the promise completion.
-extern void golem_api_host_await_promise(golem_api_host_promise_id_t *promise_id, binding_list_u8_t *ret);
+extern void golem_api_1_1_0_host_await_promise(golem_api_1_1_0_host_promise_id_t *promise_id, binding_list_u8_t *ret);
 // Completes the given promise with the given payload. Returns true if the promise was completed, false
 // if the promise was already completed. The payload is passed to the worker that is awaiting the promise.
-extern bool golem_api_host_complete_promise(golem_api_host_promise_id_t *promise_id, binding_list_u8_t *data);
+extern bool golem_api_1_1_0_host_complete_promise(golem_api_1_1_0_host_promise_id_t *promise_id, binding_list_u8_t *data);
 // Deletes the given promise
-extern void golem_api_host_delete_promise(golem_api_host_promise_id_t *promise_id);
-// Returns a Golem worker URI that can be used to invoke a given function on the current worker
-extern void golem_api_host_get_self_uri(binding_string_t *function_name, golem_api_host_uri_t *ret);
+extern void golem_api_1_1_0_host_delete_promise(golem_api_1_1_0_host_promise_id_t *promise_id);
 // Returns the current position in the persistent op log
-extern golem_api_host_oplog_index_t golem_api_host_get_oplog_index(void);
+extern golem_api_1_1_0_host_oplog_index_t golem_api_1_1_0_host_get_oplog_index(void);
 // Makes the current worker travel back in time and continue execution from the given position in the persistent
 // op log.
-extern void golem_api_host_set_oplog_index(golem_api_host_oplog_index_t oplog_idx);
+extern void golem_api_1_1_0_host_set_oplog_index(golem_api_1_1_0_host_oplog_index_t oplog_idx);
 // Blocks the execution until the oplog has been written to at least the specified number of replicas,
 // or the maximum number of replicas if the requested number is higher.
-extern void golem_api_host_oplog_commit(uint8_t replicas);
+extern void golem_api_1_1_0_host_oplog_commit(uint8_t replicas);
 // Marks the beginning of an atomic operation.
 // In case of a failure within the region selected by `mark-begin-operation` and `mark-end-operation`
 // the whole region will be reexecuted on retry.
 // The end of the region is when `mark-end-operation` is called with the returned oplog-index.
-extern golem_api_host_oplog_index_t golem_api_host_mark_begin_operation(void);
+extern golem_api_1_1_0_host_oplog_index_t golem_api_1_1_0_host_mark_begin_operation(void);
 // Commits this atomic operation. After `mark-end-operation` is called for a given index, further calls
 // with the same parameter will do nothing.
-extern void golem_api_host_mark_end_operation(golem_api_host_oplog_index_t begin);
+extern void golem_api_1_1_0_host_mark_end_operation(golem_api_1_1_0_host_oplog_index_t begin);
 // Gets the current retry policy associated with the worker
-extern void golem_api_host_get_retry_policy(golem_api_host_retry_policy_t *ret);
+extern void golem_api_1_1_0_host_get_retry_policy(golem_api_1_1_0_host_retry_policy_t *ret);
 // Overrides the current retry policy associated with the worker. Following this call, `get-retry-policy` will return the
 // new retry policy.
-extern void golem_api_host_set_retry_policy(golem_api_host_retry_policy_t *new_retry_policy);
+extern void golem_api_1_1_0_host_set_retry_policy(golem_api_1_1_0_host_retry_policy_t *new_retry_policy);
 // Gets the worker's current persistence level.
-extern void golem_api_host_get_oplog_persistence_level(golem_api_host_persistence_level_t *ret);
+extern void golem_api_1_1_0_host_get_oplog_persistence_level(golem_api_1_1_0_host_persistence_level_t *ret);
 // Sets the worker's current persistence level. This can increase the performance of execution in cases where durable
 // execution is not required.
-extern void golem_api_host_set_oplog_persistence_level(golem_api_host_persistence_level_t *new_persistence_level);
+extern void golem_api_1_1_0_host_set_oplog_persistence_level(golem_api_1_1_0_host_persistence_level_t *new_persistence_level);
 // Gets the current idempotence mode. See `set-idempotence-mode` for details.
-extern bool golem_api_host_get_idempotence_mode(void);
+extern bool golem_api_1_1_0_host_get_idempotence_mode(void);
 // Sets the current idempotence mode. The default is true.
 // True means side-effects are treated idempotent and Golem guarantees at-least-once semantics.
 // In case of false the executor provides at-most-once semantics, failing the worker in case it is
 // not known if the side effect was already executed.
-extern void golem_api_host_set_idempotence_mode(bool idempotent);
+extern void golem_api_1_1_0_host_set_idempotence_mode(bool idempotent);
 // Generates an idempotency key. This operation will never be replayed —
 // i.e. not only is this key generated, but it is persisted and committed, such that the key can be used in third-party systems (e.g. payment processing)
 // to introduce idempotence.
-extern void golem_api_host_generate_idempotency_key(golem_api_host_uuid_t *ret);
+extern void golem_api_1_1_0_host_generate_idempotency_key(golem_api_1_1_0_host_uuid_t *ret);
 // Initiates an update attempt for the given worker. The function returns immediately once the request has been processed,
 // not waiting for the worker to get updated.
-extern void golem_api_host_update_worker(golem_api_host_worker_id_t *worker_id, golem_api_host_component_version_t target_version, golem_api_host_update_mode_t mode);
+extern void golem_api_1_1_0_host_update_worker(golem_api_1_1_0_host_worker_id_t *worker_id, golem_api_1_1_0_host_component_version_t target_version, golem_api_1_1_0_host_update_mode_t mode);
 // Get current worker metadata
-extern void golem_api_host_get_self_metadata(golem_api_host_worker_metadata_t *ret);
+extern void golem_api_1_1_0_host_get_self_metadata(golem_api_1_1_0_host_worker_metadata_t *ret);
 // Get worker metadata
-extern void golem_api_host_get_worker_metadata(golem_api_host_worker_id_t *worker_id, golem_api_host_option_worker_metadata_t *ret);
+extern void golem_api_1_1_0_host_get_worker_metadata(golem_api_1_1_0_host_worker_id_t *worker_id, golem_api_1_1_0_host_option_worker_metadata_t *ret);
+
+// Imported Functions from `wasi:clocks/wall-clock@0.2.0`
+// Read the current value of the clock.
+// 
+// This clock is not monotonic, therefore calling this function repeatedly
+// will not necessarily produce a sequence of non-decreasing values.
+// 
+// The returned timestamps represent the number of seconds since
+// 1970-01-01T00:00:00Z, also known as [POSIX's Seconds Since the Epoch],
+// also known as [Unix Time].
+// 
+// The nanoseconds field of the output is always less than 1000000000.
+// 
+// [POSIX's Seconds Since the Epoch]: https://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html#tag_21_04_16
+// [Unix Time]: https://en.wikipedia.org/wiki/Unix_time
+extern void wasi_clocks_wall_clock_now(wasi_clocks_wall_clock_datetime_t *ret);
+// Query the resolution of the clock.
+// 
+// The nanoseconds field of the output is always less than 1000000000.
+extern void wasi_clocks_wall_clock_resolution(wasi_clocks_wall_clock_datetime_t *ret);
+
+// Imported Functions from `golem:api/oplog@1.1.0`
+extern golem_api_1_1_0_oplog_own_get_oplog_t golem_api_1_1_0_oplog_constructor_get_oplog(golem_api_1_1_0_oplog_worker_id_t *worker_id, golem_api_1_1_0_oplog_oplog_index_t start);
+extern void golem_api_1_1_0_oplog_method_get_oplog_get_next(golem_api_1_1_0_oplog_borrow_get_oplog_t self, golem_api_1_1_0_oplog_option_list_oplog_entry_t *ret);
+extern golem_api_1_1_0_oplog_own_search_oplog_t golem_api_1_1_0_oplog_constructor_search_oplog(golem_api_1_1_0_oplog_worker_id_t *worker_id, binding_string_t *text);
+extern void golem_api_1_1_0_oplog_method_search_oplog_get_next(golem_api_1_1_0_oplog_borrow_search_oplog_t self, golem_api_1_1_0_oplog_option_list_tuple2_oplog_index_oplog_entry_t *ret);
 
 // Imported Functions from `wasi:io/error@0.2.0`
 // Returns a string that is suitable to assist humans in debugging
@@ -2150,26 +2563,6 @@ extern void wasi_cli_environment_get_arguments(binding_list_string_t *ret);
 // Return a path that programs should use as their initial current working
 // directory, interpreting `.` as shorthand for this.
 extern void wasi_cli_environment_initial_cwd(binding_option_string_t *ret);
-
-// Imported Functions from `wasi:clocks/wall-clock@0.2.0`
-// Read the current value of the clock.
-// 
-// This clock is not monotonic, therefore calling this function repeatedly
-// will not necessarily produce a sequence of non-decreasing values.
-// 
-// The returned timestamps represent the number of seconds since
-// 1970-01-01T00:00:00Z, also known as [POSIX's Seconds Since the Epoch],
-// also known as [Unix Time].
-// 
-// The nanoseconds field of the output is always less than 1000000000.
-// 
-// [POSIX's Seconds Since the Epoch]: https://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html#tag_21_04_16
-// [Unix Time]: https://en.wikipedia.org/wiki/Unix_time
-extern void wasi_clocks_wall_clock_now(wasi_clocks_wall_clock_datetime_t *ret);
-// Query the resolution of the clock.
-// 
-// The nanoseconds field of the output is always less than 1000000000.
-extern void wasi_clocks_wall_clock_resolution(wasi_clocks_wall_clock_datetime_t *ret);
 
 // Imported Functions from `wasi:filesystem/types@0.2.0`
 // Return a stream for reading from a file, if available.
@@ -2870,27 +3263,33 @@ void golem_rpc_types_result_void_rpc_error_free(golem_rpc_types_result_void_rpc_
 
 void golem_rpc_types_option_result_wit_value_rpc_error_free(golem_rpc_types_option_result_wit_value_rpc_error_t *ptr);
 
-void golem_api_host_uri_free(golem_api_host_uri_t *ptr);
+void golem_api_1_1_0_host_uri_free(golem_api_1_1_0_host_uri_t *ptr);
 
-void golem_api_host_worker_id_free(golem_api_host_worker_id_t *ptr);
+void golem_api_1_1_0_host_worker_id_free(golem_api_1_1_0_host_worker_id_t *ptr);
 
-void golem_api_host_promise_id_free(golem_api_host_promise_id_t *ptr);
+void golem_api_1_1_0_host_promise_id_free(golem_api_1_1_0_host_promise_id_t *ptr);
 
-void golem_api_host_persistence_level_free(golem_api_host_persistence_level_t *ptr);
+void golem_api_1_1_0_host_account_id_free(golem_api_1_1_0_host_account_id_t *ptr);
 
-void golem_api_host_worker_name_filter_free(golem_api_host_worker_name_filter_t *ptr);
+void binding_option_f64_free(binding_option_f64_t *ptr);
 
-void golem_api_host_worker_env_filter_free(golem_api_host_worker_env_filter_t *ptr);
+void golem_api_1_1_0_host_retry_policy_free(golem_api_1_1_0_host_retry_policy_t *ptr);
 
-void golem_api_host_worker_property_filter_free(golem_api_host_worker_property_filter_t *ptr);
+void golem_api_1_1_0_host_persistence_level_free(golem_api_1_1_0_host_persistence_level_t *ptr);
 
-void golem_api_host_list_worker_property_filter_free(golem_api_host_list_worker_property_filter_t *ptr);
+void golem_api_1_1_0_host_worker_name_filter_free(golem_api_1_1_0_host_worker_name_filter_t *ptr);
 
-void golem_api_host_worker_all_filter_free(golem_api_host_worker_all_filter_t *ptr);
+void golem_api_1_1_0_host_worker_env_filter_free(golem_api_1_1_0_host_worker_env_filter_t *ptr);
 
-void golem_api_host_list_worker_all_filter_free(golem_api_host_list_worker_all_filter_t *ptr);
+void golem_api_1_1_0_host_worker_property_filter_free(golem_api_1_1_0_host_worker_property_filter_t *ptr);
 
-void golem_api_host_worker_any_filter_free(golem_api_host_worker_any_filter_t *ptr);
+void golem_api_1_1_0_host_list_worker_property_filter_free(golem_api_1_1_0_host_list_worker_property_filter_t *ptr);
+
+void golem_api_1_1_0_host_worker_all_filter_free(golem_api_1_1_0_host_worker_all_filter_t *ptr);
+
+void golem_api_1_1_0_host_list_worker_all_filter_free(golem_api_1_1_0_host_list_worker_all_filter_t *ptr);
+
+void golem_api_1_1_0_host_worker_any_filter_free(golem_api_1_1_0_host_worker_any_filter_t *ptr);
 
 void binding_list_string_free(binding_list_string_t *ptr);
 
@@ -2898,21 +3297,99 @@ void binding_tuple2_string_string_free(binding_tuple2_string_string_t *ptr);
 
 void binding_list_tuple2_string_string_free(binding_list_tuple2_string_string_t *ptr);
 
-void golem_api_host_worker_metadata_free(golem_api_host_worker_metadata_t *ptr);
+void golem_api_1_1_0_host_worker_metadata_free(golem_api_1_1_0_host_worker_metadata_t *ptr);
 
-extern void golem_api_host_get_workers_drop_own(golem_api_host_own_get_workers_t handle);
+extern void golem_api_1_1_0_host_get_workers_drop_own(golem_api_1_1_0_host_own_get_workers_t handle);
 
-extern golem_api_host_borrow_get_workers_t golem_api_host_borrow_get_workers(golem_api_host_own_get_workers_t handle);
+extern golem_api_1_1_0_host_borrow_get_workers_t golem_api_1_1_0_host_borrow_get_workers(golem_api_1_1_0_host_own_get_workers_t handle);
 
-void golem_api_host_option_worker_any_filter_free(golem_api_host_option_worker_any_filter_t *ptr);
+void golem_api_1_1_0_host_option_worker_any_filter_free(golem_api_1_1_0_host_option_worker_any_filter_t *ptr);
 
-void golem_api_host_list_worker_metadata_free(golem_api_host_list_worker_metadata_t *ptr);
+void golem_api_1_1_0_host_list_worker_metadata_free(golem_api_1_1_0_host_list_worker_metadata_t *ptr);
 
-void golem_api_host_option_list_worker_metadata_free(golem_api_host_option_list_worker_metadata_t *ptr);
+void golem_api_1_1_0_host_option_list_worker_metadata_free(golem_api_1_1_0_host_option_list_worker_metadata_t *ptr);
 
 void binding_list_u8_free(binding_list_u8_t *ptr);
 
-void golem_api_host_option_worker_metadata_free(golem_api_host_option_worker_metadata_t *ptr);
+void golem_api_1_1_0_host_option_worker_metadata_free(golem_api_1_1_0_host_option_worker_metadata_t *ptr);
+
+void golem_api_1_1_0_oplog_wit_value_free(golem_api_1_1_0_oplog_wit_value_t *ptr);
+
+void golem_api_1_1_0_oplog_account_id_free(golem_api_1_1_0_oplog_account_id_t *ptr);
+
+void golem_api_1_1_0_oplog_retry_policy_free(golem_api_1_1_0_oplog_retry_policy_t *ptr);
+
+void golem_api_1_1_0_oplog_worker_id_free(golem_api_1_1_0_oplog_worker_id_t *ptr);
+
+void binding_option_oplog_index_free(binding_option_oplog_index_t *ptr);
+
+void golem_api_1_1_0_oplog_wrapped_function_type_free(golem_api_1_1_0_oplog_wrapped_function_type_t *ptr);
+
+void golem_api_1_1_0_oplog_plugin_installation_description_free(golem_api_1_1_0_oplog_plugin_installation_description_t *ptr);
+
+void golem_api_1_1_0_oplog_option_worker_id_free(golem_api_1_1_0_oplog_option_worker_id_t *ptr);
+
+void golem_api_1_1_0_oplog_list_plugin_installation_description_free(golem_api_1_1_0_oplog_list_plugin_installation_description_t *ptr);
+
+void golem_api_1_1_0_oplog_create_parameters_free(golem_api_1_1_0_oplog_create_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_imported_function_invoked_parameters_free(golem_api_1_1_0_oplog_imported_function_invoked_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_list_wit_value_free(golem_api_1_1_0_oplog_list_wit_value_t *ptr);
+
+void golem_api_1_1_0_oplog_exported_function_invoked_parameters_free(golem_api_1_1_0_oplog_exported_function_invoked_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_exported_function_completed_parameters_free(golem_api_1_1_0_oplog_exported_function_completed_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_error_parameters_free(golem_api_1_1_0_oplog_error_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_change_retry_policy_parameters_free(golem_api_1_1_0_oplog_change_retry_policy_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_option_list_wit_value_free(golem_api_1_1_0_oplog_option_list_wit_value_t *ptr);
+
+void golem_api_1_1_0_oplog_exported_function_invocation_parameters_free(golem_api_1_1_0_oplog_exported_function_invocation_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_worker_invocation_free(golem_api_1_1_0_oplog_worker_invocation_t *ptr);
+
+void golem_api_1_1_0_oplog_pending_worker_invocation_parameters_free(golem_api_1_1_0_oplog_pending_worker_invocation_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_update_description_free(golem_api_1_1_0_oplog_update_description_t *ptr);
+
+void golem_api_1_1_0_oplog_pending_update_parameters_free(golem_api_1_1_0_oplog_pending_update_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_successful_update_parameters_free(golem_api_1_1_0_oplog_successful_update_parameters_t *ptr);
+
+void binding_option_string_free(binding_option_string_t *ptr);
+
+void golem_api_1_1_0_oplog_failed_update_parameters_free(golem_api_1_1_0_oplog_failed_update_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_describe_resource_parameters_free(golem_api_1_1_0_oplog_describe_resource_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_log_parameters_free(golem_api_1_1_0_oplog_log_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_activate_plugin_parameters_free(golem_api_1_1_0_oplog_activate_plugin_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_deactivate_plugin_parameters_free(golem_api_1_1_0_oplog_deactivate_plugin_parameters_t *ptr);
+
+void golem_api_1_1_0_oplog_oplog_entry_free(golem_api_1_1_0_oplog_oplog_entry_t *ptr);
+
+extern void golem_api_1_1_0_oplog_get_oplog_drop_own(golem_api_1_1_0_oplog_own_get_oplog_t handle);
+
+extern golem_api_1_1_0_oplog_borrow_get_oplog_t golem_api_1_1_0_oplog_borrow_get_oplog(golem_api_1_1_0_oplog_own_get_oplog_t handle);
+
+extern void golem_api_1_1_0_oplog_search_oplog_drop_own(golem_api_1_1_0_oplog_own_search_oplog_t handle);
+
+extern golem_api_1_1_0_oplog_borrow_search_oplog_t golem_api_1_1_0_oplog_borrow_search_oplog(golem_api_1_1_0_oplog_own_search_oplog_t handle);
+
+void golem_api_1_1_0_oplog_list_oplog_entry_free(golem_api_1_1_0_oplog_list_oplog_entry_t *ptr);
+
+void golem_api_1_1_0_oplog_option_list_oplog_entry_free(golem_api_1_1_0_oplog_option_list_oplog_entry_t *ptr);
+
+void golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_free(golem_api_1_1_0_oplog_tuple2_oplog_index_oplog_entry_t *ptr);
+
+void golem_api_1_1_0_oplog_list_tuple2_oplog_index_oplog_entry_free(golem_api_1_1_0_oplog_list_tuple2_oplog_index_oplog_entry_t *ptr);
+
+void golem_api_1_1_0_oplog_option_list_tuple2_oplog_index_oplog_entry_free(golem_api_1_1_0_oplog_option_list_tuple2_oplog_index_oplog_entry_t *ptr);
 
 extern void wasi_io_error_error_drop_own(wasi_io_error_own_error_t handle);
 
@@ -3011,8 +3488,6 @@ void wasi_blobstore_blobstore_result_own_container_error_free(wasi_blobstore_blo
 void wasi_blobstore_blobstore_result_void_error_free(wasi_blobstore_blobstore_result_void_error_t *ptr);
 
 void wasi_blobstore_blobstore_result_bool_error_free(wasi_blobstore_blobstore_result_bool_error_t *ptr);
-
-void binding_option_string_free(binding_option_string_t *ptr);
 
 void wasi_filesystem_types_option_datetime_free(wasi_filesystem_types_option_datetime_t *ptr);
 

@@ -5,11 +5,11 @@ import (
 )
 
 func GetIdempotenceMode() bool {
-	return binding.GolemApi0_2_0_HostGetIdempotenceMode()
+	return binding.GolemApi1_1_0_HostGetIdempotenceMode()
 }
 
 func SetIdempotenceMode(idempotent bool) {
-	binding.GolemApi0_2_0_HostSetIdempotenceMode(idempotent)
+	binding.GolemApi1_1_0_HostSetIdempotenceMode(idempotent)
 }
 
 func WithIdempotenceMode[T any](idempotent bool, f func() (T, error)) (T, error) {

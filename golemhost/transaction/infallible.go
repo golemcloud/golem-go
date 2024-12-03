@@ -15,13 +15,13 @@ type InfallibleTx interface {
 }
 
 type infallible struct {
-	beginOpLogIndex   binding.GolemApi0_2_0_HostOplogIndex
+	beginOpLogIndex   binding.GolemApi1_1_0_HostOplogIndex
 	stepIndex         uint
 	err               error
 	compensationSteps []func() error
 }
 
-func newInfallible(beginOpLogIndex binding.GolemApi0_2_0_HostOplogIndex) *infallible {
+func newInfallible(beginOpLogIndex binding.GolemApi1_1_0_HostOplogIndex) *infallible {
 	return &infallible{
 		beginOpLogIndex: beginOpLogIndex,
 	}
@@ -47,7 +47,7 @@ func (tx *infallible) retry(err error) {
 			panic(fmt.Sprintf("%s", err.Error()))
 		}
 	}
-	binding.GolemApi0_2_0_HostSetOplogIndex(tx.beginOpLogIndex)
+	binding.GolemApi1_1_0_HostSetOplogIndex(tx.beginOpLogIndex)
 }
 
 func (tx *infallible) finish() {
@@ -82,6 +82,6 @@ func ExecuteInfallible[I, O any](tx InfallibleTx, op Operation[I, O], input I) O
 func Infallible[T any](f func(tx InfallibleTx) T) T {
 	beginOpLogIndex := golemhost.MarkBeginOperation()
 	defer golemhost.MarkEndOperation(beginOpLogIndex)
-	tx := newInfallible(binding.GolemApi0_2_0_HostOplogIndex(beginOpLogIndex))
+	tx := newInfallible(binding.GolemApi1_1_0_HostOplogIndex(beginOpLogIndex))
 	return f(tx)
 }
