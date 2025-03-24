@@ -18,20 +18,20 @@ const (
 	FilterComparatorLess
 )
 
-func (filterComparator FilterComparator) ToBinding() binding.GolemApi1_1_0_HostFilterComparator {
+func (filterComparator FilterComparator) ToBinding() binding.GolemApi1_1_6_HostFilterComparator {
 	switch filterComparator {
 	case FilterComparatorEqual:
-		return binding.GolemApi1_1_0_HostFilterComparatorEqual()
+		return binding.GolemApi1_1_6_HostFilterComparatorEqual()
 	case FilterComparatorNotEqual:
-		return binding.GolemApi1_1_0_HostFilterComparatorNotEqual()
+		return binding.GolemApi1_1_6_HostFilterComparatorNotEqual()
 	case FilterComparatorGreaterEqual:
-		return binding.GolemApi1_1_0_HostFilterComparatorGreaterEqual()
+		return binding.GolemApi1_1_6_HostFilterComparatorGreaterEqual()
 	case FilterComparatorGreater:
-		return binding.GolemApi1_1_0_HostFilterComparatorGreater()
+		return binding.GolemApi1_1_6_HostFilterComparatorGreater()
 	case FilterComparatorLessEqual:
-		return binding.GolemApi1_1_0_HostFilterComparatorLessEqual()
+		return binding.GolemApi1_1_6_HostFilterComparatorLessEqual()
 	case FilterComparatorLess:
-		return binding.GolemApi1_1_0_HostFilterComparatorLess()
+		return binding.GolemApi1_1_6_HostFilterComparatorLess()
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled filterComparator: %d", filterComparator))
 	}
@@ -46,16 +46,16 @@ const (
 	StringFilterComparatorNotLike
 )
 
-func (stringFilterComparator StringFilterComparator) ToBinding() binding.GolemApi1_1_0_HostStringFilterComparator {
+func (stringFilterComparator StringFilterComparator) ToBinding() binding.GolemApi1_1_6_HostStringFilterComparator {
 	switch stringFilterComparator {
 	case StringFilterComparatorEqual:
-		return binding.GolemApi1_1_0_HostStringFilterComparatorEqual()
+		return binding.GolemApi1_1_6_HostStringFilterComparatorEqual()
 	case StringFilterComparatorNotEqual:
-		return binding.GolemApi1_1_0_HostStringFilterComparatorNotEqual()
+		return binding.GolemApi1_1_6_HostStringFilterComparatorNotEqual()
 	case StringFilterComparatorLike:
-		return binding.GolemApi1_1_0_HostStringFilterComparatorLike()
+		return binding.GolemApi1_1_6_HostStringFilterComparatorLike()
 	case StringFilterComparatorNotLike:
-		return binding.GolemApi1_1_0_HostStringFilterComparatorNotLike()
+		return binding.GolemApi1_1_6_HostStringFilterComparatorNotLike()
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled stringFilterComparator: %d", stringFilterComparator))
 	}
@@ -65,9 +65,9 @@ type WorkerAnyFilter struct {
 	Filters []WorkerAllFilter
 }
 
-func (f WorkerAnyFilter) ToBinding() binding.GolemApi1_1_0_HostWorkerAnyFilter {
-	filter := binding.GolemApi1_1_0_HostWorkerAnyFilter{
-		Filters: make([]binding.GolemApi1_1_0_HostWorkerAllFilter, len(f.Filters)),
+func (f WorkerAnyFilter) ToBinding() binding.GolemApi1_1_6_HostWorkerAnyFilter {
+	filter := binding.GolemApi1_1_6_HostWorkerAnyFilter{
+		Filters: make([]binding.GolemApi1_1_6_HostWorkerAllFilter, len(f.Filters)),
 	}
 	for i := range f.Filters {
 		filter.Filters[i] = f.Filters[i].ToBinding()
@@ -79,8 +79,8 @@ type WorkerAllFilter struct {
 	Filters []WorkerFilter
 }
 
-func (f WorkerAllFilter) ToBinding() binding.GolemApi1_1_0_HostWorkerAllFilter {
-	filter := binding.GolemApi1_1_0_HostWorkerAllFilter{}
+func (f WorkerAllFilter) ToBinding() binding.GolemApi1_1_6_HostWorkerAllFilter {
+	filter := binding.GolemApi1_1_6_HostWorkerAllFilter{}
 	for i := range f.Filters {
 		filter.Filters = append(filter.Filters, f.Filters[i].ToBinding()...)
 	}
@@ -109,14 +109,14 @@ type WorkerFilter struct {
 	EnvComparator StringFilterComparator
 }
 
-func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_0_HostWorkerPropertyFilter {
-	var filter []binding.GolemApi1_1_0_HostWorkerPropertyFilter
+func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilter {
+	var filter []binding.GolemApi1_1_6_HostWorkerPropertyFilter
 
 	if f.Name != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_0_HostWorkerPropertyFilterName(
-				binding.GolemApi1_1_0_HostWorkerNameFilter{
+			binding.GolemApi1_1_6_HostWorkerPropertyFilterName(
+				binding.GolemApi1_1_6_HostWorkerNameFilter{
 					Comparator: f.NameComparator.ToBinding(),
 					Value:      *f.Name,
 				},
@@ -127,8 +127,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_0_HostWorkerPropertyFilt
 	if f.Status != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_0_HostWorkerPropertyFilterStatus(
-				binding.GolemApi1_1_0_HostWorkerStatusFilter{
+			binding.GolemApi1_1_6_HostWorkerPropertyFilterStatus(
+				binding.GolemApi1_1_6_HostWorkerStatusFilter{
 					Comparator: f.StatusComparator.ToBinding(),
 					Value:      f.Status.ToBinding(),
 				},
@@ -139,8 +139,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_0_HostWorkerPropertyFilt
 	if f.Version != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_0_HostWorkerPropertyFilterVersion(
-				binding.GolemApi1_1_0_HostWorkerVersionFilter{
+			binding.GolemApi1_1_6_HostWorkerPropertyFilterVersion(
+				binding.GolemApi1_1_6_HostWorkerVersionFilter{
 					Comparator: f.VersionComparator.ToBinding(),
 					Value:      *f.Version,
 				},
@@ -151,8 +151,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_0_HostWorkerPropertyFilt
 	if f.CreatedAt != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_0_HostWorkerPropertyFilterCreatedAt(
-				binding.GolemApi1_1_0_HostWorkerCreatedAtFilter{
+			binding.GolemApi1_1_6_HostWorkerPropertyFilterCreatedAt(
+				binding.GolemApi1_1_6_HostWorkerCreatedAtFilter{
 					Comparator: f.CreatedAtComparator.ToBinding(),
 					Value:      uint64(f.CreatedAt.UnixNano()),
 				},
@@ -163,8 +163,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_0_HostWorkerPropertyFilt
 	if f.Env != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_0_HostWorkerPropertyFilterEnv(
-				binding.GolemApi1_1_0_HostWorkerEnvFilter{
+			binding.GolemApi1_1_6_HostWorkerPropertyFilterEnv(
+				binding.GolemApi1_1_6_HostWorkerEnvFilter{
 					Comparator: f.EnvComparator.ToBinding(),
 					Name:       f.Env.Name,
 					Value:      f.Env.Value,
