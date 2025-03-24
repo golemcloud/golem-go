@@ -12,26 +12,26 @@ type PromiseID struct {
 }
 
 func NewPromise() PromiseID {
-	promise := binding.GolemApi1_1_0_HostCreatePromise()
+	promise := binding.GolemApi1_1_6_HostCreatePromise()
 	return PromiseID{
 		WorkerID: NewWorkerID(promise.WorkerId),
 		OplogIdx: OpLogIndex(promise.OplogIdx),
 	}
 }
 
-func (promiseID PromiseID) ToBinding() binding.GolemApi1_1_0_HostPromiseId {
-	return binding.GolemApi1_1_0_HostPromiseId{
+func (promiseID PromiseID) ToBinding() binding.GolemApi1_1_6_HostPromiseId {
+	return binding.GolemApi1_1_6_HostPromiseId{
 		WorkerId: promiseID.WorkerID.ToBinding(),
-		OplogIdx: binding.GolemApi1_1_0_HostOplogIndex(promiseID.OplogIdx),
+		OplogIdx: binding.GolemApi1_1_6_HostOplogIndex(promiseID.OplogIdx),
 	}
 }
 
 func DeletePromise(promiseID PromiseID) {
-	binding.GolemApi1_1_0_HostDeletePromise(promiseID.ToBinding())
+	binding.GolemApi1_1_6_HostDeletePromise(promiseID.ToBinding())
 }
 
 func AwaitPromise(promiseID PromiseID) []byte {
-	return binding.GolemApi1_1_0_HostAwaitPromise(promiseID.ToBinding())
+	return binding.GolemApi1_1_6_HostAwaitPromise(promiseID.ToBinding())
 }
 
 func AwaitPromiseJSON(promiseID PromiseID, v any) error {
@@ -39,7 +39,7 @@ func AwaitPromiseJSON(promiseID PromiseID, v any) error {
 }
 
 func CompletePromise(promiseID PromiseID, payload []byte) bool {
-	return binding.GolemApi1_1_0_HostCompletePromise(promiseID.ToBinding(), payload)
+	return binding.GolemApi1_1_6_HostCompletePromise(promiseID.ToBinding(), payload)
 }
 
 func CompletePromiseJSON(promiseID PromiseID, v any) (bool, error) {
