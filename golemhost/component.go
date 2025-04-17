@@ -1,19 +1,18 @@
 package golemhost
 
 import (
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 	"github.com/google/uuid"
-
-	"github.com/golemcloud/golem-go/binding"
 )
 
 type ComponentID uuid.UUID
 
-func NewComponentID(componentID binding.GolemApi1_1_6_HostComponentId) ComponentID {
-	return ComponentID(NewUUID(componentID.Uuid))
+func NewComponentID(componentID host.ComponentID) ComponentID {
+	return ComponentID(NewUUID(componentID.UUID))
 }
 
-func (componentID ComponentID) ToBinding() binding.GolemApi1_1_6_HostComponentId {
-	return binding.GolemApi1_1_6_HostComponentId{
-		Uuid: UUIDToBinding(uuid.UUID(componentID)),
+func (componentID ComponentID) ToBinding() host.ComponentID {
+	return host.ComponentID{
+		UUID: UUIDToBinding(uuid.UUID(componentID)),
 	}
 }

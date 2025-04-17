@@ -3,7 +3,7 @@ package golemhost
 import (
 	"fmt"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 )
 
 type PersistenceLevel int
@@ -14,38 +14,38 @@ const (
 	PersistenceLevelSmart
 )
 
-func NewPersistenceLevel(level binding.GolemApi1_1_6_HostPersistenceLevel) PersistenceLevel {
-	switch level.Kind() {
-	case binding.GolemApi1_1_6_HostPersistenceLevelKindPersistRemoteSideEffects:
+func NewPersistenceLevel(level host.PersistenceLevel) PersistenceLevel {
+	switch level {
+	case host.PersistenceLevelPersistRemoteSideEffects:
 		return PersistenceLevelPersistRemoteSideEffects
-	case binding.GolemApi1_1_6_HostPersistenceLevelKindPersistNothing:
+	case host.PersistenceLevelPersistNothing:
 		return PersistenceLevelPersistNothing
-	case binding.GolemApi1_1_6_HostPersistenceLevelKindSmart:
+	case host.PersistenceLevelSmart:
 		return PersistenceLevelSmart
 	default:
 		panic(fmt.Sprintf("NewPersistenceLevel: unhandled persistence level: %d", level))
 	}
 }
 
-func (level PersistenceLevel) ToBinding() binding.GolemApi1_1_6_HostPersistenceLevel {
+func (level PersistenceLevel) ToBinding() host.PersistenceLevel {
 	switch level {
 	case PersistenceLevelPersistNothing:
-		return binding.GolemApi1_1_6_HostPersistenceLevelPersistNothing()
+		return host.PersistenceLevelPersistNothing
 	case PersistenceLevelPersistRemoteSideEffects:
-		return binding.GolemApi1_1_6_HostPersistenceLevelPersistRemoteSideEffects()
+		return host.PersistenceLevelPersistRemoteSideEffects
 	case PersistenceLevelSmart:
-		return binding.GolemApi1_1_6_HostPersistenceLevelSmart()
+		return host.PersistenceLevelSmart
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled persistence level: %d", level))
 	}
 }
 
 func SetPersistenceLevel(level PersistenceLevel) {
-	binding.GolemApi1_1_6_HostSetOplogPersistenceLevel(level.ToBinding())
+	host.SetOplogPersistenceLevel(level.ToBinding())
 }
 
 func GetPersistenceLevel() PersistenceLevel {
-	return NewPersistenceLevel(binding.GolemApi1_1_6_HostGetOplogPersistenceLevel())
+	return NewPersistenceLevel(host.GetOplogPersistenceLevel())
 }
 
 func WithPersistenceLevel[T any](level PersistenceLevel, f func() (T, error)) (T, error) {

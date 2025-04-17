@@ -8,7 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/golemcloud/golem-go/binding"
+	outgoinghandler "github.com/golemcloud/golem-go/binding/wasi/http/outgoing-handler"
+	"github.com/golemcloud/golem-go/binding/wasi/http/types"
+	"go.bytecodealliance.org/cm"
 )
 
 // WasiHttpTransport implements RoundTrip for the Golem WASI environment.
@@ -22,41 +24,44 @@ func InitStdDefaultClientTransport() {
 }
 
 func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, error) {
-	var headerKeyValues []binding.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT
+	var headerKeyValues []cm.Tuple[types.FieldKey, types.FieldValue]
 	for key, values := range request.Header {
 		for _, value := range values {
-			headerKeyValues = append(headerKeyValues, binding.WasiHttp0_2_0_TypesTuple2FieldKeyFieldValueT{
-				F0: key,
-				F1: []byte(value),
+			headerKeyValues = append(headerKeyValues, cm.Tuple[types.FieldKey, types.FieldValue]{
+				F0: types.FieldKey(key),
+				F1: types.FieldValue(cm.ToList([]byte(value))),
 			})
 		}
 	}
-	headers := binding.StaticFieldsFromList(headerKeyValues).Unwrap()
+	headers, err, ok := types.FieldsFromList(cm.ToList(headerKeyValues)).Result()
+	if !ok {
+		return nil, errors.New(err.String())
+	}
 
-	var method binding.WasiHttp0_2_0_TypesMethod
+	var method types.Method
 	switch strings.ToUpper(request.Method) {
 	case "":
-		method = binding.WasiHttp0_2_0_TypesMethodGet()
+		method = types.MethodGet()
 	case "GET":
-		method = binding.WasiHttp0_2_0_TypesMethodGet()
+		method = types.MethodGet()
 	case "HEAD":
-		method = binding.WasiHttp0_2_0_TypesMethodHead()
+		method = types.MethodHead()
 	case "POST":
-		method = binding.WasiHttp0_2_0_TypesMethodPost()
+		method = types.MethodPost()
 	case "PUT":
-		method = binding.WasiHttp0_2_0_TypesMethodPut()
+		method = types.MethodPut()
 	case "DELETE":
-		method = binding.WasiHttp0_2_0_TypesMethodDelete()
+		method = types.MethodDelete()
 	case "CONNECT":
-		method = binding.WasiHttp0_2_0_TypesMethodConnect()
+		method = types.MethodConnect()
 	case "OPTIONS":
-		method = binding.WasiHttp0_2_0_TypesMethodOptions()
+		method = types.MethodOptions()
 	case "TRACE":
-		method = binding.WasiHttp0_2_0_TypesMethodTrace()
+		method = types.MethodTrace()
 	case "PATCH":
-		method = binding.WasiHttp0_2_0_TypesMethodPatch()
+		method = types.MethodPatch()
 	default:
-		method = binding.WasiHttp0_2_0_TypesMethodOther(request.Method)
+		method = types.MethodOther(request.Method)
 	}
 
 	path := request.URL.Path
@@ -66,14 +71,14 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		pathAndQuery += "?" + query
 	}
 
-	var scheme binding.WasiHttp0_2_0_TypesScheme
+	var scheme types.Scheme
 	switch strings.ToLower(request.URL.Scheme) {
 	case "http":
-		scheme = binding.WasiHttp0_2_0_TypesSchemeHttp()
+		scheme = types.SchemeHTTP()
 	case "https":
-		scheme = binding.WasiHttp0_2_0_TypesSchemeHttps()
+		scheme = types.SchemeHTTPS()
 	default:
-		scheme = binding.WasiHttp0_2_0_TypesSchemeOther(request.URL.Scheme)
+		scheme = types.SchemeOther(request.URL.Scheme)
 	}
 
 	userPassword := request.URL.User.String()
@@ -84,38 +89,37 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		authority = userPassword + "@" + request.URL.Host
 	}
 
-	requestHandle := binding.NewOutgoingRequest(headers)
+	requestHandle := types.NewOutgoingRequest(headers)
 
 	requestHandle.SetMethod(method)
-	requestHandle.SetPathWithQuery(binding.Some(pathAndQuery))
-	requestHandle.SetScheme(binding.Some(scheme))
-	requestHandle.SetAuthority(binding.Some(authority))
+	requestHandle.SetPathWithQuery(cm.Some(pathAndQuery))
+	requestHandle.SetScheme(cm.Some(scheme))
+	requestHandle.SetAuthority(cm.Some(authority))
 
 	if request.Body != nil {
 		reader := request.Body
 		defer func() { _ = reader.Close() }()
 
-		requestBodyResult := requestHandle.Body()
-		if requestBodyResult.IsErr() {
+		requestBody, _, ok := requestHandle.Body().Result()
+		if !ok {
 			return nil, errors.New("failed to get request body")
 		}
-		requestBody := requestBodyResult.Unwrap()
 
-		requestStreamResult := requestBody.Write()
-		if requestStreamResult.IsErr() {
+		requestStream, _, ok := requestBody.Write().Result()
+		if !ok {
 			return nil, errors.New("failed to start writing request body")
 		}
-		requestStream := requestStreamResult.Unwrap()
 
 		buffer := make([]byte, 1024)
 		for {
 			n, err := reader.Read(buffer)
 
-			result := requestStream.Write(buffer[:n])
-			if result.IsErr() {
-				requestStream.Drop()
-				requestBody.Drop()
-				return nil, errors.New("failed to write request body chunk")
+			_, err2, ok := requestStream.Write(cm.ToList(buffer[:n])).Result()
+
+			if !ok {
+				requestStream.ResourceDrop()
+				requestBody.ResourceDrop()
+				return nil, errors.New(fmt.Sprintf("failed to write request body chunk: %s", err2.String()))
 			}
 
 			if err == io.EOF {
@@ -123,41 +127,41 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 			}
 		}
 
-		requestStream.Drop()
-		binding.StaticOutgoingBodyFinish(requestBody, binding.None[binding.WasiHttp0_2_0_TypesTrailers]())
+		requestStream.ResourceDrop()
+
+		types.OutgoingBodyFinish(requestBody, cm.None[types.Trailers]())
 		// requestBody.Drop() // TODO: this fails with "unknown handle index 0"
 	}
 
 	// TODO: timeouts
-	connectTimeoutNanos := binding.None[uint64]()
-	firstByteTimeoutNanos := binding.None[uint64]()
-	betweenBytesTimeoutNanos := binding.None[uint64]()
-	options := binding.NewRequestOptions()
+	connectTimeoutNanos := cm.None[types.Duration]()
+	firstByteTimeoutNanos := cm.None[types.Duration]()
+	betweenBytesTimeoutNanos := cm.None[types.Duration]()
+	options := types.NewRequestOptions()
 	options.SetConnectTimeout(connectTimeoutNanos)
 	options.SetFirstByteTimeout(firstByteTimeoutNanos)
 	options.SetBetweenBytesTimeout(betweenBytesTimeoutNanos)
 
-	futureResult := binding.WasiHttp0_2_0_OutgoingHandlerHandle(requestHandle, binding.Some(options))
-	if futureResult.IsErr() {
-		return nil, errors.New("failed to send request")
+	future, err3, ok := outgoinghandler.Handle(requestHandle, cm.Some(options)).Result()
+	if !ok {
+		return nil, errors.New(fmt.Sprintf("failed to send request: %s", err3.String()))
 	}
-	future := futureResult.Unwrap()
 
-	incomingResponse, err := getIncomingResponse(future)
-	if err != nil {
-		return nil, err
+	incomingResponse, err4 := getIncomingResponse(future)
+	if err4 != nil {
+		return nil, err4
 	}
 
 	status := incomingResponse.Status()
 	responseHeaders := incomingResponse.Headers()
-	defer responseHeaders.Drop()
+	defer responseHeaders.ResourceDrop()
 
 	responseHeaderEntries := responseHeaders.Entries()
 	header := http.Header{}
 
-	for _, tuple := range responseHeaderEntries {
-		ck := http.CanonicalHeaderKey(tuple.F0)
-		header[ck] = append(header[ck], string(tuple.F1))
+	for _, tuple := range responseHeaderEntries.Slice() {
+		ck := http.CanonicalHeaderKey(string(tuple.F0))
+		header[ck] = append(header[ck], string([]byte(tuple.F1.Slice())))
 	}
 
 	var contentLength int64
@@ -179,17 +183,15 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		contentLength = -1
 	}
 
-	responseBodyResult := incomingResponse.Consume()
-	if responseBodyResult.IsErr() {
+	responseBody, _, ok := incomingResponse.Consume().Result()
+	if !ok {
 		return nil, errors.New("failed to consume response body")
 	}
-	responseBody := responseBodyResult.Unwrap()
 
-	responseBodyStreamResult := responseBody.Stream()
-	if responseBodyStreamResult.IsErr() {
+	responseBodyStream, _, ok := responseBody.Stream().Result()
+	if !ok {
 		return nil, errors.New("failed to get response body stream")
 	}
-	responseBodyStream := responseBodyStreamResult.Unwrap()
 
 	responseReader := wasiStreamReader{
 		Stream:           responseBodyStream,
@@ -211,18 +213,19 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 	return &response, nil
 }
 
-func getIncomingResponse(future binding.WasiHttp0_2_0_OutgoingHandlerFutureIncomingResponse) (binding.WasiHttp0_2_0_TypesIncomingResponse, error) {
+func getIncomingResponse(future types.FutureIncomingResponse) (types.IncomingResponse, error) {
 	result := future.Get()
-	if result.IsSome() {
-		result2 := result.Unwrap()
-		if result2.IsErr() {
+	result2 := result.Some()
+	if result2 != nil {
+		result3, _, ok := result2.Result()
+		if !ok {
 			return 0, errors.New("failed to send request")
 		}
-		result3 := result2.Unwrap()
-		if result3.IsErr() {
-			return 0, errors.New("failed to send request")
+		result4, err, ok := result3.Result()
+		if !ok {
+			return 0, errors.New(fmt.Sprintf("failed to send request: %s", err.String()))
 		}
-		return result3.Unwrap(), nil
+		return result4, nil
 	} else {
 		pollable := future.Subscribe()
 		pollable.Block()
@@ -231,33 +234,32 @@ func getIncomingResponse(future binding.WasiHttp0_2_0_OutgoingHandlerFutureIncom
 }
 
 type wasiStreamReader struct {
-	Stream           binding.WasiHttp0_2_0_TypesInputStream
-	Body             binding.WasiHttp0_2_0_TypesIncomingBody
-	OutgoingRequest  binding.WasiHttp0_2_0_TypesOutgoingRequest
-	IncomingResponse binding.WasiHttp0_2_0_TypesIncomingResponse
-	Future           binding.WasiHttp0_2_0_TypesFutureIncomingResponse
+	Stream           types.InputStream
+	Body             types.IncomingBody
+	OutgoingRequest  types.OutgoingRequest
+	IncomingResponse types.IncomingResponse
+	Future           types.FutureIncomingResponse
 }
 
 func (reader *wasiStreamReader) Read(p []byte) (int, error) {
 	c := cap(p)
-	result := reader.Stream.BlockingRead(uint64(c))
-	isEof := result.IsErr() && result.UnwrapErr() == binding.WasiIo0_2_0_StreamsStreamErrorClosed()
+	chunk, err, ok := reader.Stream.BlockingRead(uint64(c)).Result()
+	isEof := err.Closed()
 	if isEof {
 		return 0, io.EOF
-	} else if result.IsErr() {
-		return 0, errors.New("failed to read response stream")
+	} else if !ok {
+		return 0, errors.New(fmt.Sprintf("failed to read response stream: %s", err.String()))
 	} else {
-		chunk := result.Unwrap()
-		copy(p, chunk)
-		return len(chunk), nil
+		copy(p, chunk.Slice())
+		return len(chunk.Slice()), nil
 	}
 }
 
 func (reader *wasiStreamReader) Close() error {
-	reader.Stream.Drop()
-	reader.Body.Drop()
-	reader.IncomingResponse.Drop()
-	reader.Future.Drop()
-	reader.OutgoingRequest.Drop()
+	reader.Stream.ResourceDrop()
+	reader.Body.ResourceDrop()
+	reader.IncomingResponse.ResourceDrop()
+	reader.Future.ResourceDrop()
+	reader.OutgoingRequest.ResourceDrop()
 	return nil
 }

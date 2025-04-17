@@ -3,7 +3,7 @@ package os
 import (
 	"os"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/wasi/cli/environment"
 )
 
 // InitStdArgs overrides standard lib args with the ones coming from the WASI environment
@@ -13,5 +13,5 @@ func InitStdArgs() {
 
 // GetArgs is convenience wrapper to be used instead of the standard lib's os.Args
 func GetArgs() []string {
-	return binding.WasiCli0_2_0_EnvironmentGetArguments()
+	return environment.GetArguments().Slice()
 }

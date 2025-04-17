@@ -1,19 +1,19 @@
 package golemhost
 
-import "github.com/golemcloud/golem-go/binding"
+import "github.com/golemcloud/golem-go/binding/golem/api/host"
 
-type OpLogIndex binding.GolemApi1_1_6_HostOplogIndex
+type OpLogIndex host.OplogIndex
 
 func OpLogCommit(replicas uint8) {
-	binding.GolemApi1_1_6_HostOplogCommit(replicas)
+	host.OplogCommit(replicas)
 }
 
 func MarkBeginOperation() OpLogIndex {
-	return OpLogIndex(binding.GolemApi1_1_6_HostMarkBeginOperation())
+	return OpLogIndex(host.MarkBeginOperation())
 }
 
 func MarkEndOperation(index OpLogIndex) {
-	binding.GolemApi1_1_6_HostMarkEndOperation(binding.GolemApi1_1_6_HostOplogIndex(index))
+	host.MarkEndOperation(host.OplogIndex(index))
 }
 
 func Atomically[T any](f func() (T, error)) (T, error) {

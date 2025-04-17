@@ -4,8 +4,9 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"go.bytecodealliance.org/cm"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 )
 
 type WorkerStatus int
@@ -20,43 +21,43 @@ const (
 	WorkerStatusExited
 )
 
-func NewWorkerStatus(status binding.GolemApi1_1_6_HostWorkerStatus) WorkerStatus {
-	switch status.Kind() {
-	case binding.GolemApi1_1_6_HostWorkerStatusKindRunning:
+func NewWorkerStatus(status host.WorkerStatus) WorkerStatus {
+	switch status {
+	case host.WorkerStatusRunning:
 		return WorkerStatusRunning
-	case binding.GolemApi1_1_6_HostWorkerStatusKindIdle:
+	case host.WorkerStatusIdle:
 		return WorkerStatusIdle
-	case binding.GolemApi1_1_6_HostWorkerStatusKindSuspended:
+	case host.WorkerStatusSuspended:
 		return WorkerStatusSuspended
-	case binding.GolemApi1_1_6_HostWorkerStatusKindInterrupted:
+	case host.WorkerStatusInterrupted:
 		return WorkerStatusInterrupted
-	case binding.GolemApi1_1_6_HostWorkerStatusKindRetrying:
+	case host.WorkerStatusRetrying:
 		return WorkerStatusRetrying
-	case binding.GolemApi1_1_6_HostWorkerStatusKindFailed:
+	case host.WorkerStatusFailed:
 		return WorkerStatusFailed
-	case binding.GolemApi1_1_6_HostWorkerStatusKindExited:
+	case host.WorkerStatusExited:
 		return WorkerStatusExited
 	default:
-		panic(fmt.Sprintf("NewWorkerStatus: unhandled status: %d", status.Kind()))
+		panic(fmt.Sprintf("NewWorkerStatus: unhandled status: %s", status.String()))
 	}
 }
 
-func (ws WorkerStatus) ToBinding() binding.GolemApi1_1_6_HostWorkerStatus {
+func (ws WorkerStatus) ToBinding() host.WorkerStatus {
 	switch ws {
 	case WorkerStatusRunning:
-		return binding.GolemApi1_1_6_HostWorkerStatusRunning()
+		return host.WorkerStatusRunning
 	case WorkerStatusIdle:
-		return binding.GolemApi1_1_6_HostWorkerStatusIdle()
+		return host.WorkerStatusIdle
 	case WorkerStatusSuspended:
-		return binding.GolemApi1_1_6_HostWorkerStatusSuspended()
+		return host.WorkerStatusSuspended
 	case WorkerStatusInterrupted:
-		return binding.GolemApi1_1_6_HostWorkerStatusInterrupted()
+		return host.WorkerStatusInterrupted
 	case WorkerStatusRetrying:
-		return binding.GolemApi1_1_6_HostWorkerStatusRetrying()
+		return host.WorkerStatusRetrying
 	case WorkerStatusFailed:
-		return binding.GolemApi1_1_6_HostWorkerStatusFailed()
+		return host.WorkerStatusFailed
 	case WorkerStatusExited:
-		return binding.GolemApi1_1_6_HostWorkerStatusExited()
+		return host.WorkerStatusExited
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled status: %d", ws))
 	}
@@ -67,16 +68,16 @@ type WorkerID struct {
 	WorkerName  string
 }
 
-func NewWorkerID(workerID binding.GolemApi1_1_6_HostWorkerId) WorkerID {
+func NewWorkerID(workerID host.WorkerID) WorkerID {
 	return WorkerID{
-		ComponentID: NewComponentID(workerID.ComponentId),
+		ComponentID: NewComponentID(workerID.ComponentID),
 		WorkerName:  workerID.WorkerName,
 	}
 }
 
-func (workerID WorkerID) ToBinding() binding.GolemApi1_1_6_HostWorkerId {
-	return binding.GolemApi1_1_6_HostWorkerId{
-		ComponentId: workerID.ComponentID.ToBinding(),
+func (workerID WorkerID) ToBinding() host.WorkerID {
+	return host.WorkerID{
+		ComponentID: workerID.ComponentID.ToBinding(),
 		WorkerName:  workerID.WorkerName,
 	}
 }
@@ -95,18 +96,19 @@ type WorkerMetadata struct {
 	RetryCount       uint64
 }
 
-func NewWorkerMetadata(metadata binding.GolemApi1_1_6_HostWorkerMetadata) WorkerMetadata {
-	envVars := make([]WorkerMetadataEnvVar, len(metadata.Env))
-	for i := range metadata.Env {
+func NewWorkerMetadata(metadata host.WorkerMetadata) WorkerMetadata {
+	envVars := make([]WorkerMetadataEnvVar, metadata.Env.Len())
+	envSlice := metadata.Env.Slice()
+	for i := range envSlice {
 		envVars[i] = WorkerMetadataEnvVar{
-			Name:  metadata.Env[i].F0,
-			Value: metadata.Env[i].F1,
+			Name:  envSlice[i][0],
+			Value: envSlice[i][1],
 		}
 	}
 
 	return WorkerMetadata{
-		WorkerId:         NewWorkerID(metadata.WorkerId),
-		Args:             metadata.Args,
+		WorkerId:         NewWorkerID(metadata.WorkerID),
+		Args:             metadata.Args.Slice(),
 		Env:              envVars,
 		Status:           NewWorkerStatus(metadata.Status),
 		ComponentVersion: metadata.ComponentVersion,
@@ -115,36 +117,36 @@ func NewWorkerMetadata(metadata binding.GolemApi1_1_6_HostWorkerMetadata) Worker
 }
 
 func GetSelfMetadata() WorkerMetadata {
-	return NewWorkerMetadata(binding.GolemApi1_1_6_HostGetSelfMetadata())
+	return NewWorkerMetadata(host.GetSelfMetadata())
 }
 
 func GetWorkerMetadata(workerID WorkerID) *WorkerMetadata {
-	bindingMetadata := binding.GolemApi1_1_6_HostGetWorkerMetadata(workerID.ToBinding())
-	if bindingMetadata.IsNone() {
+	bindingMetadata := host.GetWorkerMetadata(workerID.ToBinding())
+	if bindingMetadata.None() {
 		return nil
 	}
-	metadata := NewWorkerMetadata(bindingMetadata.Unwrap())
+	metadata := NewWorkerMetadata(*bindingMetadata.Some())
 	return &metadata
 }
 
 // GetWorkers enumerates all the workers optionally matching the provided filter
 // NOTE: Enumerating workers of a component is a slow operation and should not be used as part of the application logic.
 func GetWorkers(componentID ComponentID, filter *WorkerAnyFilter) []WorkerMetadata {
-	bindingFilter := binding.None[binding.GolemApi1_1_6_HostWorkerAnyFilter]()
+	bindingFilter := cm.None[host.WorkerAnyFilter]()
 	if filter == nil {
-		bindingFilter.Set(filter.ToBinding())
+		bindingFilter = cm.Some(filter.ToBinding())
 	}
 
-	iter := binding.NewGetWorkers(componentID.ToBinding(), bindingFilter, true)
+	iter := host.NewGetWorkers(componentID.ToBinding(), bindingFilter, true)
 
 	var results []WorkerMetadata
 	for {
 		nextResults := iter.GetNext()
-		if nextResults.IsNone() {
+		if nextResults.None() {
 			break
 		}
 
-		for _, metadata := range nextResults.Unwrap() {
+		for _, metadata := range nextResults.Some().Slice() {
 			results = append(results, NewWorkerMetadata(metadata))
 		}
 	}
@@ -159,21 +161,21 @@ const (
 	UpdateModeSnapshotBased
 )
 
-func (updateMode UpdateMode) ToBinding() binding.GolemApi1_1_6_HostUpdateMode {
+func (updateMode UpdateMode) ToBinding() host.UpdateMode {
 	switch updateMode {
 	case UpdateModeAutomatic:
-		return binding.GolemApi1_1_6_HostUpdateModeAutomatic()
+		return host.UpdateModeAutomatic
 	case UpdateModeSnapshotBased:
-		return binding.GolemApi1_1_6_HostUpdateModeSnapshotBased()
+		return host.UpdateModeSnapshotBased
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled update mode: %d", updateMode))
 	}
 }
 
 func UpdateWorker(workerID WorkerID, targetVersion uint64, updateMode UpdateMode) {
-	binding.GolemApi1_1_6_HostUpdateWorker(workerID.ToBinding(), targetVersion, updateMode.ToBinding())
+	host.UpdateWorker(workerID.ToBinding(), host.ComponentVersion(targetVersion), updateMode.ToBinding())
 }
 
 func GenerateIdempotencyKey() uuid.UUID {
-	return NewUUID(binding.GolemApi1_1_6_HostGenerateIdempotencyKey())
+	return NewUUID(host.GenerateIdempotencyKey())
 }
