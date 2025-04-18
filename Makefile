@@ -10,7 +10,7 @@ wit-deps-update:
 
 wit-bindgen:
 	rm -rf binding
-	wit-bindgen-go -v generate --world golem-go-bindings --out binding ./wit
+	go tool wit-bindgen-go -v generate --world golem-go-bindings --out binding ./wit
 
 build:
 	tinygo build $(OPTIONS) -o build/test_app.wasm test_app/main.go
