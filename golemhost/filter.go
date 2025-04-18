@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
+	"go.bytecodealliance.org/cm"
 )
 
 type FilterComparator int
@@ -18,20 +19,20 @@ const (
 	FilterComparatorLess
 )
 
-func (filterComparator FilterComparator) ToBinding() binding.GolemApi1_1_6_HostFilterComparator {
+func (filterComparator FilterComparator) ToBinding() host.FilterComparator {
 	switch filterComparator {
 	case FilterComparatorEqual:
-		return binding.GolemApi1_1_6_HostFilterComparatorEqual()
+		return host.FilterComparatorEqual
 	case FilterComparatorNotEqual:
-		return binding.GolemApi1_1_6_HostFilterComparatorNotEqual()
+		return host.FilterComparatorNotEqual
 	case FilterComparatorGreaterEqual:
-		return binding.GolemApi1_1_6_HostFilterComparatorGreaterEqual()
+		return host.FilterComparatorGreaterEqual
 	case FilterComparatorGreater:
-		return binding.GolemApi1_1_6_HostFilterComparatorGreater()
+		return host.FilterComparatorGreater
 	case FilterComparatorLessEqual:
-		return binding.GolemApi1_1_6_HostFilterComparatorLessEqual()
+		return host.FilterComparatorLessEqual
 	case FilterComparatorLess:
-		return binding.GolemApi1_1_6_HostFilterComparatorLess()
+		return host.FilterComparatorLess
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled filterComparator: %d", filterComparator))
 	}
@@ -46,16 +47,16 @@ const (
 	StringFilterComparatorNotLike
 )
 
-func (stringFilterComparator StringFilterComparator) ToBinding() binding.GolemApi1_1_6_HostStringFilterComparator {
+func (stringFilterComparator StringFilterComparator) ToBinding() host.StringFilterComparator {
 	switch stringFilterComparator {
 	case StringFilterComparatorEqual:
-		return binding.GolemApi1_1_6_HostStringFilterComparatorEqual()
+		return host.StringFilterComparatorEqual
 	case StringFilterComparatorNotEqual:
-		return binding.GolemApi1_1_6_HostStringFilterComparatorNotEqual()
+		return host.StringFilterComparatorNotEqual
 	case StringFilterComparatorLike:
-		return binding.GolemApi1_1_6_HostStringFilterComparatorLike()
+		return host.StringFilterComparatorLike
 	case StringFilterComparatorNotLike:
-		return binding.GolemApi1_1_6_HostStringFilterComparatorNotLike()
+		return host.StringFilterComparatorNotLike
 	default:
 		panic(fmt.Sprintf("ToBinding: unhandled stringFilterComparator: %d", stringFilterComparator))
 	}
@@ -65,13 +66,15 @@ type WorkerAnyFilter struct {
 	Filters []WorkerAllFilter
 }
 
-func (f WorkerAnyFilter) ToBinding() binding.GolemApi1_1_6_HostWorkerAnyFilter {
-	filter := binding.GolemApi1_1_6_HostWorkerAnyFilter{
-		Filters: make([]binding.GolemApi1_1_6_HostWorkerAllFilter, len(f.Filters)),
-	}
+func (f WorkerAnyFilter) ToBinding() host.WorkerAnyFilter {
+	filters := make([]host.WorkerAllFilter, len(f.Filters))
 	for i := range f.Filters {
-		filter.Filters[i] = f.Filters[i].ToBinding()
+		filters[i] = f.Filters[i].ToBinding()
 	}
+	filter := host.WorkerAnyFilter{
+		Filters: cm.ToList(filters),
+	}
+
 	return filter
 }
 
@@ -79,11 +82,15 @@ type WorkerAllFilter struct {
 	Filters []WorkerFilter
 }
 
-func (f WorkerAllFilter) ToBinding() binding.GolemApi1_1_6_HostWorkerAllFilter {
-	filter := binding.GolemApi1_1_6_HostWorkerAllFilter{}
+func (f WorkerAllFilter) ToBinding() host.WorkerAllFilter {
+	filters := make([]host.WorkerPropertyFilter, len(f.Filters))
 	for i := range f.Filters {
-		filter.Filters = append(filter.Filters, f.Filters[i].ToBinding()...)
+		filters = append(filters, f.Filters[i].ToBinding()...)
 	}
+	filter := host.WorkerAllFilter{
+		Filters: cm.ToList(filters),
+	}
+
 	return filter
 }
 
@@ -109,14 +116,14 @@ type WorkerFilter struct {
 	EnvComparator StringFilterComparator
 }
 
-func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilter {
-	var filter []binding.GolemApi1_1_6_HostWorkerPropertyFilter
+func (f WorkerFilter) ToBinding() []host.WorkerPropertyFilter {
+	var filter []host.WorkerPropertyFilter
 
 	if f.Name != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_6_HostWorkerPropertyFilterName(
-				binding.GolemApi1_1_6_HostWorkerNameFilter{
+			host.WorkerPropertyFilterName(
+				host.WorkerNameFilter{
 					Comparator: f.NameComparator.ToBinding(),
 					Value:      *f.Name,
 				},
@@ -127,8 +134,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilt
 	if f.Status != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_6_HostWorkerPropertyFilterStatus(
-				binding.GolemApi1_1_6_HostWorkerStatusFilter{
+			host.WorkerPropertyFilterStatus(
+				host.WorkerStatusFilter{
 					Comparator: f.StatusComparator.ToBinding(),
 					Value:      f.Status.ToBinding(),
 				},
@@ -139,8 +146,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilt
 	if f.Version != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_6_HostWorkerPropertyFilterVersion(
-				binding.GolemApi1_1_6_HostWorkerVersionFilter{
+			host.WorkerPropertyFilterVersion(
+				host.WorkerVersionFilter{
 					Comparator: f.VersionComparator.ToBinding(),
 					Value:      *f.Version,
 				},
@@ -151,8 +158,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilt
 	if f.CreatedAt != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_6_HostWorkerPropertyFilterCreatedAt(
-				binding.GolemApi1_1_6_HostWorkerCreatedAtFilter{
+			host.WorkerPropertyFilterCreatedAt(
+				host.WorkerCreatedAtFilter{
 					Comparator: f.CreatedAtComparator.ToBinding(),
 					Value:      uint64(f.CreatedAt.UnixNano()),
 				},
@@ -163,8 +170,8 @@ func (f WorkerFilter) ToBinding() []binding.GolemApi1_1_6_HostWorkerPropertyFilt
 	if f.Env != nil {
 		filter = append(
 			filter,
-			binding.GolemApi1_1_6_HostWorkerPropertyFilterEnv(
-				binding.GolemApi1_1_6_HostWorkerEnvFilter{
+			host.WorkerPropertyFilterEnv(
+				host.WorkerEnvFilter{
 					Comparator: f.EnvComparator.ToBinding(),
 					Name:       f.Env.Name,
 					Value:      f.Env.Value,

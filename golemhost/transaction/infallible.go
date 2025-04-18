@@ -3,8 +3,7 @@ package transaction
 import (
 	"fmt"
 
-	"github.com/golemcloud/golem-go/binding"
-	"github.com/golemcloud/golem-go/golemhost"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 )
 
 type InfallibleTx interface {
@@ -15,13 +14,13 @@ type InfallibleTx interface {
 }
 
 type infallible struct {
-	beginOpLogIndex   binding.GolemApi1_1_6_HostOplogIndex
+	beginOpLogIndex   host.OplogIndex
 	stepIndex         uint
 	err               error
 	compensationSteps []func() error
 }
 
-func newInfallible(beginOpLogIndex binding.GolemApi1_1_6_HostOplogIndex) *infallible {
+func newInfallible(beginOpLogIndex host.OplogIndex) *infallible {
 	return &infallible{
 		beginOpLogIndex: beginOpLogIndex,
 	}
@@ -47,7 +46,7 @@ func (tx *infallible) retry(err error) {
 			panic(fmt.Sprintf("%s", err.Error()))
 		}
 	}
-	binding.GolemApi1_1_6_HostSetOplogIndex(tx.beginOpLogIndex)
+	host.SetOplogIndex(tx.beginOpLogIndex)
 }
 
 func (tx *infallible) finish() {
@@ -80,8 +79,8 @@ func ExecuteInfallible[I, O any](tx InfallibleTx, op Operation[I, O], input I) O
 // compensation actions are executed in reverse order and the transaction gets retried,
 // using Golem's active retry policy.
 func Infallible[T any](f func(tx InfallibleTx) T) T {
-	beginOpLogIndex := golemhost.MarkBeginOperation()
-	defer golemhost.MarkEndOperation(beginOpLogIndex)
-	tx := newInfallible(binding.GolemApi1_1_6_HostOplogIndex(beginOpLogIndex))
+	beginOpLogIndex := host.MarkBeginOperation()
+	defer host.MarkEndOperation(beginOpLogIndex)
+	tx := newInfallible(beginOpLogIndex)
 	return f(tx)
 }

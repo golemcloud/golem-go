@@ -4,12 +4,11 @@ import (
 	"encoding/binary"
 	"fmt"
 
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 	"github.com/google/uuid"
-
-	"github.com/golemcloud/golem-go/binding"
 )
 
-func NewUUID(bindingUUID binding.GolemApi1_1_6_HostUuid) uuid.UUID {
+func NewUUID(bindingUUID host.UUID) uuid.UUID {
 	var bs [16]byte
 	binary.BigEndian.PutUint64(bs[:8], bindingUUID.HighBits)
 	binary.BigEndian.PutUint64(bs[8:], bindingUUID.LowBits)
@@ -21,8 +20,8 @@ func NewUUID(bindingUUID binding.GolemApi1_1_6_HostUuid) uuid.UUID {
 	return goUUID
 }
 
-func UUIDToBinding(goUUID uuid.UUID) binding.GolemApi1_1_6_HostUuid {
-	return binding.GolemApi1_1_6_HostUuid{
+func UUIDToBinding(goUUID uuid.UUID) host.UUID {
+	return host.UUID{
 		HighBits: binary.BigEndian.Uint64(goUUID[:8]),
 		LowBits:  binary.BigEndian.Uint64(goUUID[8:]),
 	}

@@ -3,7 +3,7 @@ package golemhost
 import (
 	"time"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
 )
 
 type RetryPolicy struct {
@@ -13,7 +13,7 @@ type RetryPolicy struct {
 	Multiplier  float64
 }
 
-func NewRetryPolicy(policy binding.GolemApi1_1_6_HostRetryPolicy) RetryPolicy {
+func NewRetryPolicy(policy host.RetryPolicy) RetryPolicy {
 	return RetryPolicy{
 		MaxAttempts: policy.MaxAttempts,
 		MinDelay:    time.Duration(policy.MinDelay) * time.Nanosecond,
@@ -22,21 +22,21 @@ func NewRetryPolicy(policy binding.GolemApi1_1_6_HostRetryPolicy) RetryPolicy {
 	}
 }
 
-func (policy RetryPolicy) ToBinding() binding.GolemApi1_1_6_HostRetryPolicy {
-	return binding.GolemApi1_1_6_HostRetryPolicy{
+func (policy RetryPolicy) ToBinding() host.RetryPolicy {
+	return host.RetryPolicy{
 		MaxAttempts: policy.MaxAttempts,
-		MinDelay:    binding.GolemApi1_1_6_HostDuration(policy.MinDelay.Nanoseconds()),
-		MaxDelay:    binding.GolemApi1_1_6_HostDuration(policy.MaxDelay.Nanoseconds()),
+		MinDelay:    host.Duration(policy.MinDelay.Nanoseconds()),
+		MaxDelay:    host.Duration(policy.MaxDelay.Nanoseconds()),
 		Multiplier:  policy.Multiplier,
 	}
 }
 
 func GetRetryPolicy() RetryPolicy {
-	return NewRetryPolicy(binding.GolemApi1_1_6_HostGetRetryPolicy())
+	return NewRetryPolicy(host.GetRetryPolicy())
 }
 
 func SetRetryPolicy(policy RetryPolicy) {
-	binding.GolemApi1_1_6_HostSetRetryPolicy(policy.ToBinding())
+	host.SetRetryPolicy(policy.ToBinding())
 }
 
 func WithRetryPolicy[T any](policy RetryPolicy, f func() (T, error)) (T, error) {

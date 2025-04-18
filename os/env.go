@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/wasi/cli/environment"
 )
 
 var (
@@ -15,9 +15,9 @@ var (
 
 func initEnv() {
 	env := map[string]string{}
-	e := binding.WasiCli0_2_0_EnvironmentGetEnvironment()
-	for i := range e {
-		env[e[i].F0] = e[i].F1
+	e := environment.GetEnvironment()
+	for _, kv := range e.Slice() {
+		env[kv[0]] = kv[1]
 	}
 }
 
@@ -25,9 +25,9 @@ func initEnv() {
 func InitStdEnv() {
 	// NOTE: os.ClearEnv panics with "nil pointer dereference" currently, but the env is empty anyway
 	// os.Clearenv()
-	e := binding.WasiCli0_2_0_EnvironmentGetEnvironment()
-	for i := range e {
-		err := os.Setenv(e[i].F0, e[i].F1)
+	e := environment.GetEnvironment()
+	for _, kv := range e.Slice() {
+		err := os.Setenv(kv[0], kv[1])
 		if err != nil {
 			panic(fmt.Sprintf("failed to initialize standard lib environment variables: %+v", err))
 		}

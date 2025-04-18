@@ -3,7 +3,8 @@ package golemhost
 import (
 	"encoding/json"
 
-	"github.com/golemcloud/golem-go/binding"
+	"github.com/golemcloud/golem-go/binding/golem/api/host"
+	"go.bytecodealliance.org/cm"
 )
 
 type PromiseID struct {
@@ -12,26 +13,26 @@ type PromiseID struct {
 }
 
 func NewPromise() PromiseID {
-	promise := binding.GolemApi1_1_6_HostCreatePromise()
+	promise := host.CreatePromise()
 	return PromiseID{
-		WorkerID: NewWorkerID(promise.WorkerId),
+		WorkerID: NewWorkerID(promise.WorkerID),
 		OplogIdx: OpLogIndex(promise.OplogIdx),
 	}
 }
 
-func (promiseID PromiseID) ToBinding() binding.GolemApi1_1_6_HostPromiseId {
-	return binding.GolemApi1_1_6_HostPromiseId{
-		WorkerId: promiseID.WorkerID.ToBinding(),
-		OplogIdx: binding.GolemApi1_1_6_HostOplogIndex(promiseID.OplogIdx),
+func (promiseID PromiseID) ToBinding() host.PromiseID {
+	return host.PromiseID{
+		WorkerID: promiseID.WorkerID.ToBinding(),
+		OplogIdx: host.OplogIndex(promiseID.OplogIdx),
 	}
 }
 
 func DeletePromise(promiseID PromiseID) {
-	binding.GolemApi1_1_6_HostDeletePromise(promiseID.ToBinding())
+	host.DeletePromise(promiseID.ToBinding())
 }
 
 func AwaitPromise(promiseID PromiseID) []byte {
-	return binding.GolemApi1_1_6_HostAwaitPromise(promiseID.ToBinding())
+	return host.AwaitPromise(promiseID.ToBinding()).Slice()
 }
 
 func AwaitPromiseJSON(promiseID PromiseID, v any) error {
@@ -39,7 +40,7 @@ func AwaitPromiseJSON(promiseID PromiseID, v any) error {
 }
 
 func CompletePromise(promiseID PromiseID, payload []byte) bool {
-	return binding.GolemApi1_1_6_HostCompletePromise(promiseID.ToBinding(), payload)
+	return host.CompletePromise(promiseID.ToBinding(), cm.ToList(payload))
 }
 
 func CompletePromiseJSON(promiseID PromiseID, v any) (bool, error) {
