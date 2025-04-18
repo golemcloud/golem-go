@@ -38,6 +38,11 @@ type ComponentVersion = host.ComponentVersion
 // See [host.OplogIndex] for more information.
 type OplogIndex = host.OplogIndex
 
+// PersistenceLevel represents the type alias "golem:api/oplog@1.1.6#persistence-level".
+//
+// See [host.PersistenceLevel] for more information.
+type PersistenceLevel = host.PersistenceLevel
+
 // RetryPolicy represents the type alias "golem:api/oplog@1.1.6#retry-policy".
 //
 // See [host.RetryPolicy] for more information.
@@ -781,6 +786,18 @@ type SetSpanAttributeParameters struct {
 	Value     AttributeValue `json:"value"`
 }
 
+// ChangePersistenceLevelParameters represents the record "golem:api/oplog@1.1.6#change-persistence-level-parameters".
+//
+//	record change-persistence-level-parameters {
+//		timestamp: datetime,
+//		persistence-level: persistence-level,
+//	}
+type ChangePersistenceLevelParameters struct {
+	_                cm.HostLayout    `json:"-"`
+	Timestamp        DateTime         `json:"timestamp"`
+	PersistenceLevel PersistenceLevel `json:"persistence-level"`
+}
+
 // OplogEntry represents the variant "golem:api/oplog@1.1.6#oplog-entry".
 //
 //	variant oplog-entry {
@@ -816,6 +833,7 @@ type SetSpanAttributeParameters struct {
 //		start-span(start-span-parameters),
 //		finish-span(finish-span-parameters),
 //		set-span-attribute(set-span-attribute-parameters),
+//		change-persistence-level(change-persistence-level-parameters),
 //	}
 type OplogEntry cm.Variant[uint8, CreateParametersShape, CreateParameters]
 
@@ -1221,7 +1239,19 @@ func (self *OplogEntry) SetSpanAttribute() *SetSpanAttributeParameters {
 	return cm.Case[SetSpanAttributeParameters](self, 31)
 }
 
-var _OplogEntryStrings = [32]string{
+// OplogEntryChangePersistenceLevel returns a [OplogEntry] of case "change-persistence-level".
+//
+// Change the current persistence level
+func OplogEntryChangePersistenceLevel(data ChangePersistenceLevelParameters) OplogEntry {
+	return cm.New[OplogEntry](32, data)
+}
+
+// ChangePersistenceLevel returns a non-nil *[ChangePersistenceLevelParameters] if [OplogEntry] represents the variant case "change-persistence-level".
+func (self *OplogEntry) ChangePersistenceLevel() *ChangePersistenceLevelParameters {
+	return cm.Case[ChangePersistenceLevelParameters](self, 32)
+}
+
+var _OplogEntryStrings = [33]string{
 	"create",
 	"imported-function-invoked",
 	"exported-function-invoked",
@@ -1254,6 +1284,7 @@ var _OplogEntryStrings = [32]string{
 	"start-span",
 	"finish-span",
 	"set-span-attribute",
+	"change-persistence-level",
 }
 
 // String implements [fmt.Stringer], returning the variant case name of v.
