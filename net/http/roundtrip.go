@@ -33,8 +33,8 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 			})
 		}
 	}
-	headers, err, ok := types.FieldsFromList(cm.ToList(headerKeyValues)).Result()
-	if !ok {
+	headers, err, isErr := types.FieldsFromList(cm.ToList(headerKeyValues)).Result()
+	if isErr {
 		return nil, errors.New(err.String())
 	}
 
@@ -100,13 +100,13 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		reader := request.Body
 		defer func() { _ = reader.Close() }()
 
-		requestBody, _, ok := requestHandle.Body().Result()
-		if !ok {
+		requestBody, _, isErr := requestHandle.Body().Result()
+		if isErr {
 			return nil, errors.New("failed to get request body")
 		}
 
-		requestStream, _, ok := requestBody.Write().Result()
-		if !ok {
+		requestStream, _, isErr := requestBody.Write().Result()
+		if isErr {
 			return nil, errors.New("failed to start writing request body")
 		}
 
@@ -114,9 +114,9 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		for {
 			n, err := reader.Read(buffer)
 
-			_, err2, ok := requestStream.Write(cm.ToList(buffer[:n])).Result()
+			_, err2, isErr := requestStream.Write(cm.ToList(buffer[:n])).Result()
 
-			if !ok {
+			if isErr {
 				requestStream.ResourceDrop()
 				requestBody.ResourceDrop()
 				return nil, errors.New(fmt.Sprintf("failed to write request body chunk: %s", err2.String()))
@@ -142,8 +142,8 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 	options.SetFirstByteTimeout(firstByteTimeoutNanos)
 	options.SetBetweenBytesTimeout(betweenBytesTimeoutNanos)
 
-	future, err3, ok := outgoinghandler.Handle(requestHandle, cm.Some(options)).Result()
-	if !ok {
+	future, err3, isErr := outgoinghandler.Handle(requestHandle, cm.Some(options)).Result()
+	if isErr {
 		return nil, errors.New(fmt.Sprintf("failed to send request: %s", err3.String()))
 	}
 
@@ -183,13 +183,13 @@ func (t *WasiHttpTransport) RoundTrip(request *http.Request) (*http.Response, er
 		contentLength = -1
 	}
 
-	responseBody, _, ok := incomingResponse.Consume().Result()
-	if !ok {
+	responseBody, _, isErr := incomingResponse.Consume().Result()
+	if isErr {
 		return nil, errors.New("failed to consume response body")
 	}
 
-	responseBodyStream, _, ok := responseBody.Stream().Result()
-	if !ok {
+	responseBodyStream, _, isErr := responseBody.Stream().Result()
+	if isErr {
 		return nil, errors.New("failed to get response body stream")
 	}
 
@@ -217,12 +217,12 @@ func getIncomingResponse(future types.FutureIncomingResponse) (types.IncomingRes
 	result := future.Get()
 	result2 := result.Some()
 	if result2 != nil {
-		result3, _, ok := result2.Result()
-		if !ok {
+		result3, _, isErr := result2.Result()
+		if isErr {
 			return 0, errors.New("failed to send request")
 		}
-		result4, err, ok := result3.Result()
-		if !ok {
+		result4, err, isErr := result3.Result()
+		if isErr {
 			return 0, errors.New(fmt.Sprintf("failed to send request: %s", err.String()))
 		}
 		return result4, nil
@@ -243,11 +243,11 @@ type wasiStreamReader struct {
 
 func (reader *wasiStreamReader) Read(p []byte) (int, error) {
 	c := cap(p)
-	chunk, err, ok := reader.Stream.BlockingRead(uint64(c)).Result()
+	chunk, err, isErr := reader.Stream.BlockingRead(uint64(c)).Result()
 	isEof := err.Closed()
 	if isEof {
 		return 0, io.EOF
-	} else if !ok {
+	} else if isErr {
 		return 0, errors.New(fmt.Sprintf("failed to read response stream: %s", err.String()))
 	} else {
 		copy(p, chunk.Slice())
