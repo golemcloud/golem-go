@@ -607,6 +607,47 @@ func (v RevertWorkerTarget) String() string {
 	return _RevertWorkerTargetStrings[v.Tag()]
 }
 
+// ForkResult represents the enum "golem:api/host@1.1.6#fork-result".
+//
+// Indicates which worker the code is running on after `fork`
+//
+//	enum fork-result {
+//		original,
+//		forked
+//	}
+type ForkResult uint8
+
+const (
+	// The original worker that called `fork`
+	ForkResultOriginal ForkResult = iota
+
+	// The new worker
+	ForkResultForked
+)
+
+var _ForkResultStrings = [2]string{
+	"original",
+	"forked",
+}
+
+// String implements [fmt.Stringer], returning the enum case name of e.
+func (e ForkResult) String() string {
+	return _ForkResultStrings[e]
+}
+
+// MarshalText implements [encoding.TextMarshaler].
+func (e ForkResult) MarshalText() ([]byte, error) {
+	return []byte(e.String()), nil
+}
+
+// UnmarshalText implements [encoding.TextUnmarshaler], unmarshaling into an enum
+// case. Returns an error if the supplied text is not one of the enum cases.
+func (e *ForkResult) UnmarshalText(text []byte) error {
+	return _ForkResultUnmarshalCase(e, text)
+}
+
+var _ForkResultUnmarshalCase = cm.CaseUnmarshaler[ForkResult](_ForkResultStrings[:])
+
 // CreatePromise represents the imported function "create-promise".
 //
 // Create a new promise
@@ -979,5 +1020,23 @@ func ResolveWorkerIDStrict(componentReference string, workerName string) (result
 	componentReference0, componentReference1 := cm.LowerString(componentReference)
 	workerName0, workerName1 := cm.LowerString(workerName)
 	wasmimport_ResolveWorkerIDStrict((*uint8)(componentReference0), (uint32)(componentReference1), (*uint8)(workerName0), (uint32)(workerName1), &result)
+	return
+}
+
+// Fork represents the imported function "fork".
+//
+// Forks the current worker at the current execution point. The new worker gets the
+// `new-name` worker name,
+// and this worker continues running as well. The return value is going to be different
+// in this worker and
+// the forked worker.
+//
+//	fork: func(new-name: string) -> fork-result
+//
+//go:nosplit
+func Fork(newName string) (result ForkResult) {
+	newName0, newName1 := cm.LowerString(newName)
+	result0 := wasmimport_Fork((*uint8)(newName0), (uint32)(newName1))
+	result = (ForkResult)((uint32)(result0))
 	return
 }

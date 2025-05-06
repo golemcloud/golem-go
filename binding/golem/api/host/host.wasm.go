@@ -119,3 +119,7 @@ func wasmimport_ResolveWorkerID(componentReference0 *uint8, componentReference1 
 //go:wasmimport golem:api/host@1.1.6 resolve-worker-id-strict
 //go:noescape
 func wasmimport_ResolveWorkerIDStrict(componentReference0 *uint8, componentReference1 uint32, workerName0 *uint8, workerName1 uint32, result *cm.Option[WorkerID])
+
+//go:wasmimport golem:api/host@1.1.6 fork
+//go:noescape
+func wasmimport_Fork(newName0 *uint8, newName1 uint32) (result0 uint32)
