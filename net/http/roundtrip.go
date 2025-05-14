@@ -229,6 +229,7 @@ func getIncomingResponse(future types.FutureIncomingResponse) (types.IncomingRes
 	} else {
 		pollable := future.Subscribe()
 		pollable.Block()
+		pollable.ResourceDrop()
 		return getIncomingResponse(future)
 	}
 }
@@ -260,6 +261,5 @@ func (reader *wasiStreamReader) Close() error {
 	reader.Body.ResourceDrop()
 	reader.IncomingResponse.ResourceDrop()
 	reader.Future.ResourceDrop()
-	reader.OutgoingRequest.ResourceDrop()
 	return nil
 }
