@@ -6,28 +6,28 @@ import (
 	"go.bytecodealliance.org/cm"
 )
 
-// This file contains wasmimport and wasmexport declarations for "golem:api@1.1.6".
+// This file contains wasmimport and wasmexport declarations for "golem:api@1.1.7".
 
-//go:wasmimport golem:api/oplog@1.1.6 [resource-drop]get-oplog
+//go:wasmimport golem:api/oplog@1.1.7 [resource-drop]get-oplog
 //go:noescape
 func wasmimport_GetOplogResourceDrop(self0 uint32)
 
-//go:wasmimport golem:api/oplog@1.1.6 [constructor]get-oplog
+//go:wasmimport golem:api/oplog@1.1.7 [constructor]get-oplog
 //go:noescape
 func wasmimport_NewGetOplog(workerId0 uint64, workerId1 uint64, workerId2 *uint8, workerId3 uint32, start0 uint64) (result0 uint32)
 
-//go:wasmimport golem:api/oplog@1.1.6 [method]get-oplog.get-next
+//go:wasmimport golem:api/oplog@1.1.7 [method]get-oplog.get-next
 //go:noescape
 func wasmimport_GetOplogGetNext(self0 uint32, result *cm.Option[cm.List[OplogEntry]])
 
-//go:wasmimport golem:api/oplog@1.1.6 [resource-drop]search-oplog
+//go:wasmimport golem:api/oplog@1.1.7 [resource-drop]search-oplog
 //go:noescape
 func wasmimport_SearchOplogResourceDrop(self0 uint32)
 
-//go:wasmimport golem:api/oplog@1.1.6 [constructor]search-oplog
+//go:wasmimport golem:api/oplog@1.1.7 [constructor]search-oplog
 //go:noescape
 func wasmimport_NewSearchOplog(workerId0 uint64, workerId1 uint64, workerId2 *uint8, workerId3 uint32, text0 *uint8, text1 uint32) (result0 uint32)
 
-//go:wasmimport golem:api/oplog@1.1.6 [method]search-oplog.get-next
+//go:wasmimport golem:api/oplog@1.1.7 [method]search-oplog.get-next
 //go:noescape
 func wasmimport_SearchOplogGetNext(self0 uint32, result *cm.Option[cm.List[cm.Tuple[OplogIndex, OplogEntry]]])
