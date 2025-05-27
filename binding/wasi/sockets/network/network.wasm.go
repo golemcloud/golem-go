@@ -2,8 +2,16 @@
 
 package network
 
-// This file contains wasmimport and wasmexport declarations for "wasi:sockets@0.2.0".
+import (
+	"go.bytecodealliance.org/cm"
+)
 
-//go:wasmimport wasi:sockets/network@0.2.0 [resource-drop]network
+// This file contains wasmimport and wasmexport declarations for "wasi:sockets@0.2.3".
+
+//go:wasmimport wasi:sockets/network@0.2.3 [resource-drop]network
 //go:noescape
 func wasmimport_NetworkResourceDrop(self0 uint32)
+
+//go:wasmimport wasi:sockets/network@0.2.3 network-error-code
+//go:noescape
+func wasmimport_NetworkErrorCode(err0 uint32, result *cm.Option[ErrorCode])
